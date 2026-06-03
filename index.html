@@ -756,39 +756,33 @@
       /* Nav */
       nav { top: 16px; right: 16px; left: 16px; gap: 12px; justify-content: center; }
 
-      /* Hero — stack video on top, copy below in cream */
+      /* Hero — art fills top 65%, cream below for copy, wordmark bleeds bottom */
       #hero {
-        height: auto;
-        min-height: 0;
-        overflow: visible;
-        display: flex;
-        flex-direction: column;
+        height: 100svh;
+        min-height: 580px;
+        background: var(--cream);
+        overflow: hidden;
       }
       #terrain {
-        position: relative;
+        position: absolute;
+        top: 0; left: 0;
         width: 100%;
-        height: 56vw;
-        min-height: 260px;
+        height: 62%;
         object-fit: cover;
       }
-      #terrain-grain { display: none; }
+      #terrain-grain {
+        width: 100%;
+        height: 62%;
+      }
       .hero-copy {
-        position: relative;
-        bottom: auto;
-        right: auto;
+        position: absolute;
+        bottom: 100px;
+        left: 24px;
+        right: 24px;
         max-width: 100%;
-        padding: 36px 24px 40px;
-        background: var(--cream);
-        order: 2;
       }
       .hero-wordmark {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        margin-left: -0.02em;
-        order: 3;
-        overflow: hidden;
-        line-height: 0.9;
+        font-size: clamp(4rem, 18vw, 7rem);
       }
 
       /* Section padding */
