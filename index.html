@@ -756,15 +756,40 @@
       /* Nav */
       nav { top: 16px; right: 16px; left: 16px; gap: 12px; justify-content: center; }
 
-      /* Hero */
-      #hero { min-height: 100svh; }
+      /* Hero — stack video on top, copy below in cream */
+      #hero {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+      }
+      #terrain {
+        position: relative;
+        width: 100%;
+        height: 56vw;
+        min-height: 260px;
+        object-fit: cover;
+      }
+      #terrain-grain { display: none; }
       .hero-copy {
         position: relative;
-        top: auto; right: auto;
-        padding: 24px 20px 40px;
+        bottom: auto;
+        right: auto;
         max-width: 100%;
+        padding: 36px 24px 40px;
+        background: var(--cream);
+        order: 2;
       }
-      #hero { display: flex; flex-direction: column; justify-content: flex-end; }
+      .hero-wordmark {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-left: -0.02em;
+        order: 3;
+        overflow: hidden;
+        line-height: 0.9;
+      }
 
       /* Section padding */
       #services, #os, .os-section { padding: 72px 20px; }
