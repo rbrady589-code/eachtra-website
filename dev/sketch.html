@@ -415,15 +415,6 @@
       white-space: nowrap;
     }
 
-    .work-result {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      margin-top: 4px;
-    }
-
     /* work status corner tag */
     .uncharted-tag {
       position: absolute;
@@ -805,7 +796,46 @@
     <div class="work-label reveal">
       <span>Selected work</span>
     </div>
-    <div class="work-grid" id="workGrid"></div>
+
+    <div class="work-grid">
+
+      <!-- Tall card -->
+      <div class="work-item tall reveal">
+        <div class="work-item-visual">
+          <img src="images/painting-1.jpg" alt="Project Arête">
+          <div class="uncharted-tag">Uncharted</div>
+        </div>
+        <div class="work-item-info">
+          <span class="work-item-name">Project Arête</span>
+          <span class="work-item-meta">Brand Strategy · Campaign</span>
+        </div>
+      </div>
+
+      <!-- Right column: two stacked -->
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div class="work-item reveal">
+          <div class="work-item-visual" style="aspect-ratio:4/3">
+            <img src="images/painting-2.jpg" alt="Project Cuan">
+            <div class="uncharted-tag">Uncharted</div>
+          </div>
+          <div class="work-item-info">
+            <span class="work-item-name">Project Cuan</span>
+            <span class="work-item-meta">Identity · Digital</span>
+          </div>
+        </div>
+        <div class="work-item reveal">
+          <div class="work-item-visual" style="aspect-ratio:4/3">
+            <img src="images/painting-3.jpg" alt="Project Fonn">
+            <div class="uncharted-tag">Uncharted</div>
+          </div>
+          <div class="work-item-info">
+            <span class="work-item-name">Project Fonn</span>
+            <span class="work-item-meta">Music · Social Campaign</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <!-- COMPANY OS -->
@@ -1000,81 +1030,6 @@
     }
   });
 
-  // ── Work / case studies ───────────────────────────
-  // To add a new case study: add an object to this array, push to GitHub → live in 60 seconds.
-  // image: path to file in /images/  |  tall: true makes it span 2 rows (use for hero piece)
-  // tag: "Uncharted" = coming soon, or leave blank for live work
-  // result: one-line result stat shown on the card (optional)
-  const WORK = [
-    {
-      name:   "sÜave — Artist EPK & Pre-Release",
-      meta:   "Web · Music · Blueprint Campaign",
-      image:  "images/suave-epk.png",
-      tall:   true,
-      tag:    "",
-      result: "Artist EPK · Live at suaves-epk.netlify.app",
-      link:   "https://suaves-epk.netlify.app",
-    },
-    {
-      name:   "Project Cuan",
-      meta:   "Identity · Digital",
-      image:  "images/painting-2.jpg",
-      tall:   false,
-      tag:    "Uncharted",
-      result: "",
-    },
-    {
-      name:   "Project Fonn",
-      meta:   "Music · Social Campaign",
-      image:  "images/painting-3.jpg",
-      tall:   false,
-      tag:    "Uncharted",
-      result: "",
-    },
-  ];
-
-  function renderWork() {
-    const grid = document.getElementById('workGrid');
-    if (!grid || !WORK.length) return;
-
-    // First item goes tall on the left; remaining items stack on the right
-    const [first, ...rest] = WORK;
-
-    const makeCard = (item, extraStyle = '') => {
-      const tag    = item.tag    ? `<div class="uncharted-tag">${item.tag}</div>` : '';
-      const result = item.result ? `<div class="work-result">${item.result}</div>` : '';
-      const wrap   = item.link  ? `href="${item.link}" target="_blank" rel="noopener"` : '';
-      const inner  = `
-          <div class="work-item-visual" ${!item.tall ? 'style="aspect-ratio:4/3"' : ''}>
-            <img src="${item.image}" alt="${item.name}" loading="lazy">
-            ${tag}
-          </div>
-          <div class="work-item-info">
-            <span class="work-item-name">${item.name}</span>
-            <span class="work-item-meta">${item.meta}</span>
-            ${result}
-          </div>`;
-      return item.link
-        ? `<a class="work-item ${item.tall ? 'tall' : ''} reveal" ${wrap} style="text-decoration:none;display:block${extraStyle ? ';' + extraStyle : ''}">${inner}</a>`
-        : `<div class="work-item ${item.tall ? 'tall' : ''} reveal" ${extraStyle ? `style="${extraStyle}"` : ''}>${inner}</div>`;
-    };
-
-    let html = makeCard(first);
-
-    if (rest.length) {
-      html += `<div style="display:flex;flex-direction:column;gap:2px;">`;
-      rest.forEach(item => { html += makeCard(item); });
-      html += `</div>`;
-    }
-
-    grid.innerHTML = html;
-    // Re-observe new elements for reveal animation
-    grid.querySelectorAll('.reveal').forEach((el, i) => {
-      el.style.transitionDelay = `${(i % 3) * 90}ms`;
-      io.observe(el);
-    });
-  }
-
   // ── Scroll reveal ─────────────────────────────────
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1086,8 +1041,6 @@
     el.style.transitionDelay = `${(i % 3) * 90}ms`;
     io.observe(el);
   });
-
-  renderWork();
   </script>
 </body>
 </html>
