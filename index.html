@@ -129,7 +129,7 @@
       letter-spacing: -0.01em;
     }
 
-    .hero-copy .hero-cta {
+    .hero-cta {
       display: inline-block;
       margin-top: 24px;
       font-size: 10px;
@@ -143,7 +143,7 @@
       transition: color 200ms, border-color 200ms;
       cursor: pointer;
     }
-    .hero-copy .hero-cta:hover {
+    .hero-cta:hover {
       color: var(--crimson);
       border-color: var(--crimson);
     }
@@ -800,7 +800,6 @@
         max-width: 100%;
       }
       .hero-copy p { color: var(--cream); }
-      .hero-copy .hero-cta { color: var(--cream); border-color: rgba(234,228,213,0.4); }
       .hero-wordmark {
         font-size: clamp(4rem, 18vw, 7rem);
         bottom: 20px;
@@ -1265,7 +1264,8 @@
       name:   "sÜave — Artist EPK & Pre-Release",
       meta:   "Web · Music · Blueprint Campaign",
       image:  "images/suave-epk.png",
-      tall:   true,
+      tall:   false,
+      aspect: "16/9",
       tag:    "",
       result: "Artist EPK · Live at suaves-epk.netlify.app",
       link:   "https://suaves-epk.netlify.app",
@@ -1300,7 +1300,7 @@
       const result = item.result ? `<div class="work-result">${item.result}</div>` : '';
       const wrap   = item.link  ? `href="${item.link}" target="_blank" rel="noopener"` : '';
       const inner  = `
-          <div class="work-item-visual" ${!item.tall ? 'style="aspect-ratio:4/3"' : ''}>
+          <div class="work-item-visual" ${!item.tall ? `style="aspect-ratio:${item.aspect || '4/3'}"` : ''}>
             <img src="${item.image}" alt="${item.name}" loading="lazy">
             ${tag}
           </div>
