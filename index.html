@@ -322,6 +322,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 48px;
+      align-items: end;
     }
     .metric { display: flex; flex-direction: column; gap: 8px; }
     .metric-value {
@@ -734,6 +735,11 @@
       .reveal { opacity: 1; transform: none; transition: none; }
     }
 
+    /* ─── LAYOUT CLASSES (moved from inline) ─────── */
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    .os-section { padding: 120px 48px; background: var(--ink); }
+    .os-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+
     /* ─── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 900px) {
       nav { right: 24px; gap: 20px; }
@@ -744,6 +750,51 @@
       .work-item.tall .work-item-visual { aspect-ratio: 4/3; height: auto; }
       .hero-copy { right: 24px; max-width: 240px; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 680px) {
+      /* Nav */
+      nav { top: 16px; right: 16px; left: 16px; gap: 12px; justify-content: center; }
+
+      /* Hero */
+      #hero { min-height: 100svh; }
+      .hero-copy {
+        position: relative;
+        top: auto; right: auto;
+        padding: 24px 20px 40px;
+        max-width: 100%;
+      }
+      #hero { display: flex; flex-direction: column; justify-content: flex-end; }
+
+      /* Section padding */
+      #services, #os, .os-section { padding: 72px 20px; }
+      #about, #values, #contact, #work { padding: 72px 20px; }
+
+      /* Services grid → single col */
+      .services-grid { grid-template-columns: 1fr; }
+
+      /* Metrics strip → 2 col */
+      .metrics-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+      /* OS section → single col */
+      .os-inner { grid-template-columns: 1fr; gap: 48px; }
+
+      /* Values */
+      .values-inner { grid-template-columns: 1fr; gap: 40px; }
+      .value-item { grid-template-columns: 32px 1fr; gap: 20px; }
+
+      /* Contact form */
+      .field-row { grid-template-columns: 1fr; gap: 16px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+
+      /* Work */
+      .work-grid { grid-template-columns: 1fr; }
+
+      /* Footer */
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+
+      /* Typography scale down */
+      .hero-wordmark { font-size: clamp(4rem, 18vw, 7rem); }
     }
   </style>
 </head>
@@ -772,7 +823,7 @@
 
   <!-- VERTICALS -->
   <section id="metrics">
-    <div class="metrics-inner" style="grid-template-columns:repeat(3,1fr);align-items:end">
+    <div class="metrics-inner">
       <div class="metric">
         <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Music</span>
         <span class="metric-label">Artists · Labels · Radio</span>
@@ -826,7 +877,7 @@
   <section id="services">
     <div class="services-inner">
       <div class="eyebrow">What we do</div>
-      <div class="services-grid" style="grid-template-columns: repeat(2,1fr);">
+      <div class="services-grid">
         <div class="service-card service-card--expandable" id="paidSocialCard" onclick="toggleCard('paidSocialCard')">
           <span class="service-num">01</span>
           <div class="service-card-header">
@@ -972,8 +1023,8 @@
   </section>
 
   <!-- COMPANY OS -->
-  <section id="os" style="padding:120px 48px;background:var(--ink);">
-    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;">
+  <section id="os" class="os-section">
+    <div class="os-inner">
       <div class="reveal">
         <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(234,228,213,0.35);margin-bottom:28px;">The infrastructure beneath</div>
         <h2 style="font-family:var(--font-serif);font-size:clamp(2.4rem,4vw,3.6rem);font-weight:300;font-style:italic;line-height:1.1;letter-spacing:-0.03em;color:var(--cream);margin-bottom:32px;">Your business,<br>fully visible.</h2>
