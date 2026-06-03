@@ -367,6 +367,57 @@
       transition: background 250ms;
     }
     .service-card:hover { background: rgba(234,228,213,0.08); }
+    .service-card--expandable { cursor: pointer; }
+    .service-card--expandable .service-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .service-expand-icon {
+      font-size: 20px;
+      font-weight: 200;
+      color: var(--crimson);
+      line-height: 1;
+      transition: transform 300ms ease;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .service-card--open .service-expand-icon { transform: rotate(45deg); }
+    .service-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 400ms ease, opacity 300ms ease;
+      opacity: 0;
+    }
+    .service-card--open .service-detail {
+      max-height: 600px;
+      opacity: 1;
+    }
+    .service-detail-list {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-detail-item {
+      padding: 16px 0;
+      border-top: 1px solid rgba(234,228,213,0.08);
+    }
+    .service-detail-item:last-child { border-bottom: 1px solid rgba(234,228,213,0.08); }
+    .service-detail-item strong {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 6px;
+    }
+    .service-detail-item span {
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(234,228,213,0.45);
+    }
     .service-num {
       font-size: 10px;
       letter-spacing: 0.12em;
@@ -776,25 +827,137 @@
     <div class="services-inner">
       <div class="eyebrow">What we do</div>
       <div class="services-grid" style="grid-template-columns: repeat(2,1fr);">
-        <div class="service-card">
+        <div class="service-card service-card--expandable" id="paidSocialCard" onclick="toggleCard('paidSocialCard')">
           <span class="service-num">01</span>
-          <h3>Paid Social &amp; Search</h3>
+          <div class="service-card-header">
+            <h3>Paid Social &amp; Search</h3>
+            <span class="service-expand-icon">+</span>
+          </div>
           <p>Campaign architecture, psychographic targeting, and full-funnel management across Instagram, TikTok, and Google. We know which platform to play on for each business — and why.</p>
+          <div class="service-detail">
+            <div class="service-detail-list">
+              <div class="service-detail-item">
+                <strong>Account Audit</strong>
+                <span>Full analysis of your Meta, Google, and TikTok accounts — campaigns, creatives, spend, audiences. Delivered fast.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Creative Production</strong>
+                <span>Ad creative at volume — copy, visual direction, and bulk variants per ad set.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Campaign Build</strong>
+                <span>Full campaign setup from scratch — audience research, budget planning, creative, launch.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Performance Management</strong>
+                <span>Ongoing monitoring, budget reallocation, issue flagging, and creative iteration.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Audience Research</strong>
+                <span>Market sizing and audience validation before you spend. Find the right segments first.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Creator &amp; Influencer Partnerships</strong>
+                <span>Matching brands with the right YouTube and social creators — identified by audience psychographics, not just follower count.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="service-card">
+        <div class="service-card service-card--expandable" id="musicCard" onclick="toggleCard('musicCard')">
           <span class="service-num">02</span>
-          <h3>Music &amp; Event Marketing</h3>
+          <div class="service-card-header">
+            <h3>Music &amp; Event Marketing</h3>
+            <span class="service-expand-icon">+</span>
+          </div>
           <p>Release campaigns, event countdown strategies, community promoter activation, and editorial relationships. We work inside the creative industries — not outside looking in.</p>
+          <div class="service-detail">
+            <div class="service-detail-list">
+              <div class="service-detail-item">
+                <strong>Release Campaign</strong>
+                <span>Strategy and execution for single, EP, and album drops across DSPs and social.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Event Promotion</strong>
+                <span>Countdown campaigns, ticket sales, and pre-show momentum building.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Promoter &amp; Community Activation</strong>
+                <span>Direct outreach to collectives, promoters, and bookers who move the right crowd.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Editorial &amp; Press</strong>
+                <span>Relationships with music media, playlist curators, and tastemakers.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Artist Development</strong>
+                <span>Long-form positioning, brand building, and audience growth strategy.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="service-card">
+        <div class="service-card service-card--expandable" id="creativeCard" onclick="toggleCard('creativeCard')">
           <span class="service-num">03</span>
-          <h3>Creative Production</h3>
-          <p>Video, static, and motion creative with professional videographers and AI generation. We test and iterate at a pace traditional production houses can't match — without the overhead.</p>
+          <div class="service-card-header">
+            <h3>Creative Production</h3>
+            <span class="service-expand-icon">+</span>
+          </div>
+          <p>Video, static, and motion creative with professional videographers. We test and iterate at a pace traditional production houses can't match — without the overhead.</p>
+          <div class="service-detail">
+            <div class="service-detail-list">
+              <div class="service-detail-item">
+                <strong>Video Production</strong>
+                <span>Short-form content, campaign hero videos, and event documentation with professional crew.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Static Ads</strong>
+                <span>Scroll-stopping single-image ads built for each platform's format and audience.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Motion &amp; Animation</strong>
+                <span>Animated assets, logo reveals, and branded motion content.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Creative Testing</strong>
+                <span>Volume production and systematic testing to find what performs before scaling spend.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>UGC Direction</strong>
+                <span>Brief writing and talent direction for user-generated style content.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="service-card">
+        <div class="service-card service-card--expandable" id="webCard" onclick="toggleCard('webCard')">
           <span class="service-num">04</span>
-          <h3>Web &amp; Digital Infrastructure</h3>
+          <div class="service-card-header">
+            <h3>Web &amp; Digital Infrastructure</h3>
+            <span class="service-expand-icon">+</span>
+          </div>
           <p>Brand websites, client portals, onboarding systems, and booking flows. Built fast, designed properly. Everything a growing business needs to look and operate like it means it.</p>
+          <div class="service-detail">
+            <div class="service-detail-list">
+              <div class="service-detail-item">
+                <strong>Brand Website</strong>
+                <span>Fast, design-forward websites that convert and look the part.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Client Portal</strong>
+                <span>Custom-built portals for reporting, onboarding, and client communication.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Booking Flow</strong>
+                <span>End-to-end booking and scheduling systems for service businesses.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Onboarding Systems</strong>
+                <span>Automated intake, contracts, and client communication flows.</span>
+              </div>
+              <div class="service-detail-item">
+                <strong>Analytics Setup</strong>
+                <span>Tracking, attribution, and reporting infrastructure from day one.</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1088,6 +1251,10 @@
   });
 
   renderWork();
+
+  function toggleCard(id) {
+    document.getElementById(id).classList.toggle('service-card--open');
+  }
   </script>
 </body>
 </html>
