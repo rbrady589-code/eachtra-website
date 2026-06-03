@@ -1005,12 +1005,13 @@
   // result: one-line result stat shown on the card (optional)
   const WORK = [
     {
-      name:   "Project Arête",
-      meta:   "Brand Strategy · Campaign",
-      image:  "images/painting-1.jpg",
+      name:   "sÜave — Artist EPK & Pre-Release",
+      meta:   "Web · Music · Blueprint Campaign",
+      image:  "images/painting-4.jpg",
       tall:   true,
-      tag:    "Uncharted",
-      result: "",
+      tag:    "",
+      result: "340 Blueprint signups · Live at suaves-epk.netlify.app",
+      link:   "https://suaves-epk.netlify.app",
     },
     {
       name:   "Project Cuan",
@@ -1040,8 +1041,8 @@
     const makeCard = (item, extraStyle = '') => {
       const tag    = item.tag    ? `<div class="uncharted-tag">${item.tag}</div>` : '';
       const result = item.result ? `<div class="work-result">${item.result}</div>` : '';
-      return `
-        <div class="work-item ${item.tall ? 'tall' : ''} reveal" ${extraStyle ? `style="${extraStyle}"` : ''}>
+      const wrap   = item.link  ? `href="${item.link}" target="_blank" rel="noopener"` : '';
+      const inner  = `
           <div class="work-item-visual" ${!item.tall ? 'style="aspect-ratio:4/3"' : ''}>
             <img src="${item.image}" alt="${item.name}" loading="lazy">
             ${tag}
@@ -1050,8 +1051,10 @@
             <span class="work-item-name">${item.name}</span>
             <span class="work-item-meta">${item.meta}</span>
             ${result}
-          </div>
-        </div>`;
+          </div>`;
+      return item.link
+        ? `<a class="work-item ${item.tall ? 'tall' : ''} reveal" ${wrap} style="text-decoration:none;display:block${extraStyle ? ';' + extraStyle : ''}">${inner}</a>`
+        : `<div class="work-item ${item.tall ? 'tall' : ''} reveal" ${extraStyle ? `style="${extraStyle}"` : ''}>${inner}</div>`;
     };
 
     let html = makeCard(first);

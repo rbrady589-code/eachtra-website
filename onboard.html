@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eachtra — Client Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #EAE4D5; --ink: #16120D; --ink-2: #3A332A;
+  --muted: #7A7165; --muted-2: #A89F93; --border: rgba(22,18,13,0.12);
+  --crimson: #8B1A12;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: var(--font-sans); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+/* ── Progress bar ── */
+.progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--border); z-index: 100; }
+.progress-fill { height: 100%; background: var(--ink); transition: width 400ms ease; }
+
+/* ── Logo ── */
+.logo { position: fixed; top: 28px; left: 40px; font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--ink); opacity: 0.5; letter-spacing: -0.01em; z-index: 100; text-decoration: none; }
+
+/* ── Step ── */
+.step { display: none; min-height: 100vh; padding: 120px 48px 80px; max-width: 680px; margin: 0 auto; flex-direction: column; justify-content: center; }
+.step.active { display: flex; }
+.step-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 20px; }
+.step h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; font-style: italic; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; }
+.step .sub { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 48px; }
+
+/* ── Type selector ── */
+.type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.type-card { padding: 28px 24px; border: 1.5px solid var(--border); cursor: pointer; transition: all 180ms; background: transparent; text-align: left; }
+.type-card:hover { border-color: var(--ink); }
+.type-card.selected { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+.type-card .type-num { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--crimson); display: block; margin-bottom: 10px; }
+.type-card.selected .type-num { color: rgba(234,228,213,0.5); }
+.type-card h3 { font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; font-weight: 300; margin-bottom: 6px; }
+.type-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.type-card.selected p { color: rgba(234,228,213,0.55); }
+
+/* ── Fields ── */
+.fields { display: flex; flex-direction: column; gap: 32px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.field input, .field textarea, .field select {
+  background: transparent; border: none; border-bottom: 1.5px solid var(--border);
+  padding: 10px 0; font-size: 17px; font-family: var(--font-sans); color: var(--ink);
+  outline: none; width: 100%; resize: none; transition: border-color 180ms; appearance: none;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
+.field input:focus, .field textarea:focus, .field select:focus { border-bottom-color: var(--ink); }
+.field select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237A7165' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.field .hint { font-size: 11px; color: var(--muted-2); margin-top: 4px; line-height: 1.4; }
+
+/* ── Checkbox group ── */
+.check-group { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.check-option { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 14px 18px; border: 1.5px solid var(--border); transition: all 180ms; }
+.check-option:hover { border-color: rgba(22,18,13,0.3); }
+.check-option input { width: 16px; height: 16px; accent-color: var(--ink); cursor: pointer; flex-shrink: 0; }
+.check-option span { font-size: 14px; color: var(--ink-2); }
+
+/* ── Navigation ── */
+.nav { display: flex; align-items: center; justify-content: space-between; margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+.btn-back { background: none; border: none; font-family: var(--font-sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); cursor: pointer; padding: 0; transition: color 180ms; }
+.btn-back:hover { color: var(--ink); }
+.btn-next { background: var(--ink); color: var(--cream); border: none; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; padding: 14px 36px; cursor: pointer; transition: opacity 180ms; }
+.btn-next:hover { opacity: 0.8; }
+.btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+.step-count { font-size: 11px; color: var(--muted-2); letter-spacing: 0.06em; }
+
+/* ── Success ── */
+#success { display: none; min-height: 100vh; padding: 120px 48px; max-width: 680px; margin: 0 auto; flex-direction: column; justify-content: center; }
+#success h1 { font-family: var(--font-serif); font-size: clamp(2.4rem,5vw,4rem); font-weight: 300; font-style: italic; line-height: 1.1; margin-bottom: 24px; }
+#success p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 12px; }
+.ref-box { display: inline-block; background: var(--ink); color: var(--cream); font-family: monospace; font-size: 13px; padding: 10px 18px; margin: 12px 0 24px; letter-spacing: 0.06em; }
+
+@media (max-width: 600px) {
+  .step, #success { padding: 100px 24px 60px; }
+  .type-grid { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+  .logo { left: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+<a class="logo" href="/">Eachtra</a>
+
+<!-- TYPE SELECTOR -->
+<div class="step active" id="step-type">
+  <div class="step-eyebrow">Let's begin</div>
+  <h1>What best describes your work?</h1>
+  <p class="sub">We'll personalise everything to your world.</p>
+  <div class="type-grid">
+    <button class="type-card" onclick="selectType('service')">
+      <span class="type-num">01</span>
+      <h3>Service Business</h3>
+      <p>Healers, coaches, therapists, consultants — anyone who books clients for sessions or appointments.</p>
+    </button>
+    <button class="type-card" onclick="selectType('artist')">
+      <span class="type-num">02</span>
+      <h3>Artist or Musician</h3>
+      <p>Producers, DJs, bands, labels — anyone building a music career or releasing work.</p>
+    </button>
+    <button class="type-card" onclick="selectType('events')">
+      <span class="type-num">03</span>
+      <h3>Event Promoter</h3>
+      <p>Collectives, promoters, venues — anyone putting on events and selling tickets.</p>
+    </button>
+    <button class="type-card" onclick="selectType('ecom')">
+      <span class="type-num">04</span>
+      <h3>E-commerce Brand</h3>
+      <p>Product brands selling online — anyone who wants more customers buying from their store.</p>
+    </button>
+  </div>
+  <div class="nav">
+    <span></span>
+    <button class="btn-next" id="btn-type-next" disabled onclick="startFlow()">Continue →</button>
+  </div>
+</div>
+
+<!-- DYNAMIC STEPS -->
+<div id="stepsContainer"></div>
+
+<!-- SUCCESS -->
+<div id="success">
+  <div class="step-eyebrow">You're in.</div>
+  <h1>We've got everything we need.</h1>
+  <p>Your client reference — include this when sending creative assets:</p>
+  <div class="ref-box" id="successRef">EACHTRA-REF-PENDING</div>
+  <p>We'll review your submission and be in touch within 24 hours with next steps and a proposed plan of action.</p>
+  <p style="margin-top:20px;font-size:13px;">Questions? <a href="mailto:rbrady589@gmail.com" style="color:var(--ink);font-weight:600">rbrady589@gmail.com</a></p>
+</div>
+
+<script>
+const ADENGINE = 'http://localhost:5050';
+
+// ── Flow definitions ─────────────────────────────────────────────────────────
+const FLOWS = {
+  service: {
+    label: 'Service Business',
+    steps: [
+      {
+        id: 'about', eyebrow: 'Step 1 — About you',
+        heading: 'Tell us about yourself.',
+        sub: 'The basics first.',
+        fields: [
+          { id: 'contact_name',   label: 'Your name',          type: 'text',   placeholder: 'First and last name', required: true },
+          { id: 'contact_email',  label: 'Email address',      type: 'email',  placeholder: 'you@yourpractice.com', required: true },
+          { id: 'company_name',   label: 'Business / practice name', type: 'text', placeholder: 'What do you call your practice?', required: true },
+          { id: 'service_type',   label: 'Type of service',    type: 'select', options: ['Somatic healing','Life coaching','Therapy / counselling','Nutritional therapy','Yoga / movement','Business consulting','Other'] },
+        ],
+      },
+      {
+        id: 'service', eyebrow: 'Step 2 — Your work',
+        heading: 'Describe what you offer.',
+        sub: 'Help us understand exactly what you do and how you do it.',
+        fields: [
+          { id: 'product_service_name', label: 'What is your core offering?', type: 'text', placeholder: 'e.g. 1:1 somatic healing sessions, 8-week coaching programme…' },
+          { id: 'session_price',        label: 'Session / package price (€)', type: 'number', placeholder: '150' },
+          { id: 'session_duration',     label: 'Session length', type: 'text', placeholder: 'e.g. 60 minutes, 90 minutes' },
+          { id: 'monthly_capacity',     label: 'How many new clients can you take per month?', type: 'number', placeholder: '8' },
+        ],
+      },
+      {
+        id: 'clients', eyebrow: 'Step 3 — Who you serve',
+        heading: 'Who is your ideal client?',
+        sub: 'Be as specific as you like. The more honest, the better we target.',
+        fields: [
+          { id: 'ideal_customer', label: 'Describe your ideal client', type: 'textarea', placeholder: 'Age, situation, what they are struggling with, what they are searching for…' },
+          { id: 'differentiation', label: 'What do clients say makes you different?', type: 'textarea', placeholder: 'Your edge — approach, results, story, environment…' },
+          { id: 'current_leads', label: 'Where do clients currently find you?', type: 'text', placeholder: 'e.g. word of mouth, Instagram, local directory…' },
+        ],
+      },
+      {
+        id: 'platforms', eyebrow: 'Step 4 — Your presence',
+        heading: 'Where are you already showing up?',
+        sub: '',
+        fields: [
+          { id: 'instagram_handle', label: 'Instagram', type: 'text', placeholder: '@yourhandle' },
+          { id: 'tiktok_handle',    label: 'TikTok',    type: 'text', placeholder: '@yourhandle' },
+          { id: 'website_url',      label: 'Website (if you have one)', type: 'url', placeholder: 'https://' },
+        ],
+      },
+      {
+        id: 'goals', eyebrow: 'Step 5 — Goals',
+        heading: 'What does success look like?',
+        sub: 'Give us a number to aim at.',
+        fields: [
+          { id: 'booking_target',   label: 'Target: new bookings per month', type: 'number', placeholder: '10' },
+          { id: 'monthly_budget',   label: 'Monthly marketing budget (€)', type: 'number', placeholder: '500' },
+          { id: 'notes',            label: 'Anything else we should know?', type: 'textarea', placeholder: 'Timeline, sensitivities, non-negotiables…' },
+        ],
+      },
+    ],
+  },
+
+  artist: {
+    label: 'Artist / Musician',
+    steps: [
+      {
+        id: 'about', eyebrow: 'Step 1 — About you',
+        heading: 'Tell us who you are.',
+        sub: '',
+        fields: [
+          { id: 'contact_name',  label: 'Your name',       type: 'text',  placeholder: 'Full name', required: true },
+          { id: 'contact_email', label: 'Email address',   type: 'email', placeholder: 'you@email.com', required: true },
+          { id: 'company_name',  label: 'Artist / project name', type: 'text', placeholder: 'Stage name or project', required: true },
+          { id: 'genre',         label: 'Genre / style',   type: 'text',  placeholder: 'e.g. techno, jazz, hip-hop, ambient…' },
+        ],
+      },
+      {
+        id: 'music', eyebrow: 'Step 2 — Your music',
+        heading: 'Where does your music live?',
+        sub: '',
+        fields: [
+          { id: 'spotify_url',    label: 'Spotify artist profile URL', type: 'url',  placeholder: 'https://open.spotify.com/artist/…' },
+          { id: 'soundcloud_url', label: 'SoundCloud URL (optional)',  type: 'url',  placeholder: 'https://soundcloud.com/…' },
+          { id: 'ra_url',         label: 'Resident Advisor URL (optional)', type: 'url', placeholder: 'https://ra.co/dj/…' },
+          { id: 'label_status',   label: 'Label or independent?', type: 'select', options: ['Independent', 'Signed to a label', 'Own label'] },
+        ],
+      },
+      {
+        id: 'release', eyebrow: 'Step 3 — Upcoming work',
+        heading: 'What are we promoting?',
+        sub: 'Tell us about your next release or campaign.',
+        fields: [
+          { id: 'release_title',  label: 'Release title',  type: 'text',   placeholder: 'Name of EP, album, single, or mix' },
+          { id: 'release_type',   label: 'Type',           type: 'select', options: ['Single', 'EP', 'Album', 'Mix / DJ set', 'Event', 'Other'] },
+          { id: 'release_date',   label: 'Release date',   type: 'text',   placeholder: 'e.g. July 2026 or exact date' },
+          { id: 'product_service_name', label: 'Key track or centrepiece', type: 'text', placeholder: 'The one that says everything' },
+        ],
+      },
+      {
+        id: 'platforms', eyebrow: 'Step 4 — Your presence',
+        heading: 'Where are your people?',
+        sub: '',
+        fields: [
+          { id: 'instagram_handle', label: 'Instagram',       type: 'text', placeholder: '@yourhandle' },
+          { id: 'tiktok_handle',    label: 'TikTok',          type: 'text', placeholder: '@yourhandle' },
+          { id: 'youtube_url',      label: 'YouTube channel', type: 'url',  placeholder: 'https://youtube.com/@…' },
+          { id: 'monthly_listeners', label: 'Approx. monthly listeners / monthly plays', type: 'text', placeholder: 'e.g. 4,200 Spotify listeners' },
+        ],
+      },
+      {
+        id: 'goals', eyebrow: 'Step 5 — Goals',
+        heading: 'What are we aiming for?',
+        sub: '',
+        fields: [
+          { id: 'ideal_customer',  label: 'What does your target audience look like?', type: 'textarea', placeholder: 'Who listens, where they go, what they care about…' },
+          { id: 'campaign_goals',  label: 'Primary goal for this campaign', type: 'select', options: ['More streams / listeners', 'Live / touring bookings', 'Playlist placements', 'Press & editorial coverage', 'Social media growth', 'Release campaign awareness'] },
+          { id: 'monthly_budget',  label: 'Monthly marketing budget (€)', type: 'number', placeholder: '300' },
+          { id: 'notes',           label: 'Anything else?', type: 'textarea', placeholder: '' },
+        ],
+      },
+    ],
+  },
+
+  events: {
+    label: 'Event Promoter',
+    steps: [
+      {
+        id: 'about', eyebrow: 'Step 1 — About you',
+        heading: 'Tell us about your operation.',
+        sub: '',
+        fields: [
+          { id: 'contact_name',  label: 'Your name',            type: 'text',  placeholder: 'First and last name', required: true },
+          { id: 'contact_email', label: 'Email address',        type: 'email', placeholder: 'you@email.com', required: true },
+          { id: 'company_name',  label: 'Collective / brand name', type: 'text', placeholder: 'What do you run under?', required: true },
+          { id: 'event_city',    label: 'Base city',            type: 'text',  placeholder: 'e.g. Berlin, Dublin, London' },
+        ],
+      },
+      {
+        id: 'events_info', eyebrow: 'Step 2 — Your events',
+        heading: 'What kind of events do you run?',
+        sub: '',
+        fields: [
+          { id: 'event_genre',    label: 'Music / event type',  type: 'text',   placeholder: 'e.g. techno, house, jazz, multigenre…' },
+          { id: 'typical_capacity', label: 'Typical capacity',  type: 'select', options: ['Under 100', '100–300', '300–600', '600–1,000', '1,000+'] },
+          { id: 'ticket_platform', label: 'Ticket platform',    type: 'select', options: ['Resident Advisor', 'Dice', 'Eventbrite', 'Skiddle', 'Own website', 'Multiple'] },
+          { id: 'events_per_year', label: 'Events per year (approx.)', type: 'number', placeholder: '12' },
+        ],
+      },
+      {
+        id: 'next_event', eyebrow: 'Step 3 — Next event',
+        heading: 'Tell us about your next event.',
+        sub: 'This is what we\'ll build the first campaign around.',
+        fields: [
+          { id: 'product_service_name', label: 'Event name', type: 'text', placeholder: 'What is it called?' },
+          { id: 'event_date',           label: 'Date',       type: 'text', placeholder: 'e.g. 12 July 2026' },
+          { id: 'venue',                label: 'Venue',      type: 'text', placeholder: 'Name and city' },
+          { id: 'lineup_summary',       label: 'Lineup (headline / key names)', type: 'text', placeholder: 'Artists on the bill' },
+          { id: 'ticket_price',         label: 'Ticket price (€)', type: 'number', placeholder: '15' },
+        ],
+      },
+      {
+        id: 'marketing', eyebrow: 'Step 4 — Current marketing',
+        heading: 'How do you market right now?',
+        sub: '',
+        fields: [
+          { id: 'instagram_handle', label: 'Instagram',  type: 'text', placeholder: '@yourcollective' },
+          { id: 'tiktok_handle',    label: 'TikTok',     type: 'text', placeholder: '@handle' },
+          { id: 'ra_url',           label: 'RA profile or promoter page', type: 'url', placeholder: 'https://ra.co/promoter/…' },
+          { id: 'current_leads',    label: 'What is working right now?', type: 'textarea', placeholder: 'Instagram posts, RA listing, word of mouth…' },
+          { id: 'differentiation',  label: 'What is not working?', type: 'textarea', placeholder: 'Where do you feel stuck or like you are leaving tickets on the table?' },
+        ],
+      },
+      {
+        id: 'goals', eyebrow: 'Step 5 — Goals',
+        heading: 'What are we aiming for?',
+        sub: '',
+        fields: [
+          { id: 'ideal_customer', label: 'Who is the ideal attendee for this event?', type: 'textarea', placeholder: 'Age, city, what else they go to, what they care about…' },
+          { id: 'sellthrough_target', label: 'Sell-through target for next event (%)', type: 'number', placeholder: '85' },
+          { id: 'monthly_budget',     label: 'Marketing budget for this event (€)', type: 'number', placeholder: '400' },
+          { id: 'notes',              label: 'Anything else?', type: 'textarea', placeholder: '' },
+        ],
+      },
+    ],
+  },
+
+  ecom: {
+    label: 'E-commerce Brand',
+    steps: [
+      {
+        id: 'about', eyebrow: 'Step 1 — About you',
+        heading: 'Tell us about your brand.',
+        sub: '',
+        fields: [
+          { id: 'contact_name',  label: 'Your name',      type: 'text',  placeholder: 'Full name', required: true },
+          { id: 'contact_email', label: 'Email address',  type: 'email', placeholder: 'you@brand.com', required: true },
+          { id: 'company_name',  label: 'Brand name',     type: 'text',  placeholder: 'What is your brand called?', required: true },
+          { id: 'product_category', label: 'What do you sell?', type: 'text', placeholder: 'e.g. skincare, coffee, streetwear, supplements…' },
+        ],
+      },
+      {
+        id: 'store', eyebrow: 'Step 2 — Your store',
+        heading: 'The numbers that matter.',
+        sub: 'Be honest — we are on your side.',
+        fields: [
+          { id: 'website_url',        label: 'Store URL', type: 'url', placeholder: 'https://yourstore.com', required: true },
+          { id: 'ecom_platform',      label: 'Platform',  type: 'select', options: ['Shopify', 'WooCommerce', 'Squarespace', 'Wix', 'Custom / other'] },
+          { id: 'monthly_revenue',    label: 'Monthly revenue (approx.)', type: 'select', options: ['Under €5k', '€5k–€20k', '€20k–€50k', '€50k–€100k', '€100k+'] },
+          { id: 'avg_order_value',    label: 'Average order value (€)', type: 'number', placeholder: '65' },
+        ],
+      },
+      {
+        id: 'products', eyebrow: 'Step 3 — Your products',
+        heading: 'What are we selling?',
+        sub: '',
+        fields: [
+          { id: 'product_service_name', label: 'Top selling product(s)', type: 'text', placeholder: 'Name them — the ones that convert best' },
+          { id: 'differentiation',      label: 'What makes you different?', type: 'textarea', placeholder: 'Ingredient, story, price, design, values — what is the real edge?' },
+          { id: 'ideal_customer',       label: 'Who is your best customer?', type: 'textarea', placeholder: 'Age, lifestyle, what they buy, why they come back…' },
+        ],
+      },
+      {
+        id: 'ads', eyebrow: 'Step 4 — Advertising history',
+        heading: 'Have you run paid ads before?',
+        sub: '',
+        fields: [
+          { id: 'running_ads',      label: 'Currently running ads?', type: 'select', options: ['Yes', 'No — starting fresh'] },
+          { id: 'current_ad_spend', label: 'Current monthly ad spend (€)', type: 'number', placeholder: 'Leave blank if not running' },
+          { id: 'current_roas',     label: 'Current ROAS (if known)', type: 'text', placeholder: 'e.g. 2.4x — leave blank if unknown' },
+          { id: 'pixel_installed',  label: 'Meta Pixel installed on site?', type: 'select', options: ['Yes', 'No', 'Not sure'] },
+          { id: 'ad_platforms',     label: 'Which platforms have you advertised on?', type: 'text', placeholder: 'e.g. Meta, TikTok, Google, Pinterest…' },
+        ],
+      },
+      {
+        id: 'platforms', eyebrow: 'Step 5 — Your channels',
+        heading: 'Where does your brand show up?',
+        sub: '',
+        fields: [
+          { id: 'instagram_handle', label: 'Instagram', type: 'text', placeholder: '@yourbrand' },
+          { id: 'tiktok_handle',    label: 'TikTok',    type: 'text', placeholder: '@yourbrand' },
+          { id: 'email_list_size',  label: 'Email list size (approx.)', type: 'text', placeholder: 'e.g. 2,400 subscribers' },
+        ],
+      },
+      {
+        id: 'goals', eyebrow: 'Step 6 — Goals',
+        heading: 'What does winning look like?',
+        sub: '',
+        fields: [
+          { id: 'target_roas',    label: 'Target ROAS', type: 'text', placeholder: 'e.g. 3x, 4x' },
+          { id: 'monthly_budget', label: 'Monthly ad budget (€)', type: 'number', placeholder: '1500' },
+          { id: 'notes',          label: 'Anything else we should know?', type: 'textarea', placeholder: 'Seasonality, product launches, sensitivities…' },
+        ],
+      },
+    ],
+  },
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let selectedType = null;
+let currentStep  = 0;
+let flow         = null;
+let formData     = {};
+
+// ── Type selection ────────────────────────────────────────────────────────────
+function selectType(type) {
+  selectedType = type;
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  document.getElementById('btn-type-next').disabled = false;
+}
+
+function startFlow() {
+  if (!selectedType) return;
+  flow = FLOWS[selectedType];
+  buildSteps();
+  document.getElementById('step-type').classList.remove('active');
+  goToStep(0);
+}
+
+// ── Build step DOM ────────────────────────────────────────────────────────────
+function buildSteps() {
+  const container = document.getElementById('stepsContainer');
+  container.innerHTML = '';
+  flow.steps.forEach((step, i) => {
+    const div = document.createElement('div');
+    div.className = 'step';
+    div.id = `flow-step-${i}`;
+    div.innerHTML = buildStepHTML(step, i);
+    container.appendChild(div);
+  });
+}
+
+function buildStepHTML(step, i) {
+  const isLast = i === flow.steps.length - 1;
+  let fieldsHTML = '';
+  step.fields.forEach(f => {
+    fieldsHTML += buildField(f);
+  });
+
+  return `
+    <div class="step-eyebrow">${step.eyebrow}</div>
+    <h1>${step.heading}</h1>
+    ${step.sub ? `<p class="sub">${step.sub}</p>` : ''}
+    <div class="fields">${fieldsHTML}</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <span class="step-count">${i + 1} of ${flow.steps.length}</span>
+      <button class="btn-next" onclick="${isLast ? 'submitForm()' : 'goNext()'}">${isLast ? 'Submit →' : 'Continue →'}</button>
+    </div>`;
+}
+
+function buildField(f) {
+  if (f.type === 'select') {
+    const opts = f.options.map(o => `<option value="${o}">${o}</option>`).join('');
+    return `<div class="field">
+      <label>${f.label}</label>
+      <select id="f_${f.id}" data-key="${f.id}" onchange="saveField('${f.id}', this.value)">
+        <option value="">Select…</option>${opts}
+      </select>
+      ${f.hint ? `<div class="hint">${f.hint}</div>` : ''}
+    </div>`;
+  }
+  if (f.type === 'textarea') {
+    return `<div class="field">
+      <label>${f.label}</label>
+      <textarea id="f_${f.id}" rows="3" placeholder="${f.placeholder || ''}" data-key="${f.id}" oninput="saveField('${f.id}', this.value)"></textarea>
+    </div>`;
+  }
+  return `<div class="field">
+    <label>${f.label}${f.required ? ' *' : ''}</label>
+    <input type="${f.type}" id="f_${f.id}" placeholder="${f.placeholder || ''}" data-key="${f.id}" oninput="saveField('${f.id}', this.value)" ${f.required ? 'required' : ''}>
+    ${f.hint ? `<div class="hint">${f.hint}</div>` : ''}
+  </div>`;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function goToStep(i) {
+  document.querySelectorAll('#stepsContainer .step').forEach(s => s.classList.remove('active'));
+  const stepEl = document.getElementById(`flow-step-${i}`);
+  if (stepEl) {
+    stepEl.classList.add('active');
+    currentStep = i;
+    updateProgress();
+    window.scrollTo(0, 0);
+    // Restore saved values
+    const step = flow.steps[i];
+    step.fields.forEach(f => {
+      const el = document.getElementById(`f_${f.id}`);
+      if (el && formData[f.id] !== undefined) el.value = formData[f.id];
+    });
+  }
+}
+
+function goNext() {
+  // Validate required fields
+  const step = flow.steps[currentStep];
+  for (const f of step.fields) {
+    if (f.required && !formData[f.id]) {
+      document.getElementById(`f_${f.id}`)?.focus();
+      return;
+    }
+  }
+  goToStep(currentStep + 1);
+}
+
+function goBack() {
+  if (currentStep === 0) {
+    document.querySelectorAll('#stepsContainer .step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-type').classList.add('active');
+    updateProgress(0);
+  } else {
+    goToStep(currentStep - 1);
+  }
+}
+
+function saveField(key, value) {
+  formData[key] = value;
+}
+
+function updateProgress(override) {
+  const total   = flow ? flow.steps.length + 1 : 1;
+  const current = override !== undefined ? override : currentStep + 2;
+  const pct     = Math.round((current / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+async function submitForm() {
+  const step = flow.steps[currentStep];
+  step.fields.forEach(f => {
+    const el = document.getElementById(`f_${f.id}`);
+    if (el) formData[f.id] = el.value;
+  });
+
+  // Build payload — split common fields from type-specific
+  const commonKeys = ['contact_name','contact_email','company_name','website_url','instagram_handle','tiktok_handle','monthly_budget','avg_order_value','notes','ideal_customer','differentiation','product_service_name'];
+  const payload = { client_type: selectedType, type_data: {} };
+
+  Object.entries(formData).forEach(([k, v]) => {
+    if (commonKeys.includes(k)) payload[k] = v || null;
+    else if (v) payload.type_data[k] = v;
+  });
+
+  if (!payload.contact_email) { alert('Please enter your email address.'); return; }
+
+  document.querySelector(`#flow-step-${currentStep} .btn-next`).disabled = true;
+  document.querySelector(`#flow-step-${currentStep} .btn-next`).textContent = 'Sending…';
+
+  try {
+    const res = await fetch(`${ADENGINE}/api/onboarding/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Submission failed');
+
+    document.querySelectorAll('#stepsContainer .step').forEach(s => s.classList.remove('active'));
+    document.getElementById('progressFill').style.width = '100%';
+    const success = document.getElementById('success');
+    success.style.display = 'flex';
+    document.getElementById('successRef').textContent = result.folder_ref || 'EACHTRA-REF-PENDING';
+
+  } catch(err) {
+    document.querySelector(`#flow-step-${currentStep} .btn-next`).disabled = false;
+    document.querySelector(`#flow-step-${currentStep} .btn-next`).textContent = 'Submit →';
+    alert('Something went wrong. Please email rbrady589@gmail.com directly.');
+  }
+}
+
+// ── Init: check URL param ─────────────────────────────────────────────────────
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  const t = params.get('type');
+  if (t && FLOWS[t]) {
+    // Auto-select type and jump straight to step 1
+    const card = [...document.querySelectorAll('.type-card')].find(c => c.getAttribute('onclick')?.includes(`'${t}'`));
+    if (card) { card.classList.add('selected'); }
+    selectedType = t;
+    flow = FLOWS[t];
+    buildSteps();
+    document.getElementById('step-type').classList.remove('active');
+    document.getElementById('progressFill').style.width = '0%';
+    goToStep(0);
+  }
+})();
+</script>
+</body>
+</html>
