@@ -312,13 +312,28 @@
 
     /* ─── METRICS ────────────────────────────────────── */
     #metrics {
-      padding: 64px 48px;
+      padding: 80px 48px;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
     .metrics-inner {
       max-width: 1080px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .intro-copy { display: flex; flex-direction: column; gap: 28px; }
+    .intro-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    .verticals {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 48px;
@@ -798,8 +813,9 @@
       /* Services grid → single col */
       .services-grid { grid-template-columns: 1fr; }
 
-      /* Metrics strip → 2 col */
-      .metrics-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      /* Intro + verticals */
+      .verticals { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      #metrics { padding: 60px 20px; }
 
       /* OS section → single col */
       .os-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -837,29 +853,29 @@
   <section id="hero">
     <video id="terrain" src="images/painting-arete-animated.mp4" autoplay loop muted playsinline></video>
     <div id="terrain-grain"></div>
-
-    <div class="hero-copy">
-      <p>We build marketing systems<br>for creative businesses.</p>
-      <a class="hero-cta" href="#contact">Let's build something permanent</a>
-    </div>
-
     <div class="hero-wordmark">Eachtra</div>
   </section>
 
-  <!-- VERTICALS -->
+  <!-- INTRO + VERTICALS -->
   <section id="metrics">
     <div class="metrics-inner">
-      <div class="metric">
-        <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Music</span>
-        <span class="metric-label">Artists · Labels · Radio</span>
+      <div class="intro-copy reveal">
+        <p class="intro-headline">We build marketing systems<br>for creative businesses.</p>
+        <a class="hero-cta" href="#contact">Let's build something permanent</a>
       </div>
-      <div class="metric">
-        <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Events</span>
-        <span class="metric-label">Promoters · Venues · Festivals</span>
-      </div>
-      <div class="metric">
-        <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Commerce</span>
-        <span class="metric-label">Ecommerce · Service · Brand</span>
+      <div class="verticals">
+        <div class="metric">
+          <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Music</span>
+          <span class="metric-label">Artists · Labels · Radio</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Events</span>
+          <span class="metric-label">Promoters · Venues · Festivals</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value" style="font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic">Commerce</span>
+          <span class="metric-label">Ecommerce · Service · Brand</span>
+        </div>
       </div>
     </div>
   </section>
