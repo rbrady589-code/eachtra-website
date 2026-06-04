@@ -54,18 +54,23 @@
     /* ─── NAV LOGO ───────────────────────────────── */
     .nav-logo {
       position: fixed;
-      top: 26px;
+      top: 22px;
       left: 40px;
       z-index: 100;
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 18px;
-      color: rgba(234,228,213,0.8);
-      letter-spacing: -0.01em;
+      display: block;
       text-decoration: none;
-      transition: color 300ms, opacity 300ms;
+      transition: opacity 300ms;
+      opacity: 0.85;
     }
-    .nav-logo.scrolled { color: var(--ink); opacity: 0.55; }
+    .nav-logo img {
+      width: 110px;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+      transition: filter 300ms;
+    }
+    .nav-logo.scrolled { opacity: 0.7; }
+    .nav-logo.scrolled img { filter: brightness(0); }
     .nav-logo.scrolled:hover { opacity: 1; }
 
     /* ─── NAV ─────────────────────────────────────── */
@@ -861,6 +866,7 @@
     @media (max-width: 900px) {
       nav { right: 24px; gap: 20px; }
       .nav-logo { left: 24px; }
+      .nav-logo img { width: 90px; }
       #about, #values, #contact, #work { padding: 80px 24px; }
       .about-grid, .values-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
       .work-grid { grid-template-columns: 1fr; }
@@ -874,7 +880,8 @@
     /* ─── RESPONSIVE — mobile ─────────────────────── */
     @media (max-width: 680px) {
       nav { top: 16px; right: 16px; left: 16px; gap: 12px; justify-content: center; }
-      .nav-logo { left: 16px; top: 16px; font-size: 16px; }
+      .nav-logo { left: 16px; top: 16px; }
+      .nav-logo img { width: 80px; }
       nav a { color: var(--cream); opacity: 0.85; }
 
       #hero { height: 100svh; min-height: 580px; overflow: hidden; }
@@ -910,7 +917,7 @@
 <body>
 
   <!-- NAV -->
-  <a class="nav-logo" id="navLogo" href="/">Eachtra</a>
+  <a class="nav-logo" id="navLogo" href="/"><img src="images/eachtra-wordmark.png" alt="Eachtra"></a>
   <nav id="mainNav">
     <a href="#work">Work</a>
     <a href="#services">Services</a>
