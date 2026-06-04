@@ -566,6 +566,20 @@ async function submitForm() {
     const row = Array.isArray(result) ? result[0] : result;
     const shortRef = 'EACHTRA-' + row.id.slice(0, 8).toUpperCase();
 
+    // Fire-and-forget: Stripe invoice + email notification (non-blocking)
+    fetch(`${SUPABASE_URL}/functions/v1/onboarding-notify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
+      body: JSON.stringify({
+        row_id: row.id,
+        contact_name: payload.contact_name,
+        contact_email: payload.contact_email,
+        company_name: payload.company_name,
+        client_type: selectedType,
+        ref: shortRef,
+      }),
+    }).catch(console.error);
+
     document.querySelectorAll('#stepsContainer .step').forEach(s => s.classList.remove('active'));
     document.getElementById('progressFill').style.width = '100%';
     const success = document.getElementById('success');
