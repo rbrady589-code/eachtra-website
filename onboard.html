@@ -34,6 +34,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--font-sans
 
 /* ── Type selector ── */
 .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.type-grid .type-card:last-child:nth-child(odd) { grid-column: 1; }
 .type-card { padding: 28px 24px; border: 1.5px solid var(--border); cursor: pointer; transition: all 180ms; background: transparent; text-align: left; }
 .type-card:hover { border-color: var(--ink); }
 .type-card.selected { border-color: var(--ink); background: var(--ink); color: var(--cream); }
@@ -118,6 +119,11 @@ body { background: var(--cream); color: var(--ink); font-family: var(--font-sans
       <span class="type-num">04</span>
       <h3>E-commerce Brand</h3>
       <p>Product brands selling online — anyone who wants more customers buying from their store.</p>
+    </button>
+    <button class="type-card" onclick="selectType('web')">
+      <span class="type-num">05</span>
+      <h3>Web Build</h3>
+      <p>Anyone who needs a website — brochure site, full marketing build, e-commerce, platform, or immersive 3D experience.</p>
     </button>
   </div>
   <div class="nav">
@@ -454,6 +460,84 @@ const FLOWS = {
           { id: 'ga_email',         label: 'Google Analytics / GA4 access email',                      type: 'email', placeholder: 'The email to grant Editor access on your GA4 property' },
           { id: 'store_access_email', label: 'Shopify / store platform access email',                  type: 'email', placeholder: 'The email to invite as a collaborator on your store', hint: 'Staff access only — we use this to verify pixel setup and product catalogue.' },
           { id: 'comms_email',      label: 'Best email for ongoing communication',                      type: 'email', placeholder: 'Where reports, creative previews, and questions should land' },
+        ],
+      },
+    ],
+  },
+  web: {
+    label: 'Web Build',
+    steps: [
+      {
+        id: 'about', eyebrow: 'Step 1 — About you',
+        heading: 'Tell us about the project.',
+        sub: '',
+        fields: [
+          { id: 'contact_name',  label: 'Your name',          type: 'text',  placeholder: 'Full name', required: true },
+          { id: 'contact_email', label: 'Email address',      type: 'email', placeholder: 'you@yourbrand.com', required: true },
+          { id: 'company_name',  label: 'Brand or project name', type: 'text', placeholder: 'What is this for?', required: true },
+          { id: 'website_url',   label: 'Current website (if there is one)', type: 'url', placeholder: 'https://' },
+          { id: 'site_purpose',  label: 'What does this site need to do?', type: 'select', options: ['Inform / brand presence', 'Generate leads or enquiries', 'Sell products (e-commerce)', 'Book appointments or sessions', 'Build a community or platform', 'Artist or creative portfolio', 'Event or launch site', 'Something else'] },
+        ],
+      },
+      {
+        id: 'vision', eyebrow: 'Step 2 — Vision',
+        heading: 'What do you want to communicate?',
+        sub: 'This is the most important step. The best sites are built from a clear answer to this.',
+        fields: [
+          { id: 'vision_feeling',  label: 'What do you want someone to feel within the first 5 seconds of landing on the site?', type: 'textarea', placeholder: 'Confidence? Intrigue? Warmth? Desire? Trust? Be specific — this is the brief.' },
+          { id: 'vision_known',    label: 'What do you want to be known for?',                                                   type: 'textarea', placeholder: 'If someone described your brand to a friend after seeing your site, what would you want them to say?' },
+          { id: 'vision_notknown', label: 'What do you not want to be?',                                                         type: 'text',     placeholder: 'What perception would be the worst outcome — what would embarrass you?' },
+          { id: 'vision_brand',    label: 'How would you describe your brand voice?',                                            type: 'text',     placeholder: 'e.g. Direct and minimal. Warm but serious. Playful and irreverent. Raw and honest.' },
+        ],
+      },
+      {
+        id: 'references', eyebrow: 'Step 3 — References',
+        heading: 'Show us what you\'re drawn to.',
+        sub: 'References are worth a thousand words. The right ones — and the wrong ones — tell us everything.',
+        fields: [
+          { id: 'ref_love',        label: 'Sites you love — and what specifically you love about them',   type: 'textarea', placeholder: 'Paste URLs and say what works. The layout? The typography? The motion? The feeling? The more specific, the better.' },
+          { id: 'ref_hate',        label: 'Sites you hate — and what specifically you hate about them',   type: 'textarea', placeholder: 'This matters as much as the above. What makes you cringe? What feels cheap, cluttered, wrong?' },
+          { id: 'ref_industry',    label: 'Competitors or peers whose sites you respect',                type: 'text',     placeholder: 'Even if you don\'t want to look like them — what are they doing right?' },
+          { id: 'ref_outside',     label: 'References from outside your industry',                       type: 'text',     placeholder: 'A fashion brand, a film studio, an artist — something that captures the energy you\'re after even if the industry is different' },
+        ],
+      },
+      {
+        id: 'scope', eyebrow: 'Step 4 — Scope',
+        heading: 'What are we building?',
+        sub: 'Be honest about what you actually need. The right scope produces better work — not just a cheaper quote.',
+        fields: [
+          { id: 'scope_pages',     label: 'Pages or sections needed',                                    type: 'textarea', placeholder: 'e.g. Home, About, Services, Work / Portfolio, Contact — list everything you know you need' },
+          { id: 'scope_level',     label: 'Complexity level',                                            type: 'select',   options: ['Simple — clean, fast, no-frills (3–6 pages)', 'Standard — designed properly, custom layout, some animation', 'Advanced — scroll effects, complex interactions, data-driven', 'Immersive — 3D elements, WebGL, full creative direction', 'Platform — user accounts, dashboards, backend logic'] },
+          { id: 'scope_ecom',      label: 'Does it need e-commerce?',                                   type: 'select',   options: ['No', 'Yes — simple product catalogue', 'Yes — full checkout and payments', 'Yes — subscription or recurring billing'] },
+          { id: 'scope_cms',       label: 'Do you need to update the content yourself?',                type: 'select',   options: ['No — we can handle updates', 'Yes — basic content editing', 'Yes — full CMS with multiple editors'] },
+          { id: 'scope_timeline',  label: 'When do you need it live?',                                  type: 'text',     placeholder: 'e.g. 6 weeks, before a launch on 1 Sept, ASAP — and why' },
+          { id: 'monthly_budget',  label: 'Budget range (€)',                                           type: 'select',   options: ['Under €2,000', '€2,000–€5,000', '€5,000–€10,000', '€10,000–€20,000', '€20,000+', 'Not sure yet — we need guidance'] },
+        ],
+      },
+      {
+        id: 'technical', eyebrow: 'Step 5 — Technical',
+        heading: 'What does it need under the hood?',
+        sub: 'This is where security, integrations, and complexity get priced in.',
+        fields: [
+          { id: 'tech_3d',         label: 'Do you want 3D elements, WebGL, or immersive visuals?',      type: 'select',   options: ['No', 'Maybe — show me what\'s possible', 'Yes — it\'s central to the vision', 'Yes — we have a specific concept in mind'] },
+          { id: 'tech_animation',  label: 'Level of animation and motion',                              type: 'select',   options: ['Minimal — subtle transitions only', 'Standard — scroll animations, hover effects', 'Heavy — scroll-driven narrative, parallax, video', 'Cinematic — the animation IS the experience'] },
+          { id: 'tech_data',       label: 'Does the site handle user data?',                            type: 'select',   options: ['No', 'Yes — contact forms only', 'Yes — user accounts or profiles', 'Yes — sensitive data (health, financial, legal)', 'Yes — significant personal data (GDPR-critical)'] },
+          { id: 'tech_payments',   label: 'Does it take payments?',                                     type: 'select',   options: ['No', 'Yes — one-off purchases', 'Yes — subscriptions or recurring', 'Yes — marketplace or multi-vendor'] },
+          { id: 'tech_integrations', label: 'Integrations needed',                                      type: 'textarea', placeholder: 'e.g. Stripe, Calendly, Mailchimp, CRM, booking system, Meta Pixel, Google Analytics — list everything' },
+          { id: 'tech_security',   label: 'Any specific security requirements?',                        type: 'textarea', placeholder: 'Industry compliance (HIPAA, PCI-DSS, GDPR), penetration testing, SSO, two-factor — anything out of the ordinary' },
+        ],
+      },
+      {
+        id: 'connect', eyebrow: 'Step 6 — Connect',
+        heading: 'Let\'s get the assets together.',
+        sub: 'Share what you have. The more we start with, the faster we move.',
+        fields: [
+          { id: 'domain_name',     label: 'Domain name (if you have one)',                              type: 'text',     placeholder: 'yourbrand.com — or let us know if you need one registered' },
+          { id: 'current_host',    label: 'Current hosting (if applicable)',                            type: 'text',     placeholder: 'e.g. Cloudflare, Netlify, AWS, Shopify, Squarespace, no idea…' },
+          { id: 'has_brand',       label: 'Do you have existing brand assets?',                         type: 'select',   options: ['Yes — logo, colours, fonts, the lot', 'Partial — some but not all', 'No — we need full brand direction', 'No — we have a concept but nothing built yet'] },
+          { id: 'assets_url',      label: 'Brand assets or Figma / design files (if you have them)',   type: 'url',      placeholder: 'Google Drive, Dropbox, Figma link…' },
+          { id: 'comms_email',     label: 'Best email for ongoing communication',                       type: 'email',    placeholder: 'Where briefs, reviews, and questions should land' },
+          { id: 'notes',           label: 'Anything else we should know?',                              type: 'textarea', placeholder: 'Technical constraints, stakeholders to involve, things that have gone wrong before, anything…' },
         ],
       },
     ],
