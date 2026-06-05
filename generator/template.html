@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{META_TITLE}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── generated per client ───────────────────────── */
+    :root {
+      --bg:          {{COLOR_BG}};
+      --bg-2:        {{COLOR_BG_2}};
+      --ink:         {{COLOR_INK}};
+      --ink-2:       {{COLOR_INK_2}};
+      --muted:       {{COLOR_MUTED}};
+      --muted-2:     {{COLOR_MUTED_2}};
+      --accent:      {{COLOR_ACCENT}};
+      --accent-bold: {{COLOR_ACCENT_BOLD}};
+      --border:      {{COLOR_BORDER}};
+      --font-serif:  {{FONT_SERIF}};
+      --font-sans:   {{FONT_SANS}};
+      --text-eye:    10px;
+      --text-body:   15px;
+      --text-small:  13px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 28px; right: 40px; z-index: 100;
+      display: flex; gap: 32px;
+    }
+    nav a {
+      font-size: var(--text-eye); font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--bg); text-decoration: none;
+      opacity: .8; transition: opacity 200ms, color 300ms;
+    }
+    nav a:hover { opacity: 1; }
+    nav.scrolled a { color: var(--ink); }
+    nav.scrolled a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; height: 100vh; min-height: 640px; overflow: hidden;
+      background: var(--ink);
+    }
+    #hero-media {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: contrast(1.05) saturate(1.1);
+    }
+    #hero::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 60%; height: 100%;
+      background: linear-gradient(to left, rgba(0,0,0,.75) 0%, rgba(0,0,0,.35) 60%, transparent 100%);
+      z-index: 1; pointer-events: none;
+    }
+    #hero::before {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 40%;
+      background: linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .hero-wordmark {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(180px, 38vw, 500px); height: auto;
+      pointer-events: none; user-select: none; z-index: 3;
+    }
+    /* fallback if no wordmark image */
+    .hero-wordmark-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-serif); font-style: italic;
+      font-size: clamp(3rem, 8vw, 7rem); font-weight: 300;
+      color: rgba(255,255,255,.9); z-index: 3;
+      letter-spacing: -.02em; white-space: nowrap;
+    }
+
+    /* ── INTRO ── */
+    #intro { padding: 80px 48px 64px; border-top: 1px solid var(--border); }
+    .intro-inner { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px; }
+    .intro-headline {
+      font-family: var(--font-serif); font-size: clamp(2.4rem, 4.5vw, 4.5rem);
+      font-weight: 300; font-style: italic; line-height: 1.15;
+      letter-spacing: -.03em; color: var(--ink);
+    }
+    .intro-cats { display: flex; gap: 48px; flex-wrap: wrap; }
+    .intro-cat-label { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .intro-cat-sub { font-size: 11px; color: var(--muted-2); letter-spacing: .04em; margin-top: 4px; }
+
+    /* ── MANIFESTO ── */
+    #manifesto { padding: 100px 48px 64px; border-top: 1px solid var(--border); }
+    .manifesto-inner { max-width: 960px; margin: 0 auto; }
+    .manifesto-text {
+      font-family: var(--font-serif); font-size: clamp(2.4rem, 4.8vw, 4.6rem);
+      font-weight: 300; font-style: italic; line-height: 1.15;
+      letter-spacing: -.03em; color: var(--ink);
+    }
+
+    /* ── ABOUT ── */
+    #about { padding: 120px 48px 64px; border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; max-width: 1080px; margin: 0 auto; }
+    .about-left h2 {
+      font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300; font-style: italic; line-height: 1.1; letter-spacing: -.03em;
+    }
+    .about-eyebrow { font-size: var(--text-eye); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+    .about-right { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6px; }
+    .about-right p { font-size: 16px; line-height: 1.85; color: var(--muted); margin-bottom: 20px; }
+    .about-right p:last-of-type { margin-bottom: 0; }
+    .about-right strong { color: var(--ink-2); font-weight: 500; }
+
+    /* ── SERVICES ── */
+    #services { padding: 100px 48px 64px; background: var(--ink); }
+    .services-inner { max-width: 1080px; margin: 0 auto; }
+    .services-eye { font-size: var(--text-eye); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 64px; }
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .service-card { border-top: 1px solid rgba(255,255,255,.12); padding: 32px 28px 36px; background: rgba(255,255,255,.03); transition: background 250ms; }
+    .service-card:hover { background: rgba(255,255,255,.07); }
+    .service-num { font-size: var(--text-eye); font-weight: 600; letter-spacing: .12em; color: var(--accent-bold); margin-bottom: 24px; display: block; }
+    .service-card h3 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; font-style: italic; color: var(--bg); margin-bottom: 12px; line-height: 1.3; }
+    .service-card p { font-size: 14px; line-height: 1.85; color: rgba(255,255,255,.65); }
+    .services-cta { margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08); }
+    .services-cta a { font-size: var(--text-eye); font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.45); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.18); padding-bottom: 3px; transition: color 200ms, border-color 200ms; }
+    .services-cta a:hover { color: var(--bg); border-color: var(--bg); }
+
+    /* ── CONTACT ── */
+    #contact { padding: 120px 48px; }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; max-width: 1080px; margin: 0 auto; }
+    .contact-left h2 { font-family: var(--font-serif); font-size: clamp(2.6rem, 4vw, 4rem); font-weight: 300; font-style: italic; line-height: 1.15; letter-spacing: -.03em; margin-bottom: 24px; }
+    .contact-left p { font-size: var(--text-body); color: var(--muted); line-height: 1.8; }
+    .contact-eye { font-size: var(--text-eye); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+    .contact-form { display: flex; flex-direction: column; gap: 24px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-2); }
+    .field input, .field textarea, .field select { background: transparent; border: none; border-bottom: 1px solid var(--border); padding: 10px 0; font-size: var(--text-body); font-family: var(--font-sans); color: var(--ink); outline: none; width: 100%; resize: none; transition: border-color 200ms; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
+    .field input:focus, .field textarea:focus { border-bottom-color: var(--ink); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .form-submit { align-self: flex-start; background: var(--ink); color: var(--bg); font-family: var(--font-sans); font-size: var(--text-eye); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; padding: 14px 36px; border: none; cursor: pointer; transition: opacity 200ms; margin-top: 8px; }
+    .form-submit:hover { opacity: .75; }
+
+    /* ── FOOTER ── */
+    footer { padding: 36px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .footer-name { font-size: var(--text-small); font-weight: 500; color: var(--ink); opacity: .3; letter-spacing: .08em; text-transform: uppercase; }
+    footer p { font-size: 11px; color: var(--muted-2); letter-spacing: .06em; font-style: italic; font-family: var(--font-serif); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 600ms ease, transform 600ms ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { right: 24px; gap: 20px; }
+      .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 680px) {
+      nav { top: 16px; right: 16px; left: 16px; gap: 12px; justify-content: center; }
+      #intro, #manifesto, #about, #contact { padding: 72px 20px; }
+      #services { padding: 72px 20px 56px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .intro-cats { gap: 28px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="mainNav">
+  {{NAV_LINKS}}
+</nav>
+
+<section id="hero">
+  {{HERO_MEDIA}}
+  {{HERO_WORDMARK}}
+</section>
+
+<section id="intro">
+  <div class="intro-inner">
+    <p class="intro-headline reveal">{{INTRO_HEADLINE}}</p>
+    <div class="intro-cats">
+      {{INTRO_CATEGORIES}}
+    </div>
+  </div>
+</section>
+
+<section id="manifesto">
+  <div class="manifesto-inner">
+    <p class="manifesto-text reveal">{{MANIFESTO_LINE}}</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="about-eyebrow">{{ABOUT_EYEBROW}}</div>
+      <h2>{{ABOUT_HEADLINE}}</h2>
+    </div>
+    <div class="about-right reveal">
+      {{ABOUT_PARAGRAPHS}}
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-inner">
+    <div class="services-eye">What we offer</div>
+    <div class="services-grid">
+      {{SERVICE_CARDS}}
+    </div>
+    <div class="services-cta"><a href="#contact">Get in touch →</a></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="contact-eye">Get in touch</div>
+      <h2>{{CONTACT_HEADLINE}}</h2>
+      <p>{{CONTACT_SUBTEXT}}</p>
+    </div>
+    <form class="contact-form reveal" id="contactForm">
+      <div class="field-row">
+        <div class="field"><label>Name</label><input type="text" id="f-name" placeholder="Your name" required></div>
+        <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="you@email.com" required></div>
+      </div>
+      <div class="field"><label>Message</label><textarea id="f-message" rows="4" placeholder="{{CONTACT_PLACEHOLDER}}"></textarea></div>
+      <button type="submit" class="form-submit" id="f-btn">Send it</button>
+      <p id="f-status" style="font-size:13px;margin-top:12px;color:var(--muted);display:none"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">{{BRAND_NAME}}</span>
+  <p>{{FOOTER_LINE}}</p>
+</footer>
+
+<script>
+const SB_URL = '{{SUPABASE_URL}}';
+const SB_KEY = '{{SUPABASE_KEY}}';
+
+// Nav scroll
+const nav = document.getElementById('mainNav');
+new IntersectionObserver(([e]) => {
+  nav.classList.toggle('scrolled', !e.isIntersecting);
+}, { threshold: 0 }).observe(document.getElementById('hero'));
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('f-btn');
+  const status = document.getElementById('f-status');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/contact_leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        name: document.getElementById('f-name').value.trim(),
+        email: document.getElementById('f-email').value.trim(),
+        message: document.getElementById('f-message').value.trim(),
+        source: '{{BRAND_SLUG}}',
+      }),
+    });
+    if (!res.ok) throw new Error();
+    this.style.display = 'none';
+    status.style.display = 'block';
+    status.innerHTML = `<span style="font-family:var(--font-serif);font-style:italic;font-size:18px">{{CONTACT_SUCCESS}}</span>`;
+  } catch {
+    status.style.display = 'block'; status.style.color = 'var(--accent)';
+    status.textContent = 'Something went wrong. Email {{CONTACT_EMAIL}} directly.';
+    btn.disabled = false; btn.textContent = 'Send it';
+  }
+});
+</script>
+</body>
+</html>
