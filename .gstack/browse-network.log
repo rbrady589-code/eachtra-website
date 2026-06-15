@@ -1,0 +1,5 @@
+[2026-06-04T23:18:45.501Z] GET https://eachtraagency.com/onboard.html → 307 (119ms, ?B)
+[2026-06-04T23:18:45.621Z] GET https://eachtraagency.com/onboard → 200 (58ms, 9984B)
+[2026-06-04T23:18:45.692Z] GET https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap → 200 (104ms, 1404B)
+[2026-06-04T23:18:45.920Z] GET https://fonts.gstatic.com/s/fraunces/v38/6NU58FyLNQOQZAnv9ZwNjucMHVn85Ni7emAe9lKqZTnbB-gzTK0K1ChjeveQ7ZXk8g.woff2 → 200 (145ms, 82273B)
+[2026-06-04T23:18:45.920Z] GET https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2 → 200 (154ms, 48568B)

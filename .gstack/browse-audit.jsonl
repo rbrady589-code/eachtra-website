@@ -1,0 +1,78 @@
+{"ts":"2026-06-04T21:57:45.649Z","cmd":"goto","args":"https://eachtraagency.com","origin":"https://eachtraagency.com/","durationMs":1912,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:57:48.556Z","cmd":"screenshot","args":"/tmp/live-hero.png","origin":"https://eachtraagency.com/","durationMs":2833,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:29.662Z","cmd":"screenshot","args":"--clip 0,0,1280,120 /tmp/live-top.png","origin":"https://eachtraagency.com/","durationMs":92,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:38.536Z","cmd":"goto","args":"https://eachtraagency.com/onboard.html","origin":"https://eachtraagency.com/onboard","durationMs":1241,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:38.677Z","cmd":"screenshot","args":"/tmp/onboard-start.png","origin":"https://eachtraagency.com/onboard","durationMs":74,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:50.217Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":24,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:54.121Z","cmd":"click","args":"@e2","origin":"https://eachtraagency.com/onboard","durationMs":61,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:54.235Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":46,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:54.308Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":7,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:58.594Z","cmd":"fill","args":"@e2 Test Submission","origin":"https://eachtraagency.com/onboard","durationMs":10,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:58.664Z","cmd":"fill","args":"@e3 rory@eachtraagency.com","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:58.733Z","cmd":"fill","args":"@e4 Test Practice","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:58.803Z","cmd":"select","args":"@e5 Somatic healing","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T21:59:58.896Z","cmd":"click","args":"@e15","origin":"https://eachtraagency.com/onboard","durationMs":26,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:02.259Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.346Z","cmd":"fill","args":"@e2 1:1 healing sessions","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.418Z","cmd":"fill","args":"@e3 120","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.488Z","cmd":"fill","args":"@e4 60 minutes","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.557Z","cmd":"fill","args":"@e5 6","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.663Z","cmd":"click","args":"@e7","origin":"https://eachtraagency.com/onboard","durationMs":41,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:00:15.736Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:02.657Z","cmd":"fill","args":"@e2 Women 30-50 dealing with burnout","origin":"https://eachtraagency.com/onboard","durationMs":72,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:02.737Z","cmd":"fill","args":"@e3 Trauma-informed approach","origin":"https://eachtraagency.com/onboard","durationMs":7,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:02.814Z","cmd":"fill","args":"@e4 Word of mouth","origin":"https://eachtraagency.com/onboard","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:02.928Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":48,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:03.014Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":12,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:03.087Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:09.635Z","cmd":"fill","args":"@e2 @testhandle","origin":"https://eachtraagency.com/onboard","durationMs":9,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:09.735Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":36,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:09.809Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":7,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:29.352Z","cmd":"fill","args":"@e2 8","origin":"https://eachtraagency.com/onboard","durationMs":7,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:29.421Z","cmd":"fill","args":"@e3 500","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:29.539Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":53,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:32.724Z","cmd":"screenshot","args":"/tmp/onboard-result.png","origin":"https://eachtraagency.com/onboard","durationMs":98,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:50.636Z","cmd":"screenshot","args":"/tmp/onboard-success.png","origin":"https://eachtraagency.com/onboard","durationMs":66,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:12:50.703Z","cmd":"console","args":"","origin":"https://eachtraagency.com/onboard","durationMs":2,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:16:05.114Z","cmd":"network","args":"","origin":"https://eachtraagency.com/onboard","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:26:55.486Z","cmd":"goto","args":"https://eachtraagency.com/onboard.html","origin":"https://eachtraagency.com/onboard","durationMs":229,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:26:55.558Z","cmd":"click","args":"@e2","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e2 not found. Run 'snapshot' to get fresh refs."}
+{"ts":"2026-06-04T22:26:55.644Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":22,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:09.880Z","cmd":"click","args":"@e2","origin":"https://eachtraagency.com/onboard","durationMs":32,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:09.987Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":41,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:10.057Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:17.808Z","cmd":"fill","args":"@e2 Live Test Client","origin":"https://eachtraagency.com/onboard","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:17.877Z","cmd":"fill","args":"@e3 rory@eachtraagency.com","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:17.946Z","cmd":"fill","args":"@e4 Test Practice","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:18.015Z","cmd":"select","args":"@e5 Somatic healing","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:18.113Z","cmd":"click","args":"@e15","origin":"https://eachtraagency.com/onboard","durationMs":33,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:18.180Z","cmd":"fill","args":"@e2 1:1 sessions","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e2 (textbox \"First and last name\") is stale — element no longer exists. Run 'snapshot' for fresh refs."}
+{"ts":"2026-06-04T22:27:18.244Z","cmd":"fill","args":"@e2 Women 30-50, burnout","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e2 (textbox \"First and last name\") is stale — element no longer exists. Run 'snapshot' for fresh refs."}
+{"ts":"2026-06-04T22:27:18.307Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e6 (option \"Select…\") is stale — element no longer exists. Run 'snapshot' for fresh refs."}
+{"ts":"2026-06-04T22:27:18.370Z","cmd":"fill","args":"@e2 8","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e2 (textbox \"First and last name\") is stale — element no longer exists. Run 'snapshot' for fresh refs."}
+{"ts":"2026-06-04T22:27:18.434Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"error","hasCookies":false,"mode":"launched","error":"Ref @e6 (option \"Select…\") is stale — element no longer exists. Run 'snapshot' for fresh refs."}
+{"ts":"2026-06-04T22:27:34.714Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.065Z","cmd":"fill","args":"@e2 1:1 sessions","origin":"https://eachtraagency.com/onboard","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.132Z","cmd":"fill","args":"@e3 120","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.201Z","cmd":"fill","args":"@e4 60 minutes","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.270Z","cmd":"fill","args":"@e5 6","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.363Z","cmd":"click","args":"@e7","origin":"https://eachtraagency.com/onboard","durationMs":28,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:42.434Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:54.815Z","cmd":"fill","args":"@e2 Women 30-50 burnout","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:54.883Z","cmd":"fill","args":"@e3 Trauma approach","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:54.951Z","cmd":"fill","args":"@e4 Word of mouth","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:55.046Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":30,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:55.115Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:55.213Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":34,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:27:55.286Z","cmd":"snapshot","args":"-i","origin":"https://eachtraagency.com/onboard","durationMs":3,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:29:50.693Z","cmd":"fill","args":"@e2 8","origin":"https://eachtraagency.com/onboard","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:29:50.766Z","cmd":"fill","args":"@e3 500","origin":"https://eachtraagency.com/onboard","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:29:50.864Z","cmd":"click","args":"@e6","origin":"https://eachtraagency.com/onboard","durationMs":34,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:29:50.932Z","cmd":"js","args":"document.getElementById('success').style.display","origin":"https://eachtraagency.com/onboard","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:29:51.056Z","cmd":"screenshot","args":"/tmp/live-success.png","origin":"https://eachtraagency.com/onboard","durationMs":59,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:30:18.037Z","cmd":"wait","args":".ref-box","origin":"https://eachtraagency.com/onboard","durationMs":15003,"status":"error","hasCookies":false,"mode":"launched","error":"for: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ref-box') to be visible\u001b[22m\n\u001b[2m    35 × locator resolved to hidden <div class=\"ref-box\" id=\"successRef\">EACHTRA-REF-PENDING</div>\u001b[22m\n"}
+{"ts":"2026-06-04T22:30:18.171Z","cmd":"screenshot","args":"/tmp/live-success2.png","origin":"https://eachtraagency.com/onboard","durationMs":67,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:30:36.642Z","cmd":"console","args":"","origin":"https://eachtraagency.com/onboard","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T22:30:52.152Z","cmd":"network","args":"","origin":"https://eachtraagency.com/onboard","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T23:18:45.926Z","cmd":"goto","args":"https://eachtraagency.com/onboard.html","origin":"https://eachtraagency.com/onboard","durationMs":458,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-04T23:18:46.322Z","cmd":"screenshot","args":"/tmp/onboard-view.png","origin":"https://eachtraagency.com/onboard","durationMs":308,"status":"ok","hasCookies":false,"mode":"launched"}

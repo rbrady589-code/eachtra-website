@@ -3,48 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eachtra Agency — Marketing Systems for Creative Businesses</title>
-  <meta name="description" content="Eachtra is a technology-driven creative agency building marketing infrastructure for music, events, and ecommerce brands. Berlin &amp; Dublin.">
+  <title>Eachtra Agency. Marketing Systems for Creative Businesses</title>
+  <meta name="description" content="Eachtra is a technology-driven creative agency building marketing infrastructure for music, events, and commerce brands. Berlin.">
   <meta property="og:title" content="Eachtra Agency">
   <meta property="og:description" content="Marketing systems for creative businesses that compound over time.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://eachtraagency.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.cdnfonts.com/css/eachtra');
 
     /* ─── DESIGN TOKENS ──────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      /* Dark palette */
+      --bg:           #0c0b09;
+      --bg-elevated:  #161410;
       --cream:        #EAE4D5;
-      --cream-2:      #F0EBE0;
-      --ink:          #16120D;
-      --ink-2:        #3A332A;
-      --muted:        #7A7165;
-      --muted-2:      #A89F93;
-      --border:       rgba(22,18,13,0.1);
-      --font-brand:   'Eachtra', serif;
-      --font-serif:   'Fraunces', Georgia, serif;
-      --font-sans:    'Inter', -apple-system, sans-serif;
-      --crimson:      #8B1A12;
-      --crimson-bold: #A82218;
+      --cream-2:      #C8C0B0;
+      --ink:          #EAE4D5;
+      --ink-2:        #C0B8A8;
+      --muted:        #8A8278;
+      --muted-2:      #5A5450;
+      --border:       rgba(234,228,213,0.07);
+
+      --font-brand:   -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      --font-serif:   -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      --font-sans:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+
+      --crimson:      #C8352A;
+      --crimson-bold: #E03D30;
       --lavender:     #C4A8C8;
       --teal-accent:  #2A9B9B;
       --warm-orange:  #E8834A;
 
       /* Typography scale */
       --text-eyebrow: 10px;
-      --text-body:    15px;
-      --text-small:   13px;
+      --text-body:    14px;
+      --text-small:   12px;
       --text-micro:   11px;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--cream);
+      background: var(--bg);
       color: var(--ink);
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
@@ -54,11 +56,11 @@
     /* ─── NAV ─────────────────────────────────────── */
     nav {
       position: fixed;
-      top: 28px;
-      right: 40px;
+      top: 20px;
+      right: 24px;
       z-index: 100;
       display: flex;
-      gap: 32px;
+      gap: 28px;
     }
 
     nav a {
@@ -120,29 +122,6 @@
       pointer-events: none;
     }
 
-    #terrain-grain {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.18;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-      animation: grain 0.7s steps(1) infinite;
-    }
-
-    @keyframes grain {
-      0%   { transform: translate(0,    0);  }
-      14%  { transform: translate(-3%,  2%); }
-      28%  { transform: translate(2%,  -3%); }
-      42%  { transform: translate(-1%,  3%); }
-      57%  { transform: translate(3%,  -1%); }
-      71%  { transform: translate(-2%,  2%); }
-      85%  { transform: translate(1%,  -2%); }
-      100% { transform: translate(-3%,  1%); }
-    }
 
     /* Copy — bottom right, over gradient overlay */
     .hero-copy { display: none; }
@@ -205,34 +184,33 @@
 
     /* ─── MANIFESTO ──────────────────────────────────── */
     #manifesto {
-      padding: 100px 48px 64px;
+      padding: 80px 24px 56px;
       border-top: 1px solid var(--border);
     }
     .manifesto-inner {
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .manifesto-text {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+      font-size: clamp(1.8rem, 3vw, 3.2rem);
+      font-weight: 200;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
       color: var(--ink);
     }
 
     /* ─── ABOUT ───────────────────────────────────── */
     #about {
-      padding: 120px 48px 64px;
+      padding: 80px 24px 56px;
       border-top: 1px solid var(--border);
     }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      max-width: 1080px;
+      gap: 80px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -247,11 +225,10 @@
 
     .about-left h2 {
       font-family: var(--font-serif);
-      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-size: clamp(1.6rem, 2.4vw, 2.6rem);
       font-weight: 300;
-      font-style: italic;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
       color: var(--ink);
     }
 
@@ -278,26 +255,25 @@
 
     /* ─── METRICS / VERTICALS ─────────────────────── */
     #metrics {
-      padding: 80px 48px;
+      padding: 64px 24px;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
     .metrics-inner {
-      max-width: 1080px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 64px;
+      gap: 48px;
     }
     .intro-copy { display: flex; flex-direction: column; gap: 28px; }
     .intro-headline {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-size: clamp(1.6rem, 2.4vw, 2.6rem);
       font-weight: 300;
-      font-style: italic;
       color: var(--ink);
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
     .verticals {
       display: grid;
@@ -525,12 +501,12 @@
     }
     .service-card h3 {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
+      font-size: 15px;
       font-weight: 400;
-      font-style: italic;
       color: var(--cream);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       line-height: 1.3;
+      letter-spacing: -0.01em;
     }
     .service-card p {
       font-size: 14px;
@@ -579,13 +555,12 @@
     }
     .os-h2 {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-size: clamp(1.6rem, 2.4vw, 2.4rem);
       font-weight: 300;
-      font-style: italic;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
       color: var(--cream);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     .os-body {
       font-size: var(--text-body);
@@ -655,10 +630,10 @@
 
     .values-left h2 {
       font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-      font-weight: 400;
-      font-style: italic;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      font-weight: 300;
       line-height: 1.3;
+      letter-spacing: -0.01em;
       color: var(--ink);
     }
 
@@ -683,12 +658,12 @@
 
     .value-body h3 {
       font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 22px;
+      font-size: 15px;
       font-weight: 400;
       color: var(--ink);
-      margin-bottom: 10px;
-      line-height: 1.2;
+      margin-bottom: 8px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
     }
 
     .value-body p {
@@ -721,13 +696,12 @@
 
     .contact-left h2 {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-size: clamp(1.6rem, 2.4vw, 2.6rem);
       font-weight: 300;
-      font-style: italic;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
       color: var(--ink);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .contact-left p {
@@ -901,7 +875,6 @@
   <!-- HERO -->
   <section id="hero">
     <video id="terrain" src="images/painting-arete-animated.mp4" autoplay loop muted playsinline></video>
-    <div id="terrain-grain"></div>
     <img class="hero-wordmark" src="images/eachtra-wordmark.png" alt="Eachtra">
   </section>
 
@@ -948,23 +921,19 @@
     <div class="about-grid">
       <div class="about-left reveal">
         <div class="eyebrow">Who we are</div>
-        <h2>We tell tales<br>of the<br><em>extraordinary.</em></h2>
+        <h2>Built for what<br>lasts.</h2>
       </div>
       <div class="about-right reveal">
         <p>
-          In Irish, <em>eachtra</em> means the tale of an extraordinary event —
-          the kind of story that changes the shape of everything that follows it.
-          That is what we believe every business deserves. Not a campaign. A story worth telling.
+          Eachtra is a technology-driven creative agency. We build marketing infrastructure for music, events, and commerce brands: research, creative production, paid distribution, and full-funnel follow-through, delivered as one integrated system.
         </p>
         <p>
-          We work with artists, event brands, practitioners, and businesses whose work carries real weight in the world.
-          We map their audience with the precision of a cartographer and the instinct of someone who has
-          lived inside the thing they are trying to grow.
-          <strong>We know these worlds because we live in them.</strong>
+          We work with artists, event brands, and businesses whose work carries real weight.
+          We know these worlds because we live in them.
+          <strong>The touring circuit. The DTC growth stack. The service business trying to scale past word of mouth.</strong>
         </p>
         <p>
-          Every client receives the full system — the research, the creative, the distribution,
-          the follow-through. You devote yourself to the work. We devote ourselves to the rest.
+          Every client gets the full system. You focus on the work. We handle everything else.
         </p>
       </div>
     </div>
@@ -988,16 +957,16 @@
             <h3>Paid Social &amp; Search</h3>
             <span class="service-expand-icon">+</span>
           </div>
-          <p>Campaign architecture, psychographic targeting, and full-funnel management across Instagram, TikTok, and Google. We know which platform to play on for each business — and why.</p>
+          <p>Campaign architecture, psychographic targeting, and full-funnel management across Instagram, TikTok, and Google. We know which platform to play on for each business. And why.</p>
           <div class="service-detail">
             <div class="service-detail-list">
               <div class="service-detail-item">
                 <strong>Account Audit</strong>
-                <span>Full analysis of your Meta, Google, and TikTok accounts — campaigns, creatives, spend, audiences. Delivered fast.</span>
+                <span>Full analysis of your Meta, Google, and TikTok accounts: campaigns, creatives, spend, audiences. Delivered fast.</span>
               </div>
               <div class="service-detail-item">
                 <strong>Creative Production</strong>
-                <span>Ad creative at volume — copy, visual direction, and bulk variants per ad set.</span>
+                <span>Ad creative at volume: copy, visual direction, and bulk variants per ad set.</span>
               </div>
               <div class="service-detail-item">
                 <strong>Campaign Build</strong>
@@ -1013,7 +982,7 @@
               </div>
               <div class="service-detail-item">
                 <strong>Creator &amp; Influencer Partnerships</strong>
-                <span>Matching brands with the right YouTube and social creators — identified by audience psychographics, not just follower count.</span>
+                <span>Matching brands with the right YouTube and social creators, identified by audience psychographics not follower count.</span>
               </div>
             </div>
           </div>
@@ -1024,7 +993,7 @@
             <h3>Music &amp; Event Marketing</h3>
             <span class="service-expand-icon">+</span>
           </div>
-          <p>Release campaigns, event promotion, and community activation across the music and events landscape. We work inside the creative industries — not outside looking in.</p>
+          <p>Release campaigns, event promotion, and community activation across the music and events landscape. We work inside the creative industries. Not outside looking in.</p>
           <div class="service-detail">
             <div class="service-detail-list">
               <div class="service-detail-item">
@@ -1056,12 +1025,12 @@
             <h3>Creative Production</h3>
             <span class="service-expand-icon">+</span>
           </div>
-          <p>Video, static, and motion creative built for performance. We test and iterate at a pace traditional production houses can't match — without the overhead.</p>
+          <p>Video, static, and motion creative built for performance. We test and iterate at a pace traditional production houses can't match. Without the overhead.</p>
           <div class="service-detail">
             <div class="service-detail-list">
               <div class="service-detail-item">
                 <strong>Video Production</strong>
-                <span>Short-form content, campaign hero videos, and event documentation — sourced with the right crew for each brief.</span>
+                <span>Short-form content, campaign hero videos, and event documentation, sourced with the right crew for each brief.</span>
               </div>
               <div class="service-detail-item">
                 <strong>Static Ads</strong>
@@ -1144,8 +1113,8 @@
         <div class="os-eyebrow">The infrastructure beneath</div>
         <h2 class="os-h2">Your business,<br>fully visible.</h2>
         <p class="os-body">
-          We do not simply run campaigns and disappear. We build the operating system beneath your business —
-          so that you always have a clear picture of what your marketing is doing,
+          We do not simply run campaigns and disappear. We build the operating system beneath your business.
+          You always have a clear picture of what your marketing is doing,
           where your customers are coming from, and where to push next.
         </p>
         <div class="os-cta">
@@ -1185,21 +1154,21 @@
           <span class="value-num">01</span>
           <div class="value-body">
             <h3>Know the audience before you speak</h3>
-            <p>We study who your people are — not the demographic, the person. What moves them. What makes them scroll past. What makes them stop. Only then do we open our mouths.</p>
+            <p>We study who your people are. Not the demographic, the person. What moves them. What makes them scroll past. What makes them stop. Only then do we open our mouths.</p>
           </div>
         </div>
         <div class="value-item reveal">
           <span class="value-num">02</span>
           <div class="value-body">
             <h3>Build the infrastructure, not just the campaign</h3>
-            <p>A campaign ends. A system grows. We build the architecture underneath — the targeting frameworks, the creative pipelines, the feedback loops that make each month sharper than the last.</p>
+            <p>A campaign ends. A system grows. We build the architecture underneath: the targeting frameworks, the creative pipelines, the feedback loops that make each month sharper than the last.</p>
           </div>
         </div>
         <div class="value-item reveal">
           <span class="value-num">03</span>
           <div class="value-body">
             <h3>Creative that earns its place</h3>
-            <p>We score every piece of creative before it spends a single euro. If it won't stop the scroll, it doesn't go live. This is not caution — it is the discipline that separates work that compounds from work that disappears.</p>
+            <p>We score every piece of creative before it spends a single euro. If it won't stop the scroll, it doesn't go live. This is not caution. It is the discipline that separates work that compounds from work that disappears.</p>
           </div>
         </div>
       </div>
@@ -1218,8 +1187,8 @@
     <div class="contact-inner">
       <div class="contact-left reveal">
         <div class="eyebrow">Get in touch</div>
-        <h2>Every extraordinary<br>story begins<br>with a conversation.</h2>
-        <p>We work with a small number of clients at a time — by design. The work demands it. If you are building something that deserves to be known, we would like to hear about it.</p>
+        <h2>Ready to build<br>something that<br>lasts.</h2>
+        <p>We work with a small number of clients at a time. By design. The work demands it. If you are building something that deserves to be known, we would like to hear about it.</p>
       </div>
       <!-- Anchor so nav #contact link lands directly at the form -->
       <div>
@@ -1248,7 +1217,7 @@
               <option>Event campaign</option>
               <option>Creative production</option>
               <option>Website &amp; digital</option>
-              <option>Not sure — let's talk</option>
+              <option>Not sure, let's talk</option>
             </select>
           </div>
           <div class="field">
@@ -1265,7 +1234,7 @@
   <!-- FOOTER -->
   <footer>
     <span class="footer-logo">Eachtra Agency</span>
-    <p style="font-style:italic;font-family:var(--font-serif);font-size:12px;color:var(--muted-2)">Tale of an extraordinary event &nbsp;·&nbsp; Berlin · Dublin · Est. 2026</p>
+    <p style="font-family:var(--font-sans);font-size:12px;color:var(--muted-2)">Berlin · Est. 2026</p>
   </footer>
 
   <script>
