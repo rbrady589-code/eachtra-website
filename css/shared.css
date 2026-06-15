@@ -10,7 +10,8 @@
   --cream:    #EAE4D5;
   --muted:    rgba(234,228,213,0.38);
   --dim:      rgba(234,228,213,0.18);
-  --font:     -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --letter-tight: -0.02em;
 }
 
 html, body {

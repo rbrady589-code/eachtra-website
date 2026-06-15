@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eachtra — Work</title>
+  <link rel="stylesheet" href="css/fonts.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,7 +15,7 @@
       --border:  rgba(234,228,213,0.09);
       --crimson: #C8352A;
       --green:   #2A9B6A;
-      --font:    -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
     html, body {
@@ -93,12 +94,12 @@
     #world { position: absolute; top: 0; left: 0; width: 5000px; height: 3600px; cursor: grab; }
     #svg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 
-    /* Connection group fades in when client expanded */
-    #connections-mahalla {
+    /* Connection groups fade in when their client expands */
+    .conn-group {
       opacity: 0;
       transition: opacity 0.4s ease 0.2s;
     }
-    #connections-mahalla.visible { opacity: 1; }
+    .conn-group.visible { opacity: 1; }
 
     /* ── Float animations ─────────────────────────── */
     @keyframes float-a { 0%,100% { transform: translateY(0px);  } 50% { transform: translateY(-8px); } }
@@ -165,6 +166,15 @@
     #n-meta.expanded     { transition-delay: 0s; }
     #n-funnel.expanded   { transition-delay: 0.06s; }
     #n-audience.expanded { transition-delay: 0.12s; }
+
+    /* sÜave at world (400, 1180); children mirror MaHalla's offsets */
+    #n-web      { left: 860px;  top: 960px;  --dx: -460px; --dy: 220px;  }
+    #n-brand    { left: 860px;  top: 1400px; --dx: -460px; --dy: -220px; }
+    #n-campaign { left: 1260px; top: 1180px; --dx: -860px; --dy: 0px;    }
+
+    #n-web.expanded      { transition-delay: 0s; }
+    #n-brand.expanded    { transition-delay: 0.06s; }
+    #n-campaign.expanded { transition-delay: 0.12s; }
 
     .child-node.expanded { pointer-events: auto; transform: translate(-50%, -50%) scale(1); opacity: 1; }
     .child-node.expanded.fc .node-inner { animation: float-c 6.1s ease-in-out infinite; }
@@ -287,7 +297,7 @@
   <div id="world">
     <svg id="svg-layer" xmlns="http://www.w3.org/2000/svg">
       <!-- MaHalla connection group — hidden until expanded -->
-      <g id="connections-mahalla">
+      <g id="connections-mahalla" class="conn-group">
         <!-- MaHalla → Meta Ads -->
         <path d="M 400 300 C 630 300, 630 80, 860 80" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
         <!-- MaHalla → Funnel -->
@@ -297,10 +307,22 @@
         <!-- Funnel → Audience -->
         <path d="M 860 520 C 1060 520, 1060 300, 1260 300" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
       </g>
+
+      <!-- sÜave connection group -->
+      <g id="connections-suave" class="conn-group">
+        <!-- sÜave → Web -->
+        <path d="M 400 1180 C 630 1180, 630 960, 860 960" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- sÜave → Brand -->
+        <path d="M 400 1180 C 630 1180, 630 1400, 860 1400" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- Web → Campaign -->
+        <path d="M 860 960 C 1060 960, 1060 1180, 1260 1180" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- Brand → Campaign -->
+        <path d="M 860 1400 C 1060 1400, 1060 1180, 1260 1180" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+      </g>
     </svg>
 
     <!-- ── LEVEL 1: Client node ─────────────────────── -->
-    <div class="node client-node fa" id="n-mahalla" style="left:400px;top:300px">
+    <div class="node client-node fa" id="n-mahalla" data-client="mahalla" style="left:400px;top:300px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">ECH — 001</span></div>
         <div class="node-body">
@@ -320,7 +342,7 @@
     </div>
 
     <!-- ── LEVEL 2: Deliverable child nodes ────────── -->
-    <div class="node child-node fc" id="n-meta" data-panel="meta">
+    <div class="node child-node fc" id="n-meta" data-client="mahalla" data-panel="meta">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Paid Social</span></div>
         <div class="node-body">
@@ -336,7 +358,7 @@
       </div>
     </div>
 
-    <div class="node child-node fb" id="n-funnel" data-panel="funnel">
+    <div class="node child-node fb" id="n-funnel" data-client="mahalla" data-panel="funnel">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Strategy</span></div>
         <div class="node-body">
@@ -351,7 +373,7 @@
       </div>
     </div>
 
-    <div class="node child-node fd" id="n-audience" data-panel="audience">
+    <div class="node child-node fd" id="n-audience" data-client="mahalla" data-panel="audience">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Outcome</span></div>
         <div class="node-body">
@@ -366,38 +388,99 @@
       </div>
     </div>
 
-    <!-- ── Locked future clients ────────────────────── -->
-    <div class="node dim-node fb" style="left:-200px;top:140px">
+    <!-- ── LEVEL 1: sÜave client node ───────────────── -->
+    <div class="node client-node fb" id="n-suave" data-client="suave" style="left:400px;top:1180px">
       <div class="node-inner">
-        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
-        <div class="node-body"><div class="node-top"><span class="node-code">ECH-002</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+        <div class="node-thumb"><span class="node-thumb-label">ECH — 002</span></div>
+        <div class="node-body">
+          <div class="node-top">
+            <span class="node-code">ECH-002</span>
+            <span class="node-dot live"></span>
+          </div>
+          <div class="node-name">sÜave</div>
+          <div class="node-type">Artist EPK · Web · 2026</div>
+          <div class="node-deliverables">
+            <span class="node-tag">Web Build</span>
+            <span class="node-tag">Identity</span>
+            <span class="node-tag">Campaign</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="node dim-node fc" style="left:-140px;top:580px">
+
+    <!-- ── LEVEL 2: sÜave deliverable child nodes ────── -->
+    <div class="node child-node fc" id="n-web" data-client="suave" data-panel="suave-web">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Web Design</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-002 / WEB</span><span class="node-dot live"></span></div>
+          <div class="node-name">EPK Website</div>
+          <div class="node-type">Web Design · Build</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Stack</span><span class="node-val">Three.js · WebGL</span></div>
+            <div class="node-row"><span class="node-key">Type</span><span class="node-val">Artist EPK</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Live</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node child-node fb" id="n-brand" data-client="suave" data-panel="suave-brand">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Identity</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-002 / ID</span><span class="node-dot active"></span></div>
+          <div class="node-name">Brand Identity</div>
+          <div class="node-type">Visual · Direction</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Scope</span><span class="node-val">Wordmark · Bio</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Shipped</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node child-node fd" id="n-campaign" data-client="suave" data-panel="suave-campaign">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Strategy</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-002 / CAM</span><span class="node-dot active"></span></div>
+          <div class="node-name">Pre-Release Campaign</div>
+          <div class="node-type">Strategy · Rollout</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Model</span><span class="node-val">Blueprint</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Deployed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Locked future clients ────────────────────── -->
+    <div class="node dim-node fc" style="left:-320px;top:300px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
         <div class="node-body"><div class="node-top"><span class="node-code">ECH-003</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
       </div>
     </div>
-    <div class="node dim-node fe" style="left:400px;top:-180px">
+    <div class="node dim-node fe" style="left:-320px;top:1180px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
         <div class="node-body"><div class="node-top"><span class="node-code">ECH-004</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
       </div>
     </div>
-    <div class="node dim-node fa" style="left:1560px;top:120px">
+    <div class="node dim-node fa" style="left:1820px;top:300px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
         <div class="node-body"><div class="node-top"><span class="node-code">ECH-005</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
       </div>
     </div>
-    <div class="node dim-node fd" style="left:1560px;top:500px">
+    <div class="node dim-node fd" style="left:1820px;top:1180px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
         <div class="node-body"><div class="node-top"><span class="node-code">ECH-006</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
       </div>
     </div>
-    <div class="node dim-node fb" style="left:400px;top:720px">
+    <div class="node dim-node fb" style="left:400px;top:-280px">
       <div class="node-inner">
         <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
         <div class="node-body"><div class="node-top"><span class="node-code">ECH-007</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
@@ -415,7 +498,11 @@
           <td>Meta Ads, Capture Funnel, Audience Build</td><td>Berlin</td><td>2026</td>
           <td><span class="idx-live">Live</span></td>
         </tr>
-        <tr class="index-row-data dim-row"><td class="idx-code">ECH-002</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data" data-panel-id="suave-overview">
+          <td class="idx-code">ECH-002</td><td class="idx-name">sÜave</td>
+          <td>EPK Website, Brand Identity, Pre-Release Campaign</td><td>Berlin</td><td>2026</td>
+          <td><span class="idx-live">Live</span></td>
+        </tr>
         <tr class="index-row-data dim-row"><td class="idx-code">ECH-003</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
         <tr class="index-row-data dim-row"><td class="idx-code">ECH-004</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
         <tr class="index-row-data dim-row"><td class="idx-code">ECH-005</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
@@ -481,6 +568,42 @@
         desc: `MaHalla Berlin entered the market with zero digital audience. Eachtra built a capture-first funnel powered by Meta paid social, targeting Berlin's underground music scene. The objective: grow an owned list before spending on ticket promotion.`,
         results: [['2,000','Contacts captured'],['3','Deliverables shipped'],['Day 1','Ads live']],
         credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Orchestration','Pipeboard via Claude'],['Client','MaHalla Berlin']]
+      },
+      'suave-web': {
+        code: 'ECH-002 / WEB', title: 'EPK Website',
+        images: ['Hero','Iridescent blob','Bio','Discography','Mobile'],
+        specs: [['Type','Artist EPK'],['Stack','Three.js · WebGL'],['Pages','Single-page'],['Hosting','Netlify'],['Status','Live']],
+        specPos: 'Status',
+        desc: `A press kit that moves. We designed and built sÜave's electronic press kit as a single-page site fronted by a real-time iridescent WebGL surface — the visual signature of the project rendered in the browser. Bio, discography, and booking, wrapped in the same petrol-and-chrome world as the music. <a href="https://suaves-epk.netlify.app" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none">suaves-epk.netlify.app →</a>`,
+        results: [['Live','suaves-epk.netlify.app'],['Three.js','Real-time render'],['1','Page, full story']],
+        credits: [['Design & Build','Eachtra'],['Artist','sÜave'],['Engine','Three.js · WebGL'],['Host','Netlify']]
+      },
+      'suave-brand': {
+        code: 'ECH-002 / ID', title: 'Brand Identity',
+        images: ['Wordmark','Palette','Bio set','Type','Aesthetic'],
+        specs: [['Scope','Visual direction'],['Marks','Wordmark'],['Voice','3 bio registers'],['Palette','Petrol · Chrome'],['Status','Shipped']],
+        specPos: 'Status',
+        desc: `Built the visual and verbal identity for the project: the sÜave wordmark, an iridescent petrol-and-chrome palette drawn from the music, and three bio registers — long, short, and one-line — so the artist reads consistently from RA to a booking email.`,
+        results: [['1','Wordmark system'],['3','Bio registers'],['Petrol','Signature palette']],
+        credits: [['Direction','Eachtra'],['Artist','sÜave'],['Deliverable','Identity system']]
+      },
+      'suave-campaign': {
+        code: 'ECH-002 / CAM', title: 'Pre-Release Campaign',
+        images: ['Rollout','Platforms','Beacons','Release plan','Outreach'],
+        specs: [['Type','Launch strategy'],['Model','Blueprint'],['Channels','SoundCloud · RA · Beatport'],['Goal','Pre-release reach'],['Status','Deployed']],
+        specPos: 'Status',
+        desc: `A sequenced pre-release blueprint: platform setup in the right order — SoundCloud, RA, Beacons, Beatport — feeding into a release rollout and booking outreach. The infrastructure an artist needs in place before the first track lands.`,
+        results: [['5','Platforms sequenced'],['Blueprint','Repeatable rollout'],['Pre-release','Reach built early']],
+        credits: [['Strategy','Eachtra'],['Artist','sÜave'],['Model','Blueprint campaign']]
+      },
+      'suave-overview': {
+        code: 'ECH-002', title: 'sÜave',
+        images: ['EPK site','Iridescent blob','Identity','Campaign','Mobile'],
+        specs: [['Client','sÜave'],['Vertical','Music · Artist'],['Location','Berlin'],['Year','2026'],['Deliverables','3'],['Status','Live']],
+        specPos: 'Status',
+        desc: `sÜave is an electronic artist with Dublin techno roots, building in Berlin. Eachtra delivered the full launch layer: a WebGL-driven EPK website, a complete brand identity, and a sequenced pre-release campaign — everything needed to present and promote the project before the music dropped. <a href="https://suaves-epk.netlify.app" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none">suaves-epk.netlify.app →</a>`,
+        results: [['3','Deliverables shipped'],['Live','EPK in production'],['Berlin','Base']],
+        credits: [['Web & Design','Eachtra'],['Identity','Eachtra'],['Strategy','Eachtra'],['Artist','sÜave']]
       }
     };
 
@@ -535,7 +658,6 @@
     const hint      = document.getElementById('hint');
     const btnNode   = document.getElementById('btn-node');
     const btnIndex  = document.getElementById('btn-index');
-    const connGroup = document.getElementById('connections-mahalla');
 
     let tx = 0, ty = 0, scale = 1;
     let panning = false, ox = 0, oy = 0;
@@ -594,32 +716,33 @@
     btnNode.addEventListener('click',  () => setView('node'));
     btnIndex.addEventListener('click', () => setView('index'));
 
-    // ── Client expand/collapse ─────────────────────
-    let clientExpanded = false;
-    const mahalla   = document.getElementById('n-mahalla');
-    const children  = document.querySelectorAll('.child-node');
-
-    function expandClient() {
-      clientExpanded = true;
-      mahalla.classList.add('expanded');
-      children.forEach(c => c.classList.add('expanded'));
-      connGroup.classList.add('visible');
+    // ── Client expand/collapse (multi-client) ──────
+    function expandClient(id) {
+      document.getElementById('n-' + id).classList.add('expanded');
+      document.querySelectorAll('.child-node[data-client="' + id + '"]')
+        .forEach(c => c.classList.add('expanded'));
+      const cg = document.getElementById('connections-' + id);
+      if (cg) cg.classList.add('visible');
       hint.textContent = 'Click a deliverable to see detail';
     }
-    function collapseClient() {
-      clientExpanded = false;
-      mahalla.classList.remove('expanded');
-      children.forEach(c => c.classList.remove('expanded'));
-      connGroup.classList.remove('visible');
+    function collapseClient(id) {
+      document.getElementById('n-' + id).classList.remove('expanded');
+      document.querySelectorAll('.child-node[data-client="' + id + '"]')
+        .forEach(c => c.classList.remove('expanded'));
+      const cg = document.getElementById('connections-' + id);
+      if (cg) cg.classList.remove('visible');
       hint.textContent = 'Drag to explore · Click a client to expand';
     }
 
-    mahalla.addEventListener('click', () => {
-      clientExpanded ? collapseClient() : expandClient();
+    document.querySelectorAll('.client-node').forEach(node => {
+      node.addEventListener('click', () => {
+        const id = node.dataset.client;
+        node.classList.contains('expanded') ? collapseClient(id) : expandClient(id);
+      });
     });
 
     // ── Child node click → panel ───────────────────
-    children.forEach(node => {
+    document.querySelectorAll('.child-node').forEach(node => {
       node.addEventListener('click', e => {
         e.stopPropagation();
         const key = node.dataset.panel;

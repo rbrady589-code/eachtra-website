@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eachtra — Contact</title>
+  <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/shared.css">
   <style>
     body { overflow-y: auto; }
@@ -212,16 +213,10 @@
       btn.textContent = 'Sending...';
       btn.disabled = true;
       try {
-        const res = await fetch('https://eachtraagency.com/api/contact', {
+        const res = await fetch('https://formspree.io/f/REPLACE_WITH_YOUR_ID', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name:    document.getElementById('f-name').value,
-            email:   document.getElementById('f-email').value,
-            brand:   document.getElementById('f-brand').value,
-            scope:   document.getElementById('f-scope').value,
-            message: document.getElementById('f-message').value,
-          })
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(e.target)
         });
         if (res.ok) {
           status.textContent = 'Sent. We will be in touch.';
