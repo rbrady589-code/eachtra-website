@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eachtra — About</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    body { overflow-y: auto; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0 80px;
+      padding: 56px 0;
+      border-top: 1px solid rgba(234,228,213,0.07);
+    }
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 16px 0; }
+    }
+
+    .about-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(234,228,213,0.28);
+      padding-top: 3px;
+    }
+
+    .about-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(234,228,213,0.58);
+    }
+    .about-body p + p { margin-top: 1em; }
+
+    .about-body strong {
+      color: rgba(234,228,213,0.82);
+      font-weight: 500;
+    }
+
+    .principles { list-style: none; display: flex; flex-direction: column; gap: 32px; }
+    .principle-num {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--crimson);
+      margin-bottom: 6px;
+    }
+    .principle-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(234,228,213,0.82);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .principle-body {
+      font-size: 12px;
+      line-height: 1.7;
+      color: rgba(234,228,213,0.45);
+    }
+
+    .services-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(234,228,213,0.06);
+      font-size: 12px;
+    }
+    .service-name { color: rgba(234,228,213,0.75); font-weight: 500; }
+    .service-detail { color: rgba(234,228,213,0.28); font-size: 10px; letter-spacing: 0.08em; }
+
+    .page-header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid rgba(234,228,213,0.07);
+      margin-bottom: 0;
+    }
+    .page-header-label {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(234,228,213,0.22); margin-bottom: 12px;
+    }
+    .page-header-title {
+      font-size: 28px; font-weight: 300; letter-spacing: -0.03em;
+      color: rgba(234,228,213,0.88); line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-logo" href="/">Eachtra</a>
+    <a class="nav-pill" href="work.html">Work</a>
+    <div class="nav-divider"></div>
+    <a class="nav-pill active" href="about.html">About</a>
+    <a class="nav-pill" href="contact.html">Contact</a>
+  </nav>
+
+  <div class="page">
+    <div class="page-inner">
+
+      <div class="page-header">
+        <div class="page-header-label">About</div>
+        <div class="page-header-title">There are businesses that advertise.<br>And businesses that are remembered.</div>
+      </div>
+
+      <!-- Who we are -->
+      <div class="about-grid">
+        <div class="about-label">Who we are</div>
+        <div class="about-body">
+          <p>Eachtra is a technology-driven creative agency. We build marketing infrastructure for music, events, and commerce brands — research, creative production, paid distribution, and full-funnel follow-through, delivered as one integrated system.</p>
+          <p>We work with artists, event brands, and businesses whose work carries real weight. We know these worlds because we live in them. The touring circuit. The DTC growth stack. The service business trying to scale past word of mouth.</p>
+          <p>Every client gets the full system. You focus on the work. We handle everything else.</p>
+        </div>
+      </div>
+
+      <!-- What we do -->
+      <div class="about-grid">
+        <div class="about-label">What we do</div>
+        <div>
+          <ul class="services-list">
+            <li class="service-item">
+              <span class="service-name">Paid Social</span>
+              <span class="service-detail">Meta · TikTok · YouTube</span>
+            </li>
+            <li class="service-item">
+              <span class="service-name">Audience Build</span>
+              <span class="service-detail">Capture funnels · List growth · CRM</span>
+            </li>
+            <li class="service-item">
+              <span class="service-name">Creative Production</span>
+              <span class="service-detail">Ad creative · Content · Copy</span>
+            </li>
+            <li class="service-item">
+              <span class="service-name">Marketing Systems</span>
+              <span class="service-detail">Strategy · Infrastructure · Analytics</span>
+            </li>
+            <li class="service-item">
+              <span class="service-name">Music &amp; Events</span>
+              <span class="service-detail">Artists · Promoters · Labels</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- How we work -->
+      <div class="about-grid">
+        <div class="about-label">How we work</div>
+        <div>
+          <ul class="principles">
+            <li>
+              <div class="principle-num">01</div>
+              <div class="principle-title">Know the audience before you speak</div>
+              <div class="principle-body">We study who your people are. Not the demographic — the person. What moves them. What makes them scroll past. What makes them stop. Only then do we open our mouths.</div>
+            </li>
+            <li>
+              <div class="principle-num">02</div>
+              <div class="principle-title">Build the infrastructure, not just the campaign</div>
+              <div class="principle-body">A campaign ends. A system grows. We build the architecture underneath: the targeting frameworks, the creative pipelines, the feedback loops that make each month sharper than the last.</div>
+            </li>
+            <li>
+              <div class="principle-num">03</div>
+              <div class="principle-title">Outcomes, not outputs</div>
+              <div class="principle-body">We don't invoice for hours. We build for results. Our business model is aligned with yours — we grow when you grow.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Location / context -->
+      <div class="about-grid">
+        <div class="about-label">Based</div>
+        <div class="about-body">
+          <p>Berlin, Germany. Working with clients across Europe and internationally.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="footer">
+    <span class="footer-copy">Eachtra Agency &copy; 2026</span>
+    <span class="footer-copy">Berlin</span>
+  </footer>
+
+</body>
+</html>

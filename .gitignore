@@ -2,3 +2,4 @@ output/
 dev/
 *.backup*.html
 .DS_Store
+.gstack/

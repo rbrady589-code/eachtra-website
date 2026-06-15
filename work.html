@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eachtra — Work</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0c0b09;
+      --panel:   #171512;
+      --card:    #211f1c;
+      --border:  rgba(234,228,213,0.09);
+      --crimson: #C8352A;
+      --green:   #2A9B6A;
+      --font:    -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+    body.panning { cursor: grabbing !important; }
+
+    /* ── Nav ──────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 20;
+    }
+    .nav-word {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(234,228,213,0.7);
+      margin-right: 6px;
+    }
+    .nav-pill {
+      height: 26px; padding: 0 13px;
+      border: 1px solid rgba(234,228,213,0.16);
+      border-radius: 999px;
+      font-family: var(--font); font-size: 11px; letter-spacing: 0.03em;
+      color: rgba(234,228,213,0.45);
+      background: none; cursor: pointer;
+      display: inline-flex; align-items: center;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+    }
+    .nav-pill:hover { border-color: rgba(234,228,213,0.38); color: rgba(234,228,213,0.82); }
+    .nav-pill.active { border-color: rgba(234,228,213,0.42); color: rgba(234,228,213,0.92); background: rgba(234,228,213,0.05); }
+    .nav-divider { width: 1px; height: 16px; background: rgba(234,228,213,0.1); margin: 0 4px; flex-shrink: 0; }
+
+    /* ── Zoom ─────────────────────────────────────── */
+    #zoom-ctrl {
+      position: fixed; bottom: 20px; right: 20px;
+      display: flex; align-items: center; gap: 1px;
+      z-index: 20;
+    }
+    .zoom-btn {
+      width: 28px; height: 26px;
+      border: 1px solid rgba(234,228,213,0.14); background: none;
+      font-family: var(--font); font-size: 14px;
+      color: rgba(234,228,213,0.4); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.18s, color 0.18s; line-height: 1;
+    }
+    .zoom-btn:first-child { border-radius: 999px 0 0 999px; }
+    .zoom-btn:last-child  { border-radius: 0 999px 999px 0; }
+    .zoom-btn:hover { border-color: rgba(234,228,213,0.35); color: rgba(234,228,213,0.8); }
+    #zoom-label {
+      height: 26px; padding: 0 9px;
+      border-top: 1px solid rgba(234,228,213,0.14);
+      border-bottom: 1px solid rgba(234,228,213,0.14);
+      font-size: 10px; letter-spacing: 0.06em;
+      color: rgba(234,228,213,0.3);
+      display: flex; align-items: center; min-width: 42px; justify-content: center;
+    }
+
+    #hint {
+      position: fixed; bottom: 22px; left: 20px;
+      font-size: 10px; letter-spacing: 0.12em;
+      color: rgba(234,228,213,0.14);
+      pointer-events: none; z-index: 20;
+    }
+
+    /* ── Canvas world ─────────────────────────────── */
+    #world { position: absolute; top: 0; left: 0; width: 5000px; height: 3600px; cursor: grab; }
+    #svg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+
+    /* Connection group fades in when client expanded */
+    #connections-mahalla {
+      opacity: 0;
+      transition: opacity 0.4s ease 0.2s;
+    }
+    #connections-mahalla.visible { opacity: 1; }
+
+    /* ── Float animations ─────────────────────────── */
+    @keyframes float-a { 0%,100% { transform: translateY(0px);  } 50% { transform: translateY(-8px); } }
+    @keyframes float-b { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(5px);  } }
+    @keyframes float-c { 0%,100% { transform: translateY(-3px); } 50% { transform: translateY(8px);  } }
+    @keyframes float-d { 0%,100% { transform: translateY(-6px); } 50% { transform: translateY(3px);  } }
+    @keyframes float-e { 0%,100% { transform: translateY(2px);  } 50% { transform: translateY(-6px); } }
+
+    /* ── Node base ────────────────────────────────── */
+    .node { position: absolute; cursor: pointer; z-index: 5; }
+
+    .node-inner {
+      width: 236px;
+      background: #1e1b17;
+      border: 1px solid rgba(234,228,213,0.14);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.55);
+      transition: border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+    }
+    .node:hover .node-inner {
+      border-color: rgba(234,228,213,0.34);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(-10px) scale(1.015);
+      animation-play-state: paused;
+    }
+
+    /* ── Client node (level 1) ────────────────────── */
+    .client-node { transform: translate(-50%, -50%); }
+    .client-node.fa .node-inner { animation: float-a 5.2s ease-in-out infinite; }
+    .client-node.fb .node-inner { animation: float-b 4.8s ease-in-out infinite; }
+    .client-node:hover .node-inner { animation-play-state: paused; }
+    .client-node.expanded .node-inner { border-color: rgba(234,228,213,0.28); animation-play-state: paused; }
+
+    /* Deliverable tags */
+    .node-deliverables {
+      margin-top: 12px; padding-top: 11px;
+      border-top: 1px solid rgba(234,228,213,0.07);
+      display: flex; flex-wrap: wrap; gap: 5px;
+      transition: opacity 0.2s;
+    }
+    .client-node.expanded .node-deliverables { opacity: 0.3; }
+    .node-tag {
+      height: 20px; padding: 0 8px;
+      border: 1px solid rgba(234,228,213,0.12); border-radius: 999px;
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(234,228,213,0.38);
+      display: inline-flex; align-items: center;
+    }
+
+    /* ── Child nodes (level 2) ────────────────────── */
+    .child-node {
+      pointer-events: none;
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0);
+      opacity: 0;
+      transition: transform 0.55s cubic-bezier(0.34, 1.35, 0.64, 1), opacity 0.35s ease;
+    }
+
+    /* MaHalla at world (400, 300); children expand from there */
+    #n-meta     { left: 860px; top: 80px;  --dx: -460px; --dy: 220px;  }
+    #n-funnel   { left: 860px; top: 520px; --dx: -460px; --dy: -220px; }
+    #n-audience { left: 1260px; top: 300px; --dx: -860px; --dy: 0px;   }
+
+    #n-meta.expanded     { transition-delay: 0s; }
+    #n-funnel.expanded   { transition-delay: 0.06s; }
+    #n-audience.expanded { transition-delay: 0.12s; }
+
+    .child-node.expanded { pointer-events: auto; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    .child-node.expanded.fc .node-inner { animation: float-c 6.1s ease-in-out infinite; }
+    .child-node.expanded.fb .node-inner { animation: float-b 4.8s ease-in-out infinite; }
+    .child-node.expanded.fd .node-inner { animation: float-d 5.7s ease-in-out infinite; }
+    .child-node.expanded:hover .node-inner { animation-play-state: paused; }
+
+    /* Dim locked future clients */
+    .dim-node { opacity: 0.14; pointer-events: none; transform: translate(-50%, -50%); }
+    .dim-node.fa .node-inner { animation: float-a 5.2s ease-in-out infinite; }
+    .dim-node.fb .node-inner { animation: float-b 4.8s ease-in-out infinite; }
+    .dim-node.fc .node-inner { animation: float-c 6.1s ease-in-out infinite; }
+    .dim-node.fd .node-inner { animation: float-d 5.7s ease-in-out infinite; }
+    .dim-node.fe .node-inner { animation: float-e 4.4s ease-in-out infinite; }
+
+    /* ── Shared node internals ────────────────────── */
+    .node-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1d1b18 0%, #111009 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .node-thumb-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(234,228,213,0.07); }
+    .node-body { padding: 12px 14px 15px; }
+    .node-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .node-code { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson); }
+    .node-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(234,228,213,0.18); flex-shrink: 0; }
+    .node-dot.live   { background: var(--green);  animation: pulse 2.6s ease-in-out infinite; }
+    .node-dot.active { background: var(--crimson); animation: pulse 2.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+    .node-name { font-size: 13px; font-weight: 500; color: rgba(234,228,213,0.9); letter-spacing: -0.015em; line-height: 1.25; margin-bottom: 2px; }
+    .node-type { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(234,228,213,0.28); }
+    .node-stats { margin-top: 11px; padding-top: 10px; border-top: 1px solid rgba(234,228,213,0.06); display: flex; flex-direction: column; gap: 4px; }
+    .node-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .node-key { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(234,228,213,0.22); }
+    .node-val { font-size: 11px; font-weight: 500; color: rgba(234,228,213,0.62); letter-spacing: -0.01em; }
+    .node-val.pos { color: var(--green); }
+
+    /* ── Index view ───────────────────────────────── */
+    #index-view { display: none; position: absolute; inset: 0; padding: 64px 24px 24px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(234,228,213,0.1) transparent; }
+    #index-view.visible { display: block; }
+    .index-table { width: 100%; border-collapse: collapse; }
+    .index-table th { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(234,228,213,0.22); font-weight: 400; text-align: left; padding: 0 0 12px; border-bottom: 1px solid rgba(234,228,213,0.07); }
+    .index-table th:last-child { text-align: right; }
+    .index-row-data { border-bottom: 1px solid rgba(234,228,213,0.05); cursor: pointer; transition: background 0.15s; }
+    .index-row-data:hover { background: rgba(234,228,213,0.03); }
+    .index-row-data.dim-row { opacity: 0.2; pointer-events: none; }
+    .index-row-data td { padding: 14px 0; font-size: 12px; color: rgba(234,228,213,0.6); vertical-align: middle; }
+    .index-row-data td:last-child { text-align: right; }
+    .idx-code { font-size: 10px; letter-spacing: 0.14em; color: var(--crimson); padding-right: 24px !important; white-space: nowrap; }
+    .idx-name { font-weight: 500; color: rgba(234,228,213,0.82); padding-right: 24px !important; }
+    .idx-live { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+    .idx-upcoming { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(234,228,213,0.2); }
+
+    /* ── Detail panel ─────────────────────────────── */
+    #detail-panel {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 74vh;
+      background: var(--panel); border-radius: 18px 18px 0 0;
+      z-index: 30; display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.42s cubic-bezier(0.4, 0, 0.15, 1);
+      box-shadow: 0 -8px 48px rgba(0,0,0,0.6); overflow: hidden;
+    }
+    #detail-panel.open { transform: translateY(0); }
+
+    .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 14px; flex-shrink: 0; border-bottom: 1px solid rgba(234,228,213,0.06); }
+    .panel-header-left { display: flex; align-items: baseline; gap: 14px; }
+    .panel-code { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson); }
+    .panel-title { font-size: 15px; font-weight: 500; color: rgba(234,228,213,0.92); letter-spacing: -0.02em; }
+    .panel-close { width: 28px; height: 28px; border: 1px solid rgba(234,228,213,0.12); border-radius: 50%; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: rgba(234,228,213,0.5); font-size: 13px; transition: border-color 0.2s, color 0.2s; flex-shrink: 0; }
+    .panel-close:hover { border-color: rgba(234,228,213,0.35); color: rgba(234,228,213,0.9); }
+
+    .panel-images { display: flex; gap: 8px; padding: 16px 24px; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
+    .panel-images::-webkit-scrollbar { display: none; }
+    .panel-img { height: 144px; flex-shrink: 0; border-radius: 12px; background: linear-gradient(135deg, #222018, #1a1815); display: flex; align-items: center; justify-content: center; }
+    .panel-img-wide { width: 226px; }
+    .panel-img-tall { width: 108px; }
+    .panel-img-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(234,228,213,0.1); }
+
+    .panel-grid { display: grid; grid-template-columns: 1fr 1.6fr 1.2fr 1fr; gap: 10px; padding: 0 24px 24px; flex: 1; min-height: 0; }
+    .panel-card { background: var(--card); border: 1px solid rgba(234,228,213,0.07); border-radius: 14px; padding: 16px; overflow-y: auto; scrollbar-width: none; }
+    .panel-card::-webkit-scrollbar { display: none; }
+    .panel-card-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(234,228,213,0.25); margin-bottom: 14px; }
+    .spec-row { margin-bottom: 10px; }
+    .spec-key { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(234,228,213,0.25); margin-bottom: 2px; display: block; }
+    .spec-val { font-size: 12px; font-weight: 500; color: rgba(234,228,213,0.82); letter-spacing: -0.01em; }
+    .spec-val.pos { color: var(--green); }
+    .panel-desc { font-size: 12px; line-height: 1.7; color: rgba(234,228,213,0.48); }
+    .outcome-metric { margin-bottom: 16px; }
+    .outcome-num { font-size: 28px; font-weight: 300; color: rgba(234,228,213,0.85); letter-spacing: -0.04em; line-height: 1; margin-bottom: 3px; }
+    .outcome-sub { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(234,228,213,0.28); }
+    .credit-row { margin-bottom: 12px; }
+    .credit-role { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(234,228,213,0.22); margin-bottom: 2px; }
+    .credit-name { font-size: 12px; font-weight: 500; color: rgba(234,228,213,0.7); }
+
+    #panel-overlay { position: fixed; inset: 0; z-index: 25; display: none; }
+    #panel-overlay.open { display: block; }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-word" href="/" style="text-decoration:none">Eachtra</a>
+    <button class="nav-pill active" id="btn-node">Work</button>
+    <button class="nav-pill" id="btn-index">Index</button>
+    <div class="nav-divider"></div>
+    <a class="nav-pill" href="about.html">About</a>
+    <a class="nav-pill" href="contact.html">Contact</a>
+  </nav>
+
+  <div id="zoom-ctrl">
+    <button class="zoom-btn" id="zoom-out">&#x2212;</button>
+    <span id="zoom-label">100%</span>
+    <button class="zoom-btn" id="zoom-in">&#x2B;</button>
+  </div>
+
+  <div id="hint">Drag to explore &nbsp;&middot;&nbsp; Click a client to expand</div>
+  <div id="panel-overlay"></div>
+
+  <!-- ── Canvas ───────────────────────────────────── -->
+  <div id="world">
+    <svg id="svg-layer" xmlns="http://www.w3.org/2000/svg">
+      <!-- MaHalla connection group — hidden until expanded -->
+      <g id="connections-mahalla">
+        <!-- MaHalla → Meta Ads -->
+        <path d="M 400 300 C 630 300, 630 80, 860 80" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- MaHalla → Funnel -->
+        <path d="M 400 300 C 630 300, 630 520, 860 520" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- Meta → Audience -->
+        <path d="M 860 80 C 1060 80, 1060 300, 1260 300" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+        <!-- Funnel → Audience -->
+        <path d="M 860 520 C 1060 520, 1060 300, 1260 300" stroke="rgba(234,228,213,0.32)" stroke-width="1" fill="none"/>
+      </g>
+    </svg>
+
+    <!-- ── LEVEL 1: Client node ─────────────────────── -->
+    <div class="node client-node fa" id="n-mahalla" style="left:400px;top:300px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">ECH — 001</span></div>
+        <div class="node-body">
+          <div class="node-top">
+            <span class="node-code">ECH-001</span>
+            <span class="node-dot live"></span>
+          </div>
+          <div class="node-name">MaHalla Berlin</div>
+          <div class="node-type">Event Marketing · Berlin · 2026</div>
+          <div class="node-deliverables">
+            <span class="node-tag">Meta Ads</span>
+            <span class="node-tag">Funnel</span>
+            <span class="node-tag">Audience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LEVEL 2: Deliverable child nodes ────────── -->
+    <div class="node child-node fc" id="n-meta" data-panel="meta">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Paid Social</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-001 / CH-01</span><span class="node-dot live"></span></div>
+          <div class="node-name">Meta Ads Campaign</div>
+          <div class="node-type">Paid Social · Instagram</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Platform</span><span class="node-val">Meta</span></div>
+            <div class="node-row"><span class="node-key">Objective</span><span class="node-val">Event reach</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Live</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node child-node fb" id="n-funnel" data-panel="funnel">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Strategy</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-001 / ST-01</span><span class="node-dot active"></span></div>
+          <div class="node-name">Capture Funnel</div>
+          <div class="node-type">Strategy · Lead Gen</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Model</span><span class="node-val">Capture first</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Deployed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node child-node fd" id="n-audience" data-panel="audience">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Outcome</span></div>
+        <div class="node-body">
+          <div class="node-top"><span class="node-code">ECH-001 / OUT</span><span class="node-dot live"></span></div>
+          <div class="node-name">2,000 Contacts</div>
+          <div class="node-type">Audience Asset · Owned</div>
+          <div class="node-stats">
+            <div class="node-row"><span class="node-key">Size</span><span class="node-val pos">2,000</span></div>
+            <div class="node-row"><span class="node-key">Market</span><span class="node-val">Berlin</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Locked future clients ────────────────────── -->
+    <div class="node dim-node fb" style="left:-200px;top:140px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-002</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+    <div class="node dim-node fc" style="left:-140px;top:580px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-003</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+    <div class="node dim-node fe" style="left:400px;top:-180px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-004</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+    <div class="node dim-node fa" style="left:1560px;top:120px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-005</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+    <div class="node dim-node fd" style="left:1560px;top:500px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-006</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+    <div class="node dim-node fb" style="left:400px;top:720px">
+      <div class="node-inner">
+        <div class="node-thumb"><span class="node-thumb-label">Upcoming</span></div>
+        <div class="node-body"><div class="node-top"><span class="node-code">ECH-007</span><span class="node-dot"></span></div><div class="node-name">Untitled</div><div class="node-type">TBC · 2026</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Index view ────────────────────────────────── -->
+  <div id="index-view">
+    <table class="index-table">
+      <thead><tr><th>Code</th><th>Client</th><th>Scope</th><th>Location</th><th>Year</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr class="index-row-data" data-panel-id="mahalla-overview">
+          <td class="idx-code">ECH-001</td><td class="idx-name">MaHalla Berlin</td>
+          <td>Meta Ads, Capture Funnel, Audience Build</td><td>Berlin</td><td>2026</td>
+          <td><span class="idx-live">Live</span></td>
+        </tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-002</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-003</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-004</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-005</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-006</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+        <tr class="index-row-data dim-row"><td class="idx-code">ECH-007</td><td class="idx-name">Untitled</td><td>—</td><td>—</td><td>2026</td><td><span class="idx-upcoming">Upcoming</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── Detail panel ──────────────────────────────── -->
+  <div id="detail-panel">
+    <div class="panel-header">
+      <div class="panel-header-left">
+        <span class="panel-code" id="p-code"></span>
+        <span class="panel-title" id="p-title"></span>
+      </div>
+      <button class="panel-close" id="panel-close">&#x2715;</button>
+    </div>
+    <div class="panel-images" id="p-images"></div>
+    <div class="panel-grid">
+      <div class="panel-card" id="p-specs"></div>
+      <div class="panel-card" id="p-desc"></div>
+      <div class="panel-card" id="p-results"></div>
+      <div class="panel-card" id="p-credits"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── Panel data ─────────────────────────────────
+    const PANELS = {
+      meta: {
+        code: 'ECH-001 / CH-01', title: 'Meta Ads Campaign',
+        images: ['Campaign visual','Ad 01','Ad 02','Creative','Story'],
+        specs: [['Platform','Meta'],['Format','Events'],['Placement','Instagram'],['Objective','Event reach'],['Status','Live']],
+        specPos: 'Status',
+        desc: `Built and launched Meta paid social targeting Berlin's underground music and culture scene. Optimised for event reach and capture funnel entry — every click feeds directly into the owned audience list rather than a ticket page.`,
+        results: [['3','Campaigns active'],['Instagram','Primary placement'],['Ongoing','Optimisation']],
+        credits: [['Strategy','Eachtra'],['Execution','Pipeboard via Claude'],['Platform','Meta'],['Client','MaHalla Berlin']]
+      },
+      funnel: {
+        code: 'ECH-001 / ST-01', title: 'Capture Funnel',
+        images: ['Funnel flow','Landing page','Form','Confirmation','Email'],
+        specs: [['Type','Strategy'],['Model','Capture first'],['Approach','List build'],['Trigger','Meta Ads'],['Status','Deployed']],
+        specPos: 'Status',
+        desc: 'Designed a capture-first funnel that builds an owned audience list before any ticket promotion spend. Users click Meta ads, land on a lightweight capture page, and are added to the MaHalla list. No ticket page until the list is warm.',
+        results: [['2,000','Contacts captured'],['Berlin','Primary market'],['Owned','Asset type']],
+        credits: [['Strategy','Eachtra'],['Model','Capture first'],['Orchestration','Pipeboard via Claude'],['Client','MaHalla Berlin']]
+      },
+      audience: {
+        code: 'ECH-001 / OUT', title: 'Audience Asset',
+        images: ['List overview','Segment A','Segment B','Growth chart','Export'],
+        specs: [['Type','Owned asset'],['Size','2,000'],['Market','Berlin'],['Source','Meta funnel'],['Status','Live']],
+        specPos: 'Status',
+        desc: '2,000 Berlin-based music and culture contacts captured via Meta funnel. Fully owned by MaHalla — no platform dependency. Ready for direct event promotion, ticket drops, and retargeting at zero incremental cost.',
+        results: [['2,000','Contacts owned'],['€0','Marginal reach cost'],['Day 1','Growth from ads live']],
+        credits: [['Built by','Eachtra'],['Owner','MaHalla Berlin'],['Channel','Meta Ads'],['Model','Capture first']]
+      },
+      'mahalla-overview': {
+        code: 'ECH-001', title: 'MaHalla Berlin',
+        images: ['Campaign visual','Ad 01','Funnel','Audience','Creative'],
+        specs: [['Client','MaHalla'],['Location','Berlin'],['Year','2026'],['Vertical','Events'],['Deliverables','3'],['Status','Live']],
+        specPos: 'Status',
+        desc: `MaHalla Berlin entered the market with zero digital audience. Eachtra built a capture-first funnel powered by Meta paid social, targeting Berlin's underground music scene. The objective: grow an owned list before spending on ticket promotion.`,
+        results: [['2,000','Contacts captured'],['3','Deliverables shipped'],['Day 1','Ads live']],
+        credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Orchestration','Pipeboard via Claude'],['Client','MaHalla Berlin']]
+      }
+    };
+
+    function renderPanel(key) {
+      const d = PANELS[key];
+      if (!d) return;
+      document.getElementById('p-code').textContent  = d.code;
+      document.getElementById('p-title').textContent = d.title;
+
+      // Images
+      const imgs = d.images;
+      const imgEl = document.getElementById('p-images');
+      imgEl.innerHTML = imgs.map((lbl, i) =>
+        `<div class="panel-img ${i === 0 || i === 3 ? 'panel-img-wide' : 'panel-img-tall'}">
+          <span class="panel-img-label">${lbl}</span></div>`
+      ).join('');
+
+      // Specs
+      document.getElementById('p-specs').innerHTML =
+        `<div class="panel-card-label">Project</div>` +
+        d.specs.map(([k, v]) =>
+          `<div class="spec-row"><span class="spec-key">${k}</span>
+           <span class="spec-val${k === d.specPos ? ' pos' : ''}">${v}</span></div>`
+        ).join('');
+
+      // Description
+      document.getElementById('p-desc').innerHTML =
+        `<div class="panel-card-label">Overview</div><p class="panel-desc">${d.desc}</p>`;
+
+      // Results
+      document.getElementById('p-results').innerHTML =
+        `<div class="panel-card-label">Results</div>` +
+        d.results.map(([n, s]) =>
+          `<div class="outcome-metric"><div class="outcome-num">${n}</div><div class="outcome-sub">${s}</div></div>`
+        ).join('');
+
+      // Credits
+      document.getElementById('p-credits').innerHTML =
+        `<div class="panel-card-label">Credits</div>` +
+        d.credits.map(([r, n]) =>
+          `<div class="credit-row"><div class="credit-role">${r}</div><div class="credit-name">${n}</div></div>`
+        ).join('');
+    }
+
+    // ── Pan ────────────────────────────────────────
+    const world     = document.getElementById('world');
+    const panel     = document.getElementById('detail-panel');
+    const overlay   = document.getElementById('panel-overlay');
+    const indexView = document.getElementById('index-view');
+    const zoomLbl   = document.getElementById('zoom-label');
+    const zoomCtrl  = document.getElementById('zoom-ctrl');
+    const hint      = document.getElementById('hint');
+    const btnNode   = document.getElementById('btn-node');
+    const btnIndex  = document.getElementById('btn-index');
+    const connGroup = document.getElementById('connections-mahalla');
+
+    let tx = 0, ty = 0, scale = 1;
+    let panning = false, ox = 0, oy = 0;
+
+    function applyT() {
+      world.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+      world.style.transformOrigin = '0 0';
+      zoomLbl.textContent = Math.round(scale * 100) + '%';
+    }
+
+    // Apply identity first (MaHalla at 400,300 is visible even without offset)
+    applyT();
+
+    // Then centre MaHalla properly after first paint
+    requestAnimationFrame(() => {
+      tx = window.innerWidth  / 2 - 400;
+      ty = window.innerHeight / 2 - 300;
+      applyT();
+    });
+
+    document.addEventListener('mousedown', e => {
+      if (e.target.closest('.node') || e.target.closest('#nav') ||
+          e.target.closest('#zoom-ctrl') || panel.classList.contains('open')) return;
+      panning = true; ox = e.clientX - tx; oy = e.clientY - ty;
+      document.body.classList.add('panning');
+    });
+    document.addEventListener('mousemove', e => {
+      if (!panning) return;
+      tx = e.clientX - ox; ty = e.clientY - oy; applyT();
+    });
+    document.addEventListener('mouseup', () => { panning = false; document.body.classList.remove('panning'); });
+
+    function doZoom(f, cx, cy) {
+      const ns = Math.max(0.3, Math.min(2.4, scale * f));
+      const px = cx ?? window.innerWidth/2, py = cy ?? window.innerHeight/2;
+      tx = px - (px-tx)*(ns/scale); ty = py - (py-ty)*(ns/scale);
+      scale = ns; applyT();
+    }
+    document.addEventListener('wheel', e => {
+      if (panel.classList.contains('open') || indexView.classList.contains('visible')) return;
+      e.preventDefault(); doZoom(e.deltaY > 0 ? 0.93 : 1.07, e.clientX, e.clientY);
+    }, { passive: false });
+    document.getElementById('zoom-in').addEventListener('click',  () => doZoom(1.2));
+    document.getElementById('zoom-out').addEventListener('click', () => doZoom(0.83));
+
+    // ── View toggle ────────────────────────────────
+    function setView(v) {
+      const isIdx = v === 'index';
+      world.style.display = isIdx ? 'none' : '';
+      indexView.classList.toggle('visible', isIdx);
+      btnNode.classList.toggle('active', !isIdx);
+      btnIndex.classList.toggle('active', isIdx);
+      hint.style.display = isIdx ? 'none' : '';
+      zoomCtrl.style.display = isIdx ? 'none' : '';
+    }
+    btnNode.addEventListener('click',  () => setView('node'));
+    btnIndex.addEventListener('click', () => setView('index'));
+
+    // ── Client expand/collapse ─────────────────────
+    let clientExpanded = false;
+    const mahalla   = document.getElementById('n-mahalla');
+    const children  = document.querySelectorAll('.child-node');
+
+    function expandClient() {
+      clientExpanded = true;
+      mahalla.classList.add('expanded');
+      children.forEach(c => c.classList.add('expanded'));
+      connGroup.classList.add('visible');
+      hint.textContent = 'Click a deliverable to see detail';
+    }
+    function collapseClient() {
+      clientExpanded = false;
+      mahalla.classList.remove('expanded');
+      children.forEach(c => c.classList.remove('expanded'));
+      connGroup.classList.remove('visible');
+      hint.textContent = 'Drag to explore · Click a client to expand';
+    }
+
+    mahalla.addEventListener('click', () => {
+      clientExpanded ? collapseClient() : expandClient();
+    });
+
+    // ── Child node click → panel ───────────────────
+    children.forEach(node => {
+      node.addEventListener('click', e => {
+        e.stopPropagation();
+        const key = node.dataset.panel;
+        renderPanel(key);
+        panel.classList.add('open');
+        overlay.classList.add('open');
+      });
+    });
+
+    // Index row click → panel
+    document.querySelectorAll('.index-row-data:not(.dim-row)').forEach(r => {
+      r.addEventListener('click', () => {
+        renderPanel(r.dataset.panelId);
+        panel.classList.add('open');
+        overlay.classList.add('open');
+      });
+    });
+
+    function closePanel() {
+      panel.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+    document.getElementById('panel-close').addEventListener('click', closePanel);
+    overlay.addEventListener('click', closePanel);
+  </script>
+</body>
+</html>
