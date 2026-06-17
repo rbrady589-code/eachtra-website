@@ -21,11 +21,18 @@
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
-      background: var(--bg);
+      background-color: var(--bg);
+      /* sub.global-style dot field */
+      background-image: radial-gradient(circle, rgba(234,228,213,0.13) 1px, transparent 1.6px);
+      background-size: 40px 40px;
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
+      touch-action: none;            /* canvas owns the gestures */
     }
     body.panning { cursor: grabbing !important; }
+    /* let inner scroll work on touch */
+    #index-view   { touch-action: pan-y; }
+    #detail-panel { touch-action: auto; }
 
     /* ── Nav ──────────────────────────────────────── */
     #nav {
@@ -661,6 +668,8 @@
 
     let tx = 0, ty = 0, scale = 1;
     let panning = false, ox = 0, oy = 0;
+    const pointers = new Map();
+    let pinchDist = 0, pinchScale = 1;
 
     function applyT() {
       world.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
@@ -678,17 +687,56 @@
       applyT();
     });
 
-    document.addEventListener('mousedown', e => {
-      if (e.target.closest('.node') || e.target.closest('#nav') ||
-          e.target.closest('#zoom-ctrl') || panel.classList.contains('open')) return;
-      panning = true; ox = e.clientX - tx; oy = e.clientY - ty;
-      document.body.classList.add('panning');
+    // Pointer-based pan + pinch zoom (mouse, touch and pen)
+    function blocksPan(t) {
+      return t.closest('.node') || t.closest('#nav') ||
+             t.closest('#zoom-ctrl') || t.closest('#detail-panel') ||
+             t.closest('#index-view');
+    }
+
+    document.addEventListener('pointerdown', e => {
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (panel.classList.contains('open')) return;
+
+      if (pointers.size === 1) {
+        if (blocksPan(e.target)) return;   // let nodes/UI receive the tap
+        panning = true; ox = e.clientX - tx; oy = e.clientY - ty;
+        document.body.classList.add('panning');
+      } else if (pointers.size === 2) {
+        panning = false;
+        document.body.classList.remove('panning');
+        const p = [...pointers.values()];
+        pinchDist  = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+        pinchScale = scale;
+      }
     });
-    document.addEventListener('mousemove', e => {
-      if (!panning) return;
-      tx = e.clientX - ox; ty = e.clientY - oy; applyT();
-    });
-    document.addEventListener('mouseup', () => { panning = false; document.body.classList.remove('panning'); });
+
+    document.addEventListener('pointermove', e => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (pointers.size >= 2 && pinchDist) {
+        const p = [...pointers.values()];
+        const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+        const ns = Math.max(0.3, Math.min(2.4, pinchScale * (dist / pinchDist)));
+        const cx = (p[0].x + p[1].x) / 2, cy = (p[0].y + p[1].y) / 2;
+        tx = cx - (cx - tx) * (ns / scale);
+        ty = cy - (cy - ty) * (ns / scale);
+        scale = ns; applyT();
+        e.preventDefault();
+      } else if (panning) {
+        tx = e.clientX - ox; ty = e.clientY - oy; applyT();
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    function endPointer(e) {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinchDist = 0;
+      if (pointers.size === 0) { panning = false; document.body.classList.remove('panning'); }
+    }
+    document.addEventListener('pointerup', endPointer);
+    document.addEventListener('pointercancel', endPointer);
 
     function doZoom(f, cx, cy) {
       const ns = Math.max(0.3, Math.min(2.4, scale * f));
