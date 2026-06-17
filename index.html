@@ -26,11 +26,29 @@
       filter: contrast(1.14) saturate(1.6) brightness(1.1);
     }
 
-    /* ── Nav override for landing (on dark video) ──── */
-    #nav {
-      background: none;
+    /* ── Nav override for landing (sits on bright video) ──── */
+    #nav { background: none; }
+    #nav .nav-logo {
+      color: rgba(255,255,255,0.96);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
     }
-    #nav .nav-logo { color: rgba(234,228,213,0.82); }
+    #nav .nav-pill {
+      color: rgba(255,255,255,0.92);
+      border-color: rgba(255,255,255,0.55);
+      background: rgba(12,11,9,0.28);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+    #nav .nav-pill:hover {
+      border-color: rgba(255,255,255,0.85);
+      background: rgba(12,11,9,0.42);
+    }
+    #nav .nav-pill.active {
+      border-color: rgba(255,255,255,0.9);
+      background: rgba(12,11,9,0.5);
+      color: #fff;
+    }
 
     /* ── Centered wordmark ─────────────────────────── */
     #wordmark {
