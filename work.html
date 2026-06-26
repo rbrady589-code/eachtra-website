@@ -578,10 +578,10 @@
       audience: {
         code: 'ECH-001 / OUT', title: 'Audience Asset',
         images: ['List overview','Segment A','Segment B','Growth chart','Export'],
-        specs: [['Type','Owned asset'],['Size','2,000'],['Market','Berlin'],['Source','Meta funnel'],['Status','Live']],
+        specs: [['Type','Capture funnel'],['Entries','2,090'],['Cost/click','€0.15'],['Market','Berlin'],['Status','Live']],
         specPos: 'Status',
-        desc: '2,000 Berlin-based music and culture contacts captured via Meta funnel. Fully owned by MaHalla — no platform dependency. Ready for direct event promotion, ticket drops, and retargeting at zero incremental cost.',
-        results: [['2,000','Contacts owned'],['€0','Marginal reach cost'],['Day 1','Growth from ads live']],
+        desc: 'Meta paid social drove 2,090 entries into MaHalla’s capture funnel at €0.15 per click — cheap, qualified traffic from Berlin’s music and culture audience. Each entry feeds an owned list built to promote events and ticket drops directly, lowering the cost to reach the same people again.',
+        results: [['2,090','Funnel entries'],['€0.15','Cost per click'],['Berlin','Music audience']],
         credits: [['Built by','Eachtra'],['Owner','MaHalla Berlin'],['Channel','Meta Ads'],['Model','Capture first']]
       },
       'mahalla-overview': {
@@ -663,6 +663,9 @@
       if (isNum(m.landing_page_views)) {
         PANELS.funnel.results[0]   = [fmt(m.landing_page_views), 'Landing page views'];
         PANELS.audience.results[0] = [fmt(m.landing_page_views), 'Funnel entries'];
+      }
+      if (isNum(m.cost_per_click_eur)) {
+        PANELS.audience.results[1] = ['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click'];
       }
       const ov = [];
       if (isNum(m.reach))              ov.push([fmt(m.reach), 'People reached']);

@@ -11,7 +11,8 @@
         "landing_page_views": 2090,
         "link_clicks": 2990,
         "campaigns_active": 2,
-        "ctr_pct": 1.28
+        "ctr_pct": 1.28,
+        "cost_per_click_eur": 0.15
       },
       "private": {
         "spend_eur": 547.86,
