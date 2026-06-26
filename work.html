@@ -250,6 +250,9 @@
     .panel-header-left { display: flex; align-items: baseline; gap: 14px; }
     .panel-code { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson); }
     .panel-title { font-size: 15px; font-weight: 500; color: rgba(234,228,213,0.92); letter-spacing: -0.02em; }
+    .panel-live { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+    .panel-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2.6s ease-in-out infinite; }
+    .panel-live .live-stamp { color: rgba(234,228,213,0.45); letter-spacing: 0.04em; text-transform: none; }
     .panel-close { width: 28px; height: 28px; border: 1px solid rgba(234,228,213,0.12); border-radius: 50%; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: rgba(234,228,213,0.5); font-size: 13px; transition: border-color 0.2s, color 0.2s; flex-shrink: 0; }
     .panel-close:hover { border-color: rgba(234,228,213,0.35); color: rgba(234,228,213,0.9); }
 
@@ -260,6 +263,18 @@
     .panel-img-tall { width: 108px; }
     .panel-img-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(234,228,213,0.1); }
 
+    .panel-social { padding: 0 24px 14px; flex-shrink: 0; }
+    .social-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+    .social-handle { font-size: 13px; font-weight: 500; color: rgba(234,228,213,0.9); text-decoration: none; }
+    .social-handle:hover { color: var(--green); }
+    .social-meta { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(234,228,213,0.3); }
+    .social-posts { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .social-posts::-webkit-scrollbar { display: none; }
+    .social-post { flex: 1 1 0; min-width: 120px; background: var(--card); border: 1px solid rgba(234,228,213,0.07); border-radius: 12px; padding: 12px 14px; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+    .social-post:hover { border-color: rgba(42,155,106,0.4); transform: translateY(-2px); }
+    .social-views { font-size: 22px; font-weight: 300; color: rgba(234,228,213,0.9); letter-spacing: -0.03em; line-height: 1; }
+    .social-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(234,228,213,0.28); margin: 4px 0 8px; }
+    .social-link { font-size: 10px; color: var(--green); letter-spacing: 0.04em; }
     .panel-grid { display: grid; grid-template-columns: 1fr 1.6fr 1.2fr 1fr; gap: 10px; padding: 0 24px 24px; flex: 1; min-height: 0; }
     .panel-card { background: var(--card); border: 1px solid rgba(234,228,213,0.07); border-radius: 14px; padding: 16px; overflow-y: auto; scrollbar-width: none; }
     .panel-card::-webkit-scrollbar { display: none; }
@@ -525,10 +540,12 @@
       <div class="panel-header-left">
         <span class="panel-code" id="p-code"></span>
         <span class="panel-title" id="p-title"></span>
+        <span class="panel-live" id="p-live" hidden></span>
       </div>
       <button class="panel-close" id="panel-close">&#x2715;</button>
     </div>
     <div class="panel-images" id="p-images"></div>
+    <div class="panel-social" id="p-social" hidden></div>
     <div class="panel-grid">
       <div class="panel-card" id="p-specs"></div>
       <div class="panel-card" id="p-desc"></div>
@@ -547,7 +564,7 @@
         specPos: 'Status',
         desc: `Built and launched Meta paid social targeting Berlin's underground music and culture scene. Optimised for event reach and capture funnel entry — every click feeds directly into the owned audience list rather than a ticket page.`,
         results: [['3','Campaigns active'],['Instagram','Primary placement'],['Ongoing','Optimisation']],
-        credits: [['Strategy','Eachtra'],['Execution','Pipeboard via Claude'],['Platform','Meta'],['Client','MaHalla Berlin']]
+        credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Platform','Meta'],['Client','MaHalla Berlin']]
       },
       funnel: {
         code: 'ECH-001 / ST-01', title: 'Capture Funnel',
@@ -556,7 +573,7 @@
         specPos: 'Status',
         desc: 'Designed a capture-first funnel that builds an owned audience list before any ticket promotion spend. Users click Meta ads, land on a lightweight capture page, and are added to the MaHalla list. No ticket page until the list is warm.',
         results: [['2,000','Contacts captured'],['Berlin','Primary market'],['Owned','Asset type']],
-        credits: [['Strategy','Eachtra'],['Model','Capture first'],['Orchestration','Pipeboard via Claude'],['Client','MaHalla Berlin']]
+        credits: [['Strategy','Eachtra'],['Model','Capture first'],['Build','Eachtra'],['Client','MaHalla Berlin']]
       },
       audience: {
         code: 'ECH-001 / OUT', title: 'Audience Asset',
@@ -574,7 +591,7 @@
         specPos: 'Status',
         desc: `MaHalla Berlin entered the market with zero digital audience. Eachtra built a capture-first funnel powered by Meta paid social, targeting Berlin's underground music scene. The objective: grow an owned list before spending on ticket promotion.`,
         results: [['2,000','Contacts captured'],['3','Deliverables shipped'],['Day 1','Ads live']],
-        credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Orchestration','Pipeboard via Claude'],['Client','MaHalla Berlin']]
+        credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Build','Eachtra'],['Client','MaHalla Berlin']]
       },
       'suave-web': {
         code: 'ECH-002 / WEB', title: 'EPK Website',
@@ -614,11 +631,101 @@
       }
     };
 
+    // ── Live campaign data ─────────────────────────
+    // Maps each panel to its client. Panels with live data get real metrics
+    // merged in over the hardcoded fallbacks above. Any fetch/parse failure
+    // leaves PANELS untouched, so the showcase never renders blank.
+    const PANEL_CLIENT = {
+      meta: 'mahalla', funnel: 'mahalla', audience: 'mahalla',
+      'mahalla-overview': 'mahalla'
+    };
+    const LIVE_STATE = {};                 // { clientId: { updated } } once loaded
+    const fmt = n => Number(n).toLocaleString('en-US');
+    const fmtK = n => n >= 1000 ? +(n / 1000).toFixed(1) + 'k' : String(n);
+    const isNum = n => typeof n === 'number' && isFinite(n);
+
+    function agoLabel(iso) {
+      const then = new Date(iso).getTime();
+      if (isNaN(then)) return '';
+      const mins = Math.max(0, Math.round((Date.now() - then) / 60000));
+      if (mins < 60) return `updated ${mins}m ago`;
+      const hrs = Math.round(mins / 60);
+      if (hrs < 48) return `updated ${hrs}h ago`;
+      return `updated ${Math.round(hrs / 24)}d ago`;
+    }
+
+    function applyLiveData(client) {
+      const m = client.metrics || {};
+      // Per-field overrides — only replace when the metric is a real number.
+      if (isNum(m.campaigns_active)) {
+        PANELS.meta.results[0] = [fmt(m.campaigns_active), 'Campaigns active'];
+      }
+      if (isNum(m.landing_page_views)) {
+        PANELS.funnel.results[0]   = [fmt(m.landing_page_views), 'Landing page views'];
+        PANELS.audience.results[0] = [fmt(m.landing_page_views), 'Funnel entries'];
+      }
+      const ov = [];
+      if (isNum(m.reach))              ov.push([fmt(m.reach), 'People reached']);
+      if (isNum(m.landing_page_views)) ov.push([fmt(m.landing_page_views), 'Landing page views']);
+      if (isNum(m.campaigns_active))   ov.push([fmt(m.campaigns_active), 'Campaigns active']);
+      if (ov.length) PANELS['mahalla-overview'].results = ov;
+    }
+
+    async function loadLiveData() {
+      try {
+        const res = await fetch('data/campaigns.json', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        (data.clients || []).forEach(c => {
+          if (c && c.id && c.status === 'live' && c.metrics) {
+            applyLiveData(c);
+            LIVE_STATE[c.id] = { updated: data.updated, instagram: c.instagram || null };
+          }
+        });
+      } catch (_) { /* keep hardcoded fallback values */ }
+    }
+    loadLiveData();
+
     function renderPanel(key) {
       const d = PANELS[key];
       if (!d) return;
       document.getElementById('p-code').textContent  = d.code;
       document.getElementById('p-title').textContent = d.title;
+
+      // Live badge — shown only for clients with loaded live data
+      const liveEl = document.getElementById('p-live');
+      const live = LIVE_STATE[PANEL_CLIENT[key]];
+      if (live) {
+        const stamp = agoLabel(live.updated);
+        liveEl.innerHTML = 'Live' + (stamp ? ` <span class="live-stamp">${stamp}</span>` : '');
+        liveEl.hidden = false;
+      } else {
+        liveEl.hidden = true;
+      }
+
+      // Social strip — organic Instagram reels, on the client overview panel only
+      const socialEl = document.getElementById('p-social');
+      const ig = live && live.instagram;
+      if (key.endsWith('-overview') && ig && Array.isArray(ig.posts) && ig.posts.length) {
+        const total = ig.posts.reduce((s, p) => s + (Number(p.views) || 0), 0);
+        socialEl.innerHTML =
+          `<div class="social-head">
+             <a class="social-handle" href="${ig.url}" target="_blank" rel="noopener">@${ig.handle}</a>
+             <span class="social-meta">${fmtK(ig.followers)} followers · ${fmtK(total)} views across ${ig.posts.length} reels</span>
+           </div>
+           <div class="social-posts">` +
+          ig.posts.map(p =>
+            `<a class="social-post" href="${p.url}" target="_blank" rel="noopener">
+               <div class="social-views">${fmtK(Number(p.views) || 0)}</div>
+               <div class="social-label">Views</div>
+               <div class="social-link">View reel →</div>
+             </a>`
+          ).join('') +
+          `</div>`;
+        socialEl.hidden = false;
+      } else {
+        socialEl.hidden = true;
+      }
 
       // Images
       const imgs = d.images;

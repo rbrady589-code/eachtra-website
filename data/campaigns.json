@@ -1,0 +1,34 @@
+{
+  "updated": "2026-06-26T12:00:00Z",
+  "source": "Meta Marketing API (act_419532674756411) — SOS campaign, since 2026-06-17",
+  "clients": [
+    {
+      "id": "mahalla",
+      "status": "live",
+      "metrics": {
+        "reach": 198429,
+        "impressions": 281714,
+        "landing_page_views": 2090,
+        "link_clicks": 2990,
+        "campaigns_active": 2,
+        "ctr_pct": 1.28
+      },
+      "private": {
+        "spend_eur": 547.86,
+        "cpc_eur": 0.15,
+        "cost_per_lpv_eur": 0.26
+      },
+      "instagram": {
+        "handle": "mahallaberlin",
+        "url": "https://www.instagram.com/mahallaberlin/",
+        "followers": 39883,
+        "views_note": "Public Instagram view counts (as shown on the reels), confirmed by client.",
+        "posts": [
+          { "shortcode": "DZ7yavTs6dW", "url": "https://www.instagram.com/reel/DZ7yavTs6dW/", "date": "2026-06-23", "views": 27600 },
+          { "shortcode": "DZ5Uz0nM6BZ", "url": "https://www.instagram.com/reel/DZ5Uz0nM6BZ/", "date": "2026-06-22", "views": 19400 },
+          { "shortcode": "DZugGbmszQi", "url": "https://www.instagram.com/reel/DZugGbmszQi/", "date": "2026-06-18", "views": 63300 }
+        ]
+      }
+    }
+  ]
+}
