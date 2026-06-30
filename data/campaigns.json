@@ -1,23 +1,32 @@
 {
-  "updated": "2026-06-26T12:00:00Z",
-  "source": "Meta Marketing API (act_419532674756411) — SOS campaign, since 2026-06-17",
+  "updated": "2026-06-30T20:00:00Z",
+  "source": "Meta Marketing API (act_419532674756411) — Sanctum of Sound campaign, since 2026-06-17",
   "clients": [
     {
       "id": "mahalla",
       "status": "live",
+      "event": {
+        "name": "Sanctum of Sound",
+        "descriptor": "52-hour ambient & experimental music festival",
+        "venue": "MaHalla, Berlin",
+        "campaign_window": "3-week run-up",
+        "stage": "ongoing — 2 weeks, 2 days in"
+      },
       "metrics": {
-        "reach": 198429,
-        "impressions": 281714,
-        "landing_page_views": 2090,
-        "link_clicks": 2990,
-        "campaigns_active": 2,
-        "ctr_pct": 1.28,
-        "cost_per_click_eur": 0.15
+        "reach": 222933,
+        "impressions": 327607,
+        "link_clicks": 4051,
+        "landing_page_views": 2875,
+        "campaigns_active": 3,
+        "cost_per_click_eur": 0.18,
+        "cost_per_lpv_eur": 0.26
       },
       "private": {
-        "spend_eur": 547.86,
-        "cpc_eur": 0.15,
-        "cost_per_lpv_eur": 0.26
+        "spend_eur": 744,
+        "cpc_eur": 0.18,
+        "cost_per_lpv_eur": 0.26,
+        "historical_cpc_eur": 0.27,
+        "best_adset_cpc_eur": 0.11
       },
       "instagram": {
         "handle": "mahallaberlin",
