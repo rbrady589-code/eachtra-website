@@ -204,6 +204,12 @@
       display: flex; align-items: center; justify-content: center;
     }
     .node-thumb-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(234,228,213,0.07); }
+    a.node-thumb { padding: 0; overflow: hidden; display: block; cursor: pointer; position: relative; }
+    a.node-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    a.node-thumb::after { content: 'View case study →'; position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 12px 8px; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7)); opacity: 0; transition: opacity .25s; }
+    .client-node:hover a.node-thumb::after { opacity: 1; }
+    .node-thumb.has-video { padding: 0; overflow: hidden; }
+    .node-thumb.has-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .node-body { padding: 12px 14px 15px; }
     .node-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .node-code { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson); }
@@ -346,7 +352,9 @@
     <!-- ── LEVEL 1: Client node ─────────────────────── -->
     <div class="node client-node fa" id="n-mahalla" data-client="mahalla" style="left:400px;top:300px">
       <div class="node-inner">
-        <div class="node-thumb"><span class="node-thumb-label">ECH — 001</span></div>
+        <a class="node-thumb" href="sanctum.html" onclick="event.stopPropagation()" aria-label="Open Sanctum of Sound case study">
+          <video src="images/sos/sos-1.mp4" muted loop autoplay playsinline preload="metadata"></video>
+        </a>
         <div class="node-body">
           <div class="node-top">
             <span class="node-code">ECH-001</span>
@@ -366,7 +374,7 @@
     <!-- ── LEVEL 2: Deliverable child nodes ────────── -->
     <div class="node child-node fc" id="n-meta" data-client="mahalla" data-panel="meta">
       <div class="node-inner">
-        <div class="node-thumb"><span class="node-thumb-label">Paid Social</span></div>
+        <div class="node-thumb has-video"><video src="images/sos/sos-2.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
         <div class="node-body">
           <div class="node-top"><span class="node-code">ECH-001 / CH-01</span><span class="node-dot live"></span></div>
           <div class="node-name">Meta Ads Campaign</div>
@@ -382,7 +390,7 @@
 
     <div class="node child-node fb" id="n-funnel" data-client="mahalla" data-panel="funnel">
       <div class="node-inner">
-        <div class="node-thumb"><span class="node-thumb-label">Strategy</span></div>
+        <div class="node-thumb has-video"><video src="images/sos/sos-3.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
         <div class="node-body">
           <div class="node-top"><span class="node-code">ECH-001 / ST-01</span><span class="node-dot active"></span></div>
           <div class="node-name">Capture Funnel</div>
@@ -397,7 +405,7 @@
 
     <div class="node child-node fd" id="n-audience" data-client="mahalla" data-panel="audience">
       <div class="node-inner">
-        <div class="node-thumb"><span class="node-thumb-label">Outcome</span></div>
+        <div class="node-thumb has-video"><video src="images/sos/sos-4.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
         <div class="node-body">
           <div class="node-top"><span class="node-code">ECH-001 / OUT</span><span class="node-dot live"></span></div>
           <div class="node-name">2,000 Contacts</div>
@@ -899,10 +907,11 @@
       });
     });
 
-    // ── Child node click → panel ───────────────────
+    // ── Child node click → case study (MaHalla) or panel ──
     document.querySelectorAll('.child-node').forEach(node => {
       node.addEventListener('click', e => {
         e.stopPropagation();
+        if (node.dataset.client === 'mahalla') { window.location.href = 'sanctum.html'; return; }
         const key = node.dataset.panel;
         renderPanel(key);
         panel.classList.add('open');
