@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Private — MaHalla × Eachtra</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0c0b09; --card:#141210; --cream:#EAE4D5;
+      --muted:rgba(234,228,213,0.50); --faint:rgba(234,228,213,0.28); --line:rgba(234,228,213,0.12);
+      --green:#2A9B6A; --crimson:#C8352A;
+      --font:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+    body { background:var(--bg); color:var(--cream); font-family:var(--font); -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; align-items:center; justify-content:center; padding:24px; }
+    .gate { width:100%; max-width:420px; text-align:center; }
+    .eyebrow { font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint); margin-bottom:22px; }
+    h1 { font-size:clamp(30px,7vw,44px); font-weight:300; letter-spacing:-0.03em; line-height:1.02; }
+    .sub { margin-top:16px; font-size:15px; font-weight:300; line-height:1.6; color:var(--muted); }
+    form { margin-top:34px; display:flex; flex-direction:column; gap:12px; }
+    input { width:100%; padding:15px 18px; background:var(--card); border:1px solid var(--line); border-radius:12px; color:var(--cream); font-family:var(--font); font-size:15px; letter-spacing:0.01em; text-align:center; transition:border-color .2s; }
+    input::placeholder { color:var(--faint); letter-spacing:0.08em; }
+    input:focus { outline:none; border-color:rgba(234,228,213,0.4); }
+    button { padding:15px 18px; background:var(--cream); color:#0c0b09; border:none; border-radius:999px; font-size:13px; letter-spacing:0.04em; cursor:pointer; transition:opacity .2s, transform .2s; }
+    button:hover { opacity:0.9; transform:translateY(-1px); }
+    .err { margin-top:6px; font-size:12.5px; color:var(--crimson); min-height:16px; opacity:0; transition:opacity .2s; }
+    .err.show { opacity:1; }
+    .foot { margin-top:30px; font-size:11px; letter-spacing:0.06em; color:var(--faint); }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+    .shake { animation:shake .32s; }
+  </style>
+</head>
+<body>
+  <div class="gate">
+    <div class="eyebrow">MaHalla × Eachtra</div>
+    <h1>Prepared for you.</h1>
+    <p class="sub">This is a private space. Enter the access code we sent you to open it.</p>
+    <form id="f" autocomplete="off">
+      <input id="code" type="password" placeholder="ACCESS CODE" aria-label="Access code" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button type="submit">Enter →</button>
+      <div class="err" id="err">That code isn't right. Try again.</div>
+    </form>
+    <div class="foot">Eachtra Agency · Berlin</div>
+  </div>
+
+  <script>
+    const HASH = "e3f7bcb24730c8a9382d01bba2ac5b1ac50c4fb419f3f25e22fba9d4f4dbff1a";
+    const form = document.getElementById('f');
+    const input = document.getElementById('code');
+    const err = document.getElementById('err');
+    const gate = document.querySelector('.gate');
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Already unlocked → skip the gate
+    if (localStorage.getItem('mh_access') === '1') { location.replace('mahalla-results.html'); }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const norm = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      const digest = await sha256(norm);
+      if (digest === HASH) {
+        localStorage.setItem('mh_access', '1');
+        location.replace('mahalla-results.html');
+      } else {
+        err.classList.add('show');
+        gate.classList.remove('shake'); void gate.offsetWidth; gate.classList.add('shake');
+        input.value = ''; input.focus();
+      }
+    });
+  </script>
+</body>
+</html>

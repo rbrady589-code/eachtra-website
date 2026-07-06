@@ -352,9 +352,9 @@
     <!-- ── LEVEL 1: Client node ─────────────────────── -->
     <div class="node client-node fa" id="n-mahalla" data-client="mahalla" style="left:400px;top:300px">
       <div class="node-inner">
-        <a class="node-thumb" href="sanctum.html" onclick="event.stopPropagation()" aria-label="Open Sanctum of Sound case study">
+        <div class="node-thumb">
           <video src="images/sos/sos-1.mp4" muted loop autoplay playsinline preload="metadata"></video>
-        </a>
+        </div>
         <div class="node-body">
           <div class="node-top">
             <span class="node-code">ECH-001</span>
@@ -380,9 +380,8 @@
           <div class="node-name">Meta Ads Campaign</div>
           <div class="node-type">Paid Social · 3 Phases</div>
           <div class="node-stats">
-            <div class="node-row"><span class="node-key">Spend</span><span class="node-val">€744</span></div>
-            <div class="node-row"><span class="node-key">Cost / click</span><span class="node-val pos">€0.18</span></div>
-            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Live</span></div>
+            <div class="node-row"><span class="node-key">Channel</span><span class="node-val">Meta paid social</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Delivered</span></div>
           </div>
         </div>
       </div>
@@ -408,11 +407,11 @@
         <div class="node-thumb has-video"><video src="images/sos/sos-4.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
         <div class="node-body">
           <div class="node-top"><span class="node-code">ECH-001 / OUT</span><span class="node-dot live"></span></div>
-          <div class="node-name">222,933 Reached</div>
+          <div class="node-name">Audience Reached</div>
           <div class="node-type">Outcome · Awareness</div>
           <div class="node-stats">
-            <div class="node-row"><span class="node-key">Ticket visits</span><span class="node-val pos">2,875</span></div>
-            <div class="node-row"><span class="node-key">Cost / click</span><span class="node-val">€0.18</span></div>
+            <div class="node-row"><span class="node-key">Channel</span><span class="node-val">Meta paid social</span></div>
+            <div class="node-row"><span class="node-key">Status</span><span class="node-val pos">Delivered</span></div>
           </div>
         </div>
       </div>
@@ -586,19 +585,19 @@
       audience: {
         code: 'ECH-001 / OUT', title: 'Audience Asset',
         images: ['List overview','Segment A','Segment B','Growth chart','Export'],
-        specs: [['Type','Capture funnel'],['Entries','2,090'],['Cost/click','€0.15'],['Market','Berlin'],['Status','Live']],
+        specs: [['Type','Capture funnel'],['Model','List build'],['Channel','Meta Ads'],['Market','Berlin'],['Status','Delivered']],
         specPos: 'Status',
-        desc: 'Meta paid social drove 2,090 entries into MaHalla’s capture funnel at €0.15 per click — cheap, qualified traffic from Berlin’s music and culture audience. Each entry feeds an owned list built to promote events and ticket drops directly, lowering the cost to reach the same people again.',
-        results: [['2,090','Funnel entries'],['€0.15','Cost per click'],['Berlin','Music audience']],
+        desc: 'Meta paid social drove qualified traffic into MaHalla’s capture funnel — cheap, targeted reach from Berlin’s music and culture audience. Each entry feeds an owned list built to promote events and ticket drops directly, lowering the cost to reach the same people again.',
+        results: [['Owned list','Growing'],['Meta paid social','Delivered'],['Berlin','Music audience']],
         credits: [['Built by','Eachtra'],['Owner','MaHalla Berlin'],['Channel','Meta Ads'],['Model','Capture first']]
       },
       'mahalla-overview': {
         code: 'ECH-001', title: 'MaHalla Berlin',
         images: ['Campaign visual','Ad 01','Funnel','Audience','Creative'],
-        specs: [['Client','MaHalla'],['Location','Berlin'],['Year','2026'],['Vertical','Events'],['Deliverables','3'],['Status','Live']],
+        specs: [['Client','MaHalla'],['Location','Berlin'],['Year','2026'],['Vertical','Events'],['Status','Delivered']],
         specPos: 'Status',
         desc: `MaHalla Berlin entered the market with zero digital audience. Eachtra built a capture-first funnel powered by Meta paid social, targeting Berlin's underground music scene. The objective: grow an owned list before spending on ticket promotion.`,
-        results: [['2,000','Contacts captured'],['3','Deliverables shipped'],['Day 1','Ads live']],
+        results: [['Owned list','Built & growing'],['Meta paid social','Delivered'],['Berlin','Music audience']],
         credits: [['Strategy','Eachtra'],['Paid Media','Eachtra'],['Build','Eachtra'],['Client','MaHalla Berlin']]
       },
       'suave-web': {
@@ -911,7 +910,7 @@
     document.querySelectorAll('.child-node').forEach(node => {
       node.addEventListener('click', e => {
         e.stopPropagation();
-        if (node.dataset.client === 'mahalla') { window.location.href = 'sanctum.html'; return; }
+        if (node.dataset.client === 'mahalla') { return; }
         const key = node.dataset.panel;
         renderPanel(key);
         panel.classList.add('open');

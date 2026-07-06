@@ -3,3 +3,4 @@ dev/
 *.backup*.html
 .DS_Store
 .gstack/
+images/sos/_backup/

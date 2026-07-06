@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <script>if(localStorage.getItem("mh_access")!=="1"){location.replace("mahalla.html");}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Plan — MaHalla × Eachtra</title>
+  <meta name="description" content="From a venue to an institution — we fill the room, build the audience you own, and turn every night into a story that travels. Ads, owned audience, and content, built over twelve months.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0c0b09; --panel:#141210; --card:#1a1815; --cream:#EAE4D5;
+      --muted:rgba(234,228,213,0.50); --faint:rgba(234,228,213,0.28); --line:rgba(234,228,213,0.10);
+      --green:#2A9B6A; --crimson:#C8352A;
+      --font:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--cream); font-family:var(--font); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+    #nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; gap:14px; padding:20px 28px; background:linear-gradient(180deg, rgba(12,11,9,0.72), rgba(12,11,9,0)); backdrop-filter:blur(2px); }
+    .nav-word { font-size:15px; letter-spacing:0.02em; color:var(--cream); text-decoration:none; margin-right:auto; }
+    .nav-badge { font-size:11px; letter-spacing:0.06em; color:rgba(234,228,213,0.62); border:1px solid var(--line); border-radius:999px; padding:7px 15px; }
+
+    .hero { position:relative; min-height:92svh; display:flex; flex-direction:column; justify-content:flex-end; padding:0 28px 64px; overflow:hidden; }
+    .hero-media { position:absolute; inset:0; z-index:0; }
+    .hero-media img { width:100%; height:100%; object-fit:cover; object-position:center 40%; }
+    .hero-media::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(12,11,9,0.5) 0%, rgba(12,11,9,0.2) 40%, rgba(12,11,9,0.9) 100%); }
+    .hero-inner { position:relative; z-index:1; max-width:1100px; width:100%; margin:0 auto; }
+    .hero-eyebrow { font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:18px; }
+    .paid-tag { display:inline-flex; align-items:center; gap:8px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--cream); border:1px solid var(--line); border-radius:999px; padding:6px 13px; margin-bottom:20px; background:rgba(42,155,106,0.08); }
+    .paid-dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); }
+    .hero-title { font-size:clamp(40px, 8vw, 88px); font-weight:300; letter-spacing:-0.035em; line-height:0.98; color:#fff; text-shadow:0 2px 30px rgba(0,0,0,0.45); }
+    .hero-sub { margin-top:22px; max-width:640px; font-size:clamp(15px, 2vw, 18px); font-weight:300; line-height:1.6; color:rgba(255,255,255,0.82); }
+
+    section { padding:96px 28px; }
+    .wrap { max-width:1100px; margin:0 auto; }
+    .sec-label { font-size:10px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint); margin-bottom:14px; }
+    .sec-title { font-size:clamp(26px, 4vw, 40px); font-weight:300; letter-spacing:-0.03em; line-height:1.12; color:var(--cream); max-width:780px; }
+    .lede { font-size:clamp(19px, 2.6vw, 26px); font-weight:300; line-height:1.6; letter-spacing:-0.01em; color:rgba(234,228,213,0.82); max-width:820px; margin-top:26px; }
+    .lede em { font-style:italic; color:var(--cream); }
+
+    /* Gaps (weaknesses) */
+    .gaps { display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:44px; }
+    .gap { background:var(--card); border:1px solid var(--line); border-left:2px solid var(--crimson); border-radius:14px; padding:26px; }
+    .gap-n { font-size:11px; letter-spacing:0.16em; color:var(--crimson); }
+    .gap-h { margin-top:12px; font-size:19px; font-weight:400; color:var(--cream); }
+    .gap-b { margin-top:12px; font-size:14px; line-height:1.7; color:var(--muted); }
+
+    /* Value contrast — rent vs own */
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:44px; }
+    .col { border:1px solid var(--line); border-radius:16px; padding:30px 28px; }
+    .col.rent { background:var(--card); }
+    .col.own { background:linear-gradient(180deg, rgba(42,155,106,0.10), rgba(42,155,106,0.02)); border-color:rgba(42,155,106,0.35); }
+    .col-tag { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:6px; }
+    .col.rent .col-tag { color:var(--faint); }
+    .col.own .col-tag { color:var(--green); }
+    .col-head { font-size:21px; font-weight:400; color:var(--cream); line-height:1.25; }
+    .col ul { list-style:none; margin-top:20px; padding:0; display:flex; flex-direction:column; gap:13px; }
+    .col li { font-size:14px; line-height:1.55; padding-left:20px; position:relative; }
+    .col.rent li { color:var(--muted); }
+    .col.own li { color:rgba(234,228,213,0.86); }
+    .col.rent li::before { content:"·"; position:absolute; left:2px; color:var(--faint); }
+    .col.own li::before { content:"—"; position:absolute; left:0; color:var(--green); }
+    .contrast-line { margin-top:34px; font-size:clamp(18px,2.4vw,24px); font-weight:300; line-height:1.5; letter-spacing:-0.01em; color:var(--cream); max-width:760px; }
+    .contrast-line em { font-style:italic; }
+
+    /* System modules */
+    .mods { display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:44px; }
+    .mod { border-top:1px solid var(--line); padding-top:18px; }
+    .mod-h { font-size:16px; font-weight:500; color:var(--cream); }
+    .mod-b { margin-top:10px; font-size:13.5px; line-height:1.65; color:var(--muted); }
+
+    /* Flagship card */
+    .flag { margin-top:24px; background:linear-gradient(135deg, rgba(42,155,106,0.12), rgba(42,155,106,0.03)); border:1px solid rgba(42,155,106,0.4); border-radius:18px; padding:clamp(28px,4vw,40px); }
+    .flag-tag { display:inline-flex; align-items:center; gap:8px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#0c0b09; background:var(--green); border-radius:999px; padding:5px 13px; }
+    .flag-h { margin-top:18px; font-size:clamp(22px,3vw,30px); font-weight:300; letter-spacing:-0.02em; color:var(--cream); }
+    .flag-b { margin-top:16px; font-size:15px; line-height:1.7; color:rgba(234,228,213,0.82); max-width:760px; }
+
+    /* Boundary line */
+    .boundary { margin-top:44px; border:1px solid var(--line); border-radius:16px; padding:30px 28px; background:var(--panel); }
+    .boundary-h { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--faint); margin-bottom:14px; }
+    .boundary-b { font-size:clamp(17px,2.2vw,21px); font-weight:300; line-height:1.55; color:var(--cream); max-width:820px; }
+    .boundary-b em { font-style:italic; color:var(--green); }
+
+    /* Callout (ad spend / mix economics) */
+    .callout { border:1px solid var(--line); border-radius:16px; padding:clamp(26px,4vw,38px); background:var(--card); }
+    .callout .sec-label { color:var(--green); }
+    .callout-b { font-size:15px; line-height:1.75; color:rgba(234,228,213,0.82); max-width:800px; }
+    .callout-b strong { color:var(--cream); font-weight:500; }
+
+    /* Build ladder */
+    .build { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:44px; }
+    .step { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px 22px; display:flex; flex-direction:column; position:relative; }
+    .step.steady { border-color:rgba(42,155,106,0.45); box-shadow:0 0 0 1px rgba(42,155,106,0.2); }
+    .step-m { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--faint); }
+    .step-price { margin-top:14px; font-size:clamp(26px,3vw,34px); font-weight:300; letter-spacing:-0.03em; color:var(--cream); line-height:1; }
+    .step-price .cur { color:var(--faint); font-size:0.6em; }
+    .step-price .per { font-size:0.42em; color:var(--muted); letter-spacing:0; }
+    .step-net { margin-top:8px; font-size:11.5px; color:var(--green); letter-spacing:0.02em; }
+    .step-b { margin-top:16px; font-size:13px; line-height:1.6; color:var(--muted); }
+    .build-foot { margin-top:26px; display:flex; flex-wrap:wrap; gap:10px 24px; font-size:12.5px; color:var(--muted); }
+    .build-foot span { display:inline-flex; align-items:center; gap:8px; }
+    .build-foot .fdot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+
+    /* Deposit */
+    .deposit { background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .deposit-card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:clamp(28px,5vw,44px); text-align:center; }
+    .deposit-card .big { font-size:clamp(28px,4vw,40px); font-weight:300; letter-spacing:-0.03em; color:var(--cream); }
+    .deposit-card p { margin-top:16px; font-size:15px; line-height:1.7; color:var(--muted); max-width:620px; margin-left:auto; margin-right:auto; }
+
+    .close { text-align:center; }
+    .close-title { font-size:clamp(26px, 4vw, 42px); font-weight:300; letter-spacing:-0.03em; color:var(--cream); }
+    .cta { display:inline-block; margin-top:30px; padding:14px 30px; background:var(--cream); color:#0c0b09; border-radius:999px; font-size:13px; letter-spacing:0.03em; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .cta:hover { opacity:0.9; transform:translateY(-1px); }
+    footer { display:flex; justify-content:space-between; padding:28px; border-top:1px solid var(--line); font-size:11px; color:var(--faint); letter-spacing:0.06em; }
+    .note { margin-top:26px; font-size:11px; line-height:1.6; color:var(--faint); max-width:720px; }
+
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity:1; transform:none; }
+
+    @media (max-width:880px) {
+      .gaps, .mods, .contrast { grid-template-columns:1fr; }
+      .build { grid-template-columns:repeat(2, 1fr); }
+    }
+    @media (max-width:480px) { section { padding:72px 20px; } #nav { padding:16px 18px; } .build { grid-template-columns:1fr; } }
+    @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto;} .reveal{opacity:1;transform:none;transition:none;} }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-word" href="/">Eachtra</a>
+    <span class="nav-badge">MaHalla · The Plan</span>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-media"><img src="images/sos/sos-hero-stage.jpg" alt="MaHalla, Berlin"></div>
+    <div class="hero-inner">
+      <span class="paid-tag"><span class="paid-dot"></span> What comes next</span>
+      <div class="hero-eyebrow">MaHalla × Eachtra · The Plan</div>
+      <h1 class="hero-title">From a venue<br>to an institution.</h1>
+      <p class="hero-sub">The room already pulls the most talented people in Berlin. Our job is to make that gravity visible — to build an audience you own, a channel you control, and a story the world can't ignore — while you and your team do what only you can: build the room and hold the programme.</p>
+    </div>
+  </header>
+
+  <!-- The frame -->
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">What we're really building</div>
+      <p class="lede reveal">MaHalla isn't a venue we market. It's a cultural institution we help build — a <em>gravity well</em> where the bravest creatives come just to be near it, because being there makes their own work braver. The events aren't the product; the field they happen inside is. Our work is to build the conditions for that field to compound — the audience, the reach, the mythology — so the creative core never has to think about growth.</p>
+    </div>
+  </section>
+
+  <!-- Weaknesses first -->
+  <section style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-label reveal">What's holding it back</div>
+      <h2 class="sec-title reveal">Four gaps stand between MaHalla today and an institution whose reputation compounds on its own. None of them are about the room. All of them are about what happens outside it.</h2>
+      <div class="gaps">
+        <div class="gap reveal"><div class="gap-n">GAP 01</div><div class="gap-h">The audience is rented, not owned.</div><div class="gap-b">Over 90% of your reach runs through Instagram and RA — platforms you don't control. Every ticket sale rents you the platform's audience and keeps the relationship, so the next night starts from zero and you pay to reach the same people again.</div></div>
+        <div class="gap reveal"><div class="gap-n">GAP 02</div><div class="gap-h">The magic goes undocumented.</div><div class="gap-b">Extraordinary things happen inside the room — and almost none of it leaves the room. Reputation can't compound on what nobody outside sees. The myth that turns a venue into an institution is built by broadcasting the magic, not just making it.</div></div>
+        <div class="gap reveal"><div class="gap-n">GAP 03</div><div class="gap-h">Every event pays to start over.</div><div class="gap-b">With no compounding owned list, each cycle buys the same audience again from scratch. Cost to fill the room never falls. An owned audience is the one asset that makes every night cheaper than the last.</div></div>
+        <div class="gap reveal"><div class="gap-n">GAP 04</div><div class="gap-h">The content is one-off, not a channel.</div><div class="gap-b">A reel goes to 110k, then silence. Great moments happen and evaporate. There's no owned media property turning that attention into a standing audience — no recurring reason to watch MaHalla between events.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The value story: rent vs own -->
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">The whole point</div>
+      <h2 class="sec-title reveal">The difference between renting attention and owning an audience.</h2>
+      <div class="contrast">
+        <div class="col rent reveal">
+          <div class="col-tag">Renting ads</div>
+          <div class="col-head">Spend it, and it's gone.</div>
+          <ul>
+            <li>Ad → click → ticket → the spend disappears</li>
+            <li>The platform keeps the relationship, not you</li>
+            <li>Next event, you pay again to reach the same people</li>
+            <li>Cost to fill the room never falls</li>
+            <li>Nothing compounds — you rebuild every cycle</li>
+          </ul>
+        </div>
+        <div class="col own reveal">
+          <div class="col-tag">Building a media property</div>
+          <div class="col-head">Build it, and it's yours.</div>
+          <ul>
+            <li>Ad → an audience you own → a channel you control</li>
+            <li>The relationship lives with MaHalla, forever</li>
+            <li>The list gets cheaper to reach every single cycle</li>
+            <li>Content and mythology compound into cultural capital</li>
+            <li>You own the whole system at the end — not the invoices</li>
+          </ul>
+        </div>
+      </div>
+      <p class="contrast-line reveal">You're not renting ads. You're building a <em>media property</em> — one that's worth more every month it runs, and that no platform can take back.</p>
+    </div>
+  </section>
+
+  <!-- The system -->
+  <section style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-label reveal">What we run for you</div>
+      <h2 class="sec-title reveal">Three engines — ads, owned audience, and content — built, run, and handed over.</h2>
+      <div class="mods">
+        <div class="mod reveal"><div class="mod-h">Paid media &amp; acquisition</div><div class="mod-b">Always-on campaigns bringing the right crowd — Berlin's music and culture audience — tuned weekly and held to a budget you set. Proven on the Sanctum test at €0.18 a click and a 6.8× return.</div></div>
+        <div class="mod reveal"><div class="mod-h">The owned-audience engine</div><div class="mod-b">Turn reach into a list you own. Capture at every touchpoint — the door, before RA, after every event — then a members' first-release on each night, sold to your own audience before tickets ever go public.</div></div>
+        <div class="mod reveal"><div class="mod-h">The content &amp; mythology machine</div><div class="mod-b">The reel engine (already proven at 110k+ organic on the test), live-recorded sets, and documentation of what actually happens in the room — turned into an owned channel that people follow between events.</div></div>
+        <div class="mod reveal"><div class="mod-h">Cultural partnerships</div><div class="mod-b">Bring in the right voices, collaborators and collectives so MaHalla is positioned as a space for all — awareness money can't buy, pointed at exactly the audience you want in the room.</div></div>
+      </div>
+
+      <!-- Flagship -->
+      <div class="flag reveal">
+        <span class="flag-tag">The flagship</span>
+        <div class="flag-h">MaHalla × Restless Audio — a mix series recorded live in the room.</div>
+        <p class="flag-b">A recurring mix series and radio show, recorded live on the Restless system inside MaHalla. Every artist brings their own audience. Every episode is evergreen ad fuel and a permanent piece of the myth. This is the thing that makes the whole engine feel like far more than ads — a signature series that says MaHalla is a place culture is made, not a venue you hire. It runs on Restless Audio, our own client and asset, so the two worlds strengthen each other.</p>
+      </div>
+
+      <!-- Boundary -->
+      <div class="boundary reveal">
+        <div class="boundary-h">Where our work stops</div>
+        <div class="boundary-b">You and your team hold the programme and the bookings — that's yours, and it stays yours. We hold the audience and the reach. <em>You decide what happens inside the room; we make sure the world is watching and the seats are full.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad spend vs fee -->
+  <section>
+    <div class="wrap">
+      <div class="callout reveal">
+        <div class="sec-label">Two budgets, never confused</div>
+        <p class="callout-b"><strong>Your ad budget is not our fee.</strong> The monthly figures below cover the work — strategy, media management, the capture funnel, the content and the mix series. Your <strong>ad budget is separate</strong>: it's yours, it goes straight to the platforms to buy reach, we never mark it up, and it never touches our fee. On the Sanctum test, <strong>€2,002 of media returned €13,614 in tickets — a 6.8× return.</strong> You set the number, and you keep the upside.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The build -->
+  <section style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-label reveal">The build</div>
+      <h2 class="sec-title reveal">One build, twelve months. You start light, and it grows as the machine comes on — a little more switched on each month, until MaHalla runs ahead of demand.</h2>
+      <div class="build">
+        <div class="step reveal">
+          <div class="step-m">Month 1</div>
+          <div class="step-price"><span class="cur">€</span>750</div>
+          <div class="step-net">Light to start — no deposit, no lock-in</div>
+          <div class="step-b">Ads live and scaled beyond the test. Capture switched on at every touchpoint. Tracking stood up so every result has a source.</div>
+        </div>
+        <div class="step reveal">
+          <div class="step-m">Month 2</div>
+          <div class="step-price"><span class="cur">€</span>1,100</div>
+          <div class="step-b">The reel engine running. Members' first-release live on the next event — your own audience buying before public on-sale.</div>
+        </div>
+        <div class="step reveal">
+          <div class="step-m">Month 3</div>
+          <div class="step-price"><span class="cur">€</span>1,500</div>
+          <div class="step-b">The Restless mix-series pilot recorded in the room. The owned channel taking shape. The first-release flywheel turning.</div>
+        </div>
+        <div class="step steady reveal">
+          <div class="step-m">Month 4 onward</div>
+          <div class="step-price"><span class="cur">€</span>1,800<span class="per"> / mo</span></div>
+          <div class="step-b">The full machine. Mix series recurring. One live dashboard on audience, cost-to-fill and what every euro returns — held steady while the asset compounds toward year one.</div>
+        </div>
+      </div>
+      <div class="build-foot reveal">
+        <span><span class="fdot"></span> Cancel any time — no lock-in but the momentum</span>
+        <span><span class="fdot"></span> Month to month — no deposit, no long contract</span>
+        <span><span class="fdot"></span> Ad budget separate, and always yours</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mix series economics -->
+  <section>
+    <div class="wrap">
+      <div class="callout reveal">
+        <div class="sec-label">The mix series, done right</div>
+        <p class="callout-b">We run the first <strong>two or three episodes as straight production</strong> — roughly €600–800 each, with the media budget behind them split between MaHalla and Restless Audio. We prove it travels first. Once it does, we formalise it as something <strong>all three of us co-own</strong>: MaHalla and Restless bring the room and the sound, Eachtra runs it and holds a stake in what it becomes. Prove it first, own it together after — no one commits to a structure before the series has earned it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deposit -->
+  <section class="deposit">
+    <div class="wrap">
+      <div class="deposit-card reveal">
+        <div class="sec-label">Where we start</div>
+        <div class="big">The last campaign is settled. This is what comes next.</div>
+        <p>Pick the build. We confirm the exact ad budget and the month-one priorities together in a 30-minute session — then Month 1 begins at €750 and climbs as the machine comes on. Cancel any time.</p>
+        <a class="cta" href="contact.html">Book the 30-minute session →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="close">
+    <div class="wrap">
+      <h2 class="close-title reveal">You build the room.<br>We build the world around it.</h2>
+      <p class="note reveal" style="margin-left:auto;margin-right:auto">Performance figures reference the Sanctum of Sound campaign — €2,002 of media, €13,614 in ticket revenue, a 6.8× return. Monthly fees cover Eachtra's work only; ad budget is separate and set with you. Programming and bookings remain with the MaHalla team. Strategy, paid media, content and the owned-audience engine by Eachtra.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Eachtra Agency &copy; 2026</span>
+    <span>Berlin</span>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold:0.12 });
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+
+</body>
+</html>
