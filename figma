@@ -1,0 +1,20 @@
+#!/bin/bash
+# figma — pull a Figma design and convert to HTML/CSS
+# Usage: figma <figma-url> [--out=output.html]
+# Requires: FIGMA_TOKEN in ~/.figma-token or environment
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Load token
+if [ -z "$FIGMA_TOKEN" ] && [ -f "$HOME/.figma-token" ]; then
+  export FIGMA_TOKEN="$(cat "$HOME/.figma-token" | tr -d '\n')"
+fi
+
+if [ -z "$FIGMA_TOKEN" ]; then
+  echo "No FIGMA_TOKEN found."
+  echo "1. Get token: https://www.figma.com/developers/api#access-tokens"
+  echo "2. Run: echo 'figd_...' > ~/.figma-token"
+  exit 1
+fi
+
+exec python3 "$SCRIPT_DIR/figma2site.py" "$@"
