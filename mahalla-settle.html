@@ -18,18 +18,10 @@
     .eyebrow { font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint); margin-bottom:20px; }
     h1 { font-size:clamp(26px,5vw,36px); font-weight:300; letter-spacing:-0.03em; line-height:1.08; }
     .sub { margin-top:12px; font-size:15px; font-weight:300; line-height:1.6; color:var(--muted); }
-
-    /* Currency toggle */
-    .toggle-wrap { margin-top:36px; display:flex; justify-content:center; gap:1px; background:var(--line); border-radius:999px; padding:3px; }
-    .toggle-btn { flex:1; padding:12px 20px; border:none; border-radius:999px; font-family:var(--font); font-size:13px; letter-spacing:0.04em; cursor:pointer; transition:all .2s; background:transparent; color:var(--muted); }
-    .toggle-btn.active { background:var(--cream); color:#0c0b09; }
-
-    .amount { margin-top:32px; font-size:clamp(40px,8vw,56px); font-weight:300; letter-spacing:-0.03em; }
+    .amount { margin-top:36px; font-size:clamp(48px,9vw,64px); font-weight:300; letter-spacing:-0.03em; }
     .amount-label { margin-top:6px; font-size:13px; color:var(--faint); letter-spacing:0.06em; }
-
-    .pay-btn { display:block; margin-top:28px; padding:16px 24px; background:var(--cream); color:#0c0b09; border:none; border-radius:999px; font-family:var(--font); font-size:14px; letter-spacing:0.04em; cursor:pointer; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .pay-btn { display:block; margin-top:32px; padding:16px 24px; background:var(--cream); color:#0c0b09; border:none; border-radius:999px; font-family:var(--font); font-size:14px; letter-spacing:0.04em; cursor:pointer; text-decoration:none; transition:opacity .2s, transform .2s; }
     .pay-btn:hover { opacity:0.9; transform:translateY(-1px); }
-
     .foot { margin-top:40px; font-size:11px; letter-spacing:0.06em; color:var(--faint); }
   </style>
 </head>
@@ -37,50 +29,18 @@
   <div class="card">
     <div class="eyebrow">MaHalla × Eachtra</div>
     <h1>Settle the campaign.</h1>
-    <p class="sub">Media-buying fee for the Sanctum of Sound campaign. Select your currency.</p>
+    <p class="sub">Media-buying fee for the Sanctum of Sound campaign.</p>
 
-    <div class="toggle-wrap" id="toggle">
-      <button class="toggle-btn active" data-currency="eu">€ Euro</button>
-      <button class="toggle-btn" data-currency="tw">NT$ Taiwan</button>
-    </div>
+    <div class="amount">€500.00</div>
+    <div class="amount-label">One-time settlement</div>
 
-    <div class="amount" id="amount">€500.00</div>
-    <div class="amount-label" id="amount-label">European Union</div>
-
-    <a class="pay-btn" id="pay-link" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01" target="_blank">Pay €500 →</a>
+    <a class="pay-btn" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01" id="pay-link" target="_blank">Pay €500 →</a>
 
     <div class="foot">Eachtra Agency · Berlin</div>
   </div>
 
   <script>
-    const LINKS = {
-      eu: "https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01",
-      tw: "https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01"   // ← replace with TW Stripe link
-    };
-    const DISPLAY = {
-      eu: { amount: "€500.00", label: "European Union", btn: "Pay €500 →" },
-      tw: { amount: "NT$19,076.90", label: "Taiwan", btn: "Pay NT$19,076.90 →" }
-    };
-
-    const toggle = document.getElementById('toggle');
-    const amount = document.getElementById('amount');
-    const amountLabel = document.getElementById('amount-label');
-    const payLink = document.getElementById('pay-link');
-
-    toggle.addEventListener('click', (e) => {
-      const btn = e.target.closest('.toggle-btn');
-      if (!btn) return;
-      const currency = btn.dataset.currency;
-      toggle.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      amount.textContent = DISPLAY[currency].amount;
-      amountLabel.textContent = DISPLAY[currency].label;
-      payLink.textContent = DISPLAY[currency].btn;
-      payLink.href = LINKS[currency];
-    });
-
-    // Stripe return redirect
-    payLink.addEventListener('click', () => {
+    document.getElementById('pay-link').addEventListener('click', () => {
       localStorage.setItem('mh_payment_initiated', '1');
     });
     if (localStorage.getItem('mh_payment_initiated') === '1' && document.referrer.includes('stripe.com')) {
