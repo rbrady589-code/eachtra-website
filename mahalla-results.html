@@ -294,7 +294,7 @@
       <div class="close-status reveal"><span class="dot-done"></span> The tale is told</div>
       <h2 class="close-title reveal">The room filled.<br>And this was only the test.</h2>
       <p class="reveal" style="max-width:600px;margin:22px auto 0;font-size:clamp(15px,2vw,17px);font-weight:300;line-height:1.6;color:rgba(234,228,213,0.72)">That €13,614 came from a three-week test on a locked budget. The media-buying fee for the work is €500 — and settling it opens the full plan for what comes next. You've seen what we do compressed into three weeks. Now see what we do with a real runway.</p>
-      <a class="close-cta reveal" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01">Settle the campaign — €500 →</a>
+      <a class="close-cta reveal" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01" id="stripe-link" target="_blank">Settle the campaign — €500 →</a>
       <p class="note reveal">Figures reflect Meta Ads platform data (spend, clicks, ticket-page visits, cost efficiency) for the Sanctum of Sound campaign, and ticket counts and revenue as reported by Resident Advisor. Cost per click was €0.18 blended across the full campaign; cost per link click €0.22. Ticket outcomes reflect the blended effect of paid media, organic and the event's own promotion. Strategy, paid media and creative direction by Eachtra.</p>
     </div>
   </section>
@@ -305,6 +305,20 @@
   </footer>
 
   <script>
+    // ── Stripe return detection ──
+    (function() {
+      const link = document.getElementById('stripe-link');
+      if (link) {
+        link.addEventListener('click', () => {
+          localStorage.setItem('mh_payment_initiated', '1');
+        });
+      }
+      if (localStorage.getItem('mh_payment_initiated') === '1' && document.referrer.includes('stripe.com')) {
+        localStorage.removeItem('mh_payment_initiated');
+        window.location.replace('mahalla-next.html');
+      }
+    })();
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
