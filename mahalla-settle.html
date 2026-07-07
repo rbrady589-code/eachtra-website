@@ -1,52 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Settle — MaHalla × Eachtra</title>
+  <title>Sanctum of Sound — Campaign Results · Prepared for MaHalla by Eachtra</title>
+  <meta name="description" content="The final results of the Sanctum of Sound paid campaign — €13,614 in ticket revenue on €2,002 of spend, a 6.8× return, run in a compressed three-week window.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg:#0c0b09; --card:#141210; --cream:#EAE4D5;
-      --muted:rgba(234,228,213,0.50); --faint:rgba(234,228,213,0.28); --line:rgba(234,228,213,0.12);
-      --green:#2A9B6A;
-      --font:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      --bg:      #0c0b09;
+      --panel:   #141210;
+      --card:    #1a1815;
+      --cream:   #EAE4D5;
+      --muted:   rgba(234,228,213,0.50);
+      --faint:   rgba(234,228,213,0.28);
+      --line:    rgba(234,228,213,0.10);
+      --green:   #2A9B6A;
+      --font:    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
     }
-    body { background:var(--bg); color:var(--cream); font-family:var(--font); -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; align-items:center; justify-content:center; padding:24px; }
-    .card { width:100%; max-width:440px; text-align:center; }
-    .eyebrow { font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint); margin-bottom:20px; }
-    h1 { font-size:clamp(26px,5vw,36px); font-weight:300; letter-spacing:-0.03em; line-height:1.08; }
-    .sub { margin-top:12px; font-size:15px; font-weight:300; line-height:1.6; color:var(--muted); }
-    .amount { margin-top:36px; font-size:clamp(48px,9vw,64px); font-weight:300; letter-spacing:-0.03em; }
-    .amount-label { margin-top:6px; font-size:13px; color:var(--faint); letter-spacing:0.06em; }
-    .pay-btn { display:block; margin-top:32px; padding:16px 24px; background:var(--cream); color:#0c0b09; border:none; border-radius:999px; font-family:var(--font); font-size:14px; letter-spacing:0.04em; cursor:pointer; text-decoration:none; transition:opacity .2s, transform .2s; }
-    .pay-btn:hover { opacity:0.9; transform:translateY(-1px); }
-    .foot { margin-top:40px; font-size:11px; letter-spacing:0.06em; color:var(--faint); }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--cream); font-family: var(--font);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; gap: 14px; padding: 20px 28px;
+      background: linear-gradient(180deg, rgba(12,11,9,0.72), rgba(12,11,9,0));
+      backdrop-filter: blur(2px);
+    }
+    .nav-word { font-size: 15px; letter-spacing: 0.02em; color: var(--cream); text-decoration: none; margin-right: auto; }
+    .nav-badge {
+      font-size: 11px; letter-spacing: 0.06em; color: rgba(234,228,213,0.62);
+      border: 1px solid var(--line); border-radius: 999px; padding: 7px 15px;
+    }
+
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 28px 64px; overflow: hidden;
+    }
+    .hero-media { position: absolute; inset: 0; z-index: 0; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+    .hero-media::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(12,11,9,0.55) 0%, rgba(12,11,9,0.15) 38%, rgba(12,11,9,0.86) 100%);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 1100px; width: 100%; margin: 0 auto; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 18px; }
+    .hero-title { font-size: clamp(40px, 8vw, 92px); font-weight: 300; letter-spacing: -0.035em; line-height: 0.98; color: #fff; text-shadow: 0 2px 30px rgba(0,0,0,0.45); }
+    .hero-sub { margin-top: 22px; max-width: 580px; font-size: clamp(15px, 2vw, 18px); font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.82); }
+    .hero-scroll { margin-top: 40px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+    section { padding: 96px 28px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .sec-label { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+    .sec-title { font-size: clamp(26px, 4vw, 40px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.12; color: var(--cream); max-width: 760px; }
+    .lede { font-size: clamp(19px, 2.6vw, 26px); font-weight: 300; line-height: 1.6; letter-spacing: -0.01em; color: rgba(234,228,213,0.82); max-width: 820px; margin-top: 26px; }
+    .lede em { font-style: italic; color: var(--cream); }
+
+    .headline { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #16130f, #100e0b); }
+    .headline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px 20px; }
+    .big-num { font-size: clamp(38px, 6.4vw, 72px); font-weight: 300; letter-spacing: -0.045em; color: var(--cream); line-height: 0.96; }
+    .big-num.win { color: var(--green); }
+    .big-num .eur { color: var(--faint); font-size: 0.62em; }
+    .big-sub { margin-top: 12px; font-size: 12px; letter-spacing: 0.05em; color: var(--muted); line-height: 1.4; }
+
+    .metrics { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 16px; }
+    .metric-num { font-size: clamp(28px, 4.5vw, 46px); font-weight: 300; letter-spacing: -0.04em; color: var(--cream); line-height: 1; }
+    .metric-num .eur { color: var(--faint); font-size: 0.7em; }
+    .metric-sub { margin-top: 10px; font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+
+    .reels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 40px; }
+    .reel { position: relative; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(--line); }
+    .reel video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reel::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 -40px 60px -30px rgba(0,0,0,0.7); }
+
+    .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+    .phase { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+    .phase-num { font-size: 11px; letter-spacing: 0.18em; color: var(--faint); }
+    .phase-name { margin-top: 12px; font-size: 20px; font-weight: 400; color: var(--cream); }
+    .phase-tag { margin-top: 4px; font-size: 11px; letter-spacing: 0.05em; color: var(--green); text-transform: uppercase; }
+    .phase-body { margin-top: 16px; font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+    .worked { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+    .worked-item { border-top: 1px solid var(--line); padding-top: 18px; }
+    .worked-head { font-size: 15px; font-weight: 500; color: var(--cream); line-height: 1.4; }
+    .worked-body { margin-top: 10px; font-size: 13px; line-height: 1.65; color: var(--muted); }
+
+    .forward { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: clamp(28px, 5vw, 48px); margin-top: 40px; }
+    .forward .sec-title { font-size: clamp(22px, 3vw, 32px); }
+    .forward p { font-size: clamp(15px, 1.9vw, 18px); font-weight: 300; line-height: 1.7; color: rgba(234,228,213,0.82); max-width: 780px; margin-top: 20px; }
+
+    .feature { background: #060504; padding: 40px 20px; display: flex; justify-content: center; }
+    .feature img { max-height: 94svh; width: auto; max-width: 100%; object-fit: contain; border-radius: 6px; }
+
+    .close { text-align: center; }
+    .close-status { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
+    .dot-done { width: 7px; height: 7px; border-radius: 50%; background: var(--cream); box-shadow: 0 0 10px rgba(234,228,213,0.6); }
+    .close-title { font-size: clamp(26px, 4vw, 42px); font-weight: 300; letter-spacing: -0.03em; color: var(--cream); }
+    .close-cta { display: inline-block; margin-top: 30px; padding: 13px 28px; background: var(--cream); color: #0c0b09; border-radius: 999px; font-size: 13px; letter-spacing: 0.03em; text-decoration: none; transition: opacity .2s, transform .2s; }
+    .close-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    footer { display: flex; justify-content: space-between; padding: 28px; border-top: 1px solid var(--line); font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
+    .note { margin-top: 30px; font-size: 11px; line-height: 1.6; color: var(--faint); max-width: 700px; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 880px) {
+      .headline-grid { grid-template-columns: repeat(2, 1fr); }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .reels { grid-template-columns: repeat(2, 1fr); }
+      .phases, .worked { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 72px 20px; }
+      #nav { padding: 16px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="eyebrow">MaHalla × Eachtra</div>
-    <h1>Settle the campaign.</h1>
-    <p class="sub">Media-buying fee for the Sanctum of Sound campaign.</p>
 
-    <div class="amount">€500.00</div>
-    <div class="amount-label">One-time settlement</div>
+  <nav id="nav">
+    <a class="nav-word" href="/">Eachtra</a>
+    <span class="nav-badge">Prepared for MaHalla</span>
+  </nav>
 
-    <a class="pay-btn" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01" id="pay-link" target="_blank">Pay €500 →</a>
+  <header class="hero">
+    <div class="hero-media">
+      <img src="images/sos/sos-hero-stage.jpg" alt="Sanctum of Sound — performance at MaHalla, Berlin">
+    </div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">MaHalla Berlin · Campaign Results</div>
+      <h1 class="hero-title">Sanctum<br>of Sound</h1>
+      <p class="hero-sub">Fifty-two hours at MaHalla that bent closer to a retreat than a festival. Three weeks from the doors, a tight budget, a rare production. This is where it landed.</p>
+      <div class="hero-scroll">Scroll ↓</div>
+    </div>
+  </header>
 
-    <div class="foot">Eachtra Agency · Berlin</div>
+  <section class="headline">
+    <div class="wrap">
+      <div class="sec-label reveal">What the campaign returned</div>
+      <div class="headline-grid">
+        <div class="reveal"><div class="big-num"><span class="eur">€</span>13,614</div><div class="big-sub">Gross ticket revenue</div></div>
+        <div class="reveal"><div class="big-num">212</div><div class="big-sub">Tickets sold through RA</div></div>
+        <div class="reveal"><div class="big-num win">6.8×</div><div class="big-sub">Return on ad spend<br>(ticket revenue ÷ spend)</div></div>
+        <div class="reveal"><div class="big-num"><span class="eur">€</span>9.44</div><div class="big-sub">Blended cost per ticket</div></div>
+      </div>
+      <p class="note reveal">A paid campaign is usually called strong at a 3× return. This came back at <strong style="color:var(--cream)">6.8×</strong> — in a three-week window. Ticket revenue runs through Resident Advisor and reflects the paid campaign working alongside organic reach and the event's own pull; we don't claim it all as ads. Every figure below is measured, not estimated.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">Where we began</div>
+      <p class="lede reveal">Three weeks from the doors. A tight budget, and against it a rare production and a clear vision worth carrying. So almost all the real work happened before a single euro was spent — in <em>strategy</em>. Not how to shout louder, but how to make a little travel far: the right partners to carry it the last mile, content sourced and shaped from what was already in hand, and spend kept lean enough to last every one of those weeks.</p>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <div class="wrap">
+      <div class="sec-label reveal">What €2,002 carried</div>
+      <div class="metrics-grid">
+        <div class="reveal"><div class="metric-num"><span class="eur">€</span>2,002</div><div class="metric-sub">Total ad spend</div></div>
+        <div class="reveal"><div class="metric-num">9,059</div><div class="metric-sub">Link clicks</div></div>
+        <div class="reveal"><div class="metric-num">6,661</div><div class="metric-sub">Ticket-page visits</div></div>
+        <div class="reveal"><div class="metric-num"><span class="eur">€</span>0.18</div><div class="metric-sub">Cost per click, blended</div></div>
+        <div class="reveal"><div class="metric-num"><span class="eur">€</span>0.11–0.14</div><div class="metric-sub">Best-performing ad sets</div></div>
+        <div class="reveal"><div class="metric-num">14.71%</div><div class="metric-sub">Spend as share of ticket revenue</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">And it did more than sell tickets</div>
+      <div class="metrics-grid">
+        <div class="reveal"><div class="metric-num">690,000+</div><div class="metric-sub">Views across all our campaign posts</div></div>
+        <div class="reveal"><div class="metric-num">135,439</div><div class="metric-sub">Total post engagements</div></div>
+        <div class="reveal"><div class="metric-num" style="color:var(--green)">+1,443</div><div class="metric-sub">New Instagram followers (39,900 → 41,343)</div></div>
+      </div>
+      <p class="note reveal">Views are the summed total across MaHalla's own campaign posts — partner content excluded. Engagement is Meta-reported across the promoted posts. Follower figures compare the account at the start of the engagement (≈39,900) with today (41,343). This is the part that outlasts the event: an audience you own outright, and the one asset that makes every future campaign cheaper than this one.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">The creative</div>
+      <h2 class="sec-title reveal">No budget for a production, so we made one from what we had — sourced and shaped in house, with every tool we could reach. The piece that travelled furthest wasn't polished at all: a collaboration with the festival's own sound-system partner.</h2>
+      <div class="reels">
+        <div class="reel reveal"><video src="images/sos/sos-2.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+        <div class="reel reveal"><video src="images/sos/sos-3.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+        <div class="reel reveal"><video src="images/sos/sos-4.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+        <div class="reel reveal"><video src="images/sos/sos-5.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+        <div class="reel reveal"><video src="images/sos/sos-1.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-label reveal">The crossing</div>
+      <h2 class="sec-title reveal">With the plan set, the spend moved in three measured steps — never volume for its own sake, always the next right move.</h2>
+      <div class="phases">
+        <div class="phase reveal">
+          <div class="phase-num">PHASE 01</div>
+          <div class="phase-name">Ignition</div>
+          <div class="phase-tag">Engagement</div>
+          <div class="phase-body">Built the warm audience first — reach and engagement that seeded the custom audiences and lookalikes every later euro was aimed through.</div>
+        </div>
+        <div class="phase reveal">
+          <div class="phase-num">PHASE 02</div>
+          <div class="phase-name">Convert</div>
+          <div class="phase-tag">Traffic</div>
+          <div class="phase-body">The engine. Tested artist-led, sound-system and experience angles across Berlin and its travelling neighbours — 6,661 real ticket-page visits at €0.22 a link click.</div>
+        </div>
+        <div class="phase reveal">
+          <div class="phase-num">PHASE 03</div>
+          <div class="phase-name">Close</div>
+          <div class="phase-tag">Retargeting</div>
+          <div class="phase-body">Retargeted everyone who showed real intent — visited the ticket page but hadn't bought — with the strongest creative and urgency in the final stretch. Sales accelerated hardest in the last days.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-label reveal">What the road taught us</div>
+      <div class="worked">
+        <div class="worked-item reveal">
+          <div class="worked-head">Real partnerships beat produced content.</div>
+          <div class="worked-body">A collaboration with the festival's sound-system partner became the single best-performing ad of the campaign.</div>
+        </div>
+        <div class="worked-item reveal">
+          <div class="worked-head">A locked budget is a cheaper budget.</div>
+          <div class="worked-body">Clicks ran €0.18 blended against the account's €0.27 average — and a fraction of what cold social traffic usually costs. Best ad sets held under €0.14. Cost per result only climbed when the budget was pushed up late in the run. The clearest lesson: set the number once, before we engage, and hold it.</div>
+        </div>
+        <div class="worked-item reveal">
+          <div class="worked-head">The return was there even compressed.</div>
+          <div class="worked-body">€13,614 in tickets on €2,002 of spend — a 6.8× return — earned inside a three-week window most campaigns would consider too short to start.</div>
+        </div>
+      </div>
+
+      <div class="forward reveal">
+        <div class="sec-label">What a full runway would carry</div>
+        <h3 class="sec-title">This ran compressed into three weeks. The next one doesn't have to.</h3>
+        <p>Ticket sales only accelerated in the final days — the audience was still warming when the doors were already close. A real six-to-eight-week pre-promotion builds those warm pools <em>before</em> they're needed, so the next event opens from a materially larger, cheaper base rather than sprinting to build one from scratch. And with purchase-level tracking enabled on RA from the start, every euro can be pointed at the people who actually buy — not just the people who click. Same craft, more room to work.</p>
+        <p>Three things, set before we engage: a <em>fixed budget</em>, planned against the runway and held — not changed in the final days, where cost climbs fastest; the <em>full runway</em> itself; and <em>tracking live from day one</em>. The numbers above are lowest exactly where the plan was followed. Lock those three and the next campaign starts ahead of this one, not behind it.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="feature">
+    <img src="images/sos/sos-poster.jpeg" alt="Sanctum of Sound — MaHalla, Berlin">
   </div>
 
+  <section class="close">
+    <div class="wrap">
+      <div class="close-status reveal"><span class="dot-done"></span> The tale is told</div>
+      <h2 class="close-title reveal">The room filled.<br>And this was only the test.</h2>
+      <p class="reveal" style="max-width:600px;margin:22px auto 0;font-size:clamp(15px,2vw,17px);font-weight:300;line-height:1.6;color:rgba(234,228,213,0.72)">That €13,614 came from a three-week test on a locked budget. The media-buying fee for the work is €500 — and settling it opens the full plan for what comes next. You've seen what we do compressed into three weeks. Now see what we do with a real runway.</p>
+      <a class="close-cta reveal" href="https://buy.stripe.com/5kQdRa0ED6dN9bpaHJ6Ri01" id="stripe-link" target="_blank">Settle the campaign — €500 →</a>
+      <p class="note reveal">Figures reflect Meta Ads platform data (spend, clicks, ticket-page visits, cost efficiency) for the Sanctum of Sound campaign, and ticket counts and revenue as reported by Resident Advisor. Cost per click was €0.18 blended across the full campaign; cost per link click €0.22. Ticket outcomes reflect the blended effect of paid media, organic and the event's own promotion. Strategy, paid media and creative direction by Eachtra.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Eachtra Agency &copy; 2026</span>
+    <span>Berlin</span>
+  </footer>
+
   <script>
-    document.getElementById('pay-link').addEventListener('click', () => {
-      localStorage.setItem('mh_payment_initiated', '1');
-    });
-    if (localStorage.getItem('mh_payment_initiated') === '1' && document.referrer.includes('stripe.com')) {
-      localStorage.removeItem('mh_payment_initiated');
-      window.location.replace('mahalla-next.html');
-    }
+    (function() {
+      var link = document.getElementById('stripe-link');
+      if (link) {
+        link.addEventListener('click', function() {
+          localStorage.setItem('mh_payment_initiated', '1');
+        });
+      }
+      if (localStorage.getItem('mh_payment_initiated') === '1' && document.referrer.indexOf('stripe.com') !== -1) {
+        localStorage.removeItem('mh_payment_initiated');
+        window.location.replace('mahalla-next.html');
+      }
+    })();
+
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el) { return io.observe(el); });
+
+    var vio = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        var v = e.target;
+        if (e.isIntersecting) { v.play().catch(function() {}); } else { v.pause(); }
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.reel video').forEach(function(v) { return vio.observe(v); });
   </script>
+
 </body>
 </html>
