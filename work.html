@@ -668,17 +668,26 @@
       if (isNum(m.campaigns_active)) {
         PANELS.meta.results[0] = [fmt(m.campaigns_active), 'Campaigns active'];
       }
+      if (isNum(m.link_clicks)) {
+        PANELS.meta.results[1] = [fmt(m.link_clicks), 'Link clicks'];
+      }
+      if (isNum(m.cost_per_click_eur)) {
+        PANELS.meta.results[2] = ['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click'];
+      }
       if (isNum(m.landing_page_views)) {
         PANELS.funnel.results[0]   = [fmt(m.landing_page_views), 'Landing page views'];
         PANELS.audience.results[0] = [fmt(m.landing_page_views), 'Funnel entries'];
       }
+      if (isNum(m.tickets_ra)) {
+        PANELS.audience.results[1] = [fmt(m.tickets_ra), 'Tickets sold via RA'];
+      }
       if (isNum(m.cost_per_click_eur)) {
-        PANELS.audience.results[1] = ['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click'];
+        PANELS.audience.results[2] = ['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click'];
       }
       const ov = [];
       if (isNum(m.reach))              ov.push([fmt(m.reach), 'People reached']);
+      if (isNum(m.tickets_ra))         ov.push([fmt(m.tickets_ra), 'Tickets sold via RA']);
       if (isNum(m.landing_page_views)) ov.push([fmt(m.landing_page_views), 'Landing page views']);
-      if (isNum(m.campaigns_active))   ov.push([fmt(m.campaigns_active), 'Campaigns active']);
       if (ov.length) PANELS['mahalla-overview'].results = ov;
     }
 

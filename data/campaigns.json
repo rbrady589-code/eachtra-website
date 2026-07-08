@@ -1,6 +1,6 @@
 {
-  "updated": "2026-06-30T20:00:00Z",
-  "source": "Meta Marketing API (act_419532674756411) — Sanctum of Sound campaign, since 2026-06-17",
+  "updated": "2026-07-06T20:00:00Z",
+  "source": "Meta Marketing API (act_419532674756411) + Resident Advisor — Sanctum of Sound campaign, final report (3-week window, concluded 2026-07-06)",
   "clients": [
     {
       "id": "mahalla",
@@ -10,21 +10,23 @@
         "descriptor": "52-hour ambient & experimental music festival",
         "venue": "MaHalla, Berlin",
         "campaign_window": "3-week run-up",
-        "stage": "ongoing — 2 weeks, 2 days in"
+        "stage": "complete — delivered in a 3-week campaign window"
       },
       "metrics": {
-        "reach": 222933,
-        "impressions": 327607,
-        "link_clicks": 4051,
-        "landing_page_views": 2875,
+        "reach": 333457,
+        "impressions": 544101,
+        "link_clicks": 9059,
+        "landing_page_views": 6661,
         "campaigns_active": 3,
         "cost_per_click_eur": 0.18,
-        "cost_per_lpv_eur": 0.26
+        "cost_per_link_click_eur": 0.22,
+        "cost_per_lpv_eur": 0.30,
+        "tickets_ra": 212
       },
       "private": {
-        "spend_eur": 744,
-        "cpc_eur": 0.18,
-        "cost_per_lpv_eur": 0.26,
+        "spend_eur": 2002.10,
+        "revenue_eur": 13614.55,
+        "roas_multiple": 6.8,
         "historical_cpc_eur": 0.27,
         "best_adset_cpc_eur": 0.11
       },
