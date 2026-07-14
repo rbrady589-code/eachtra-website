@@ -358,9 +358,9 @@
     <!-- ── LEVEL 1: Client node ─────────────────────── -->
     <div class="node client-node fa" id="n-mahalla" data-client="mahalla" style="left:400px;top:300px">
       <div class="node-inner">
-        <div class="node-thumb">
+        <a class="node-thumb" href="case-studies/mahalla-sanctum-of-sound.html" id="mahalla-case-study-link">
           <video src="images/sos/sos-5.mp4" muted loop autoplay playsinline preload="metadata"></video>
-        </div>
+        </a>
         <div class="node-body">
           <div class="node-top">
             <span class="node-code">ECH-001</span>
@@ -917,6 +917,11 @@
         const id = node.dataset.client;
         node.classList.contains('expanded') ? collapseClient(id) : expandClient(id);
       });
+    });
+
+    // Case-study link inside the MaHalla node shouldn't also toggle expand/collapse
+    document.getElementById('mahalla-case-study-link').addEventListener('click', e => {
+      e.stopPropagation();
     });
 
     // ── Child node click → case study (MaHalla) or panel ──
