@@ -21,11 +21,7 @@
         "cost_per_click_eur": 0.18,
         "cost_per_link_click_eur": 0.22,
         "cost_per_lpv_eur": 0.30,
-        "tickets_ra": 212
-      },
-      "private": {
-        "spend_eur": 2002.10,
-        "revenue_eur": 13614.55,
+        "tickets_ra": 212,
         "roas_multiple": 6.8,
         "historical_cpc_eur": 0.27,
         "best_adset_cpc_eur": 0.11

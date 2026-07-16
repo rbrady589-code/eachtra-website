@@ -667,8 +667,15 @@
       return `updated ${Math.round(hrs / 24)}d ago`;
     }
 
+    // Organic Instagram views across the full campaign run (client-confirmed
+    // total, not derivable from the sample post list in campaigns.json).
+    const MAHALLA_ORGANIC_VIEWS = 690000;
+    const fmtM = n => n >= 1000000 ? (n / 1000000).toFixed(1) + 'M+' : fmt(n);
+
     function applyLiveData(client) {
       const m = client.metrics || {};
+      const combinedExposure = isNum(m.impressions) ? m.impressions + MAHALLA_ORGANIC_VIEWS : null;
+
       // Results are rebuilt in "strongest proof first" order — the first
       // entry gets the hero treatment (big, green) in the panel UI.
       if (isNum(m.landing_page_views)) {
@@ -676,21 +683,21 @@
       }
 
       const metaResults = [];
+      if (isNum(m.roas_multiple))      metaResults.push([m.roas_multiple.toFixed(1) + '×', 'Return on ad spend']);
+      if (isNum(m.impressions))        metaResults.push([fmt(m.impressions), 'Impressions']);
       if (isNum(m.link_clicks))        metaResults.push([fmt(m.link_clicks), 'Link clicks']);
-      if (isNum(m.campaigns_active))   metaResults.push([fmt(m.campaigns_active), 'Campaigns active']);
-      if (isNum(m.cost_per_click_eur)) metaResults.push(['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click']);
       if (metaResults.length) PANELS.meta.results = metaResults;
 
       const audResults = [];
-      if (isNum(m.tickets_ra))         audResults.push([fmt(m.tickets_ra), 'Tickets sold via RA']);
-      if (isNum(m.landing_page_views)) audResults.push([fmt(m.landing_page_views), 'Funnel entries']);
-      if (isNum(m.cost_per_click_eur)) audResults.push(['€' + m.cost_per_click_eur.toFixed(2), 'Cost per click']);
+      if (combinedExposure)            audResults.push([fmtM(combinedExposure), 'Total exposure, organic + paid']);
+      if (isNum(m.reach))              audResults.push([fmt(m.reach), 'People reached, Meta']);
+      if (isNum(m.landing_page_views)) audResults.push([fmt(m.landing_page_views), 'Landing page visits']);
       if (audResults.length) PANELS.audience.results = audResults;
 
       const ov = [];
-      if (isNum(m.tickets_ra))         ov.push([fmt(m.tickets_ra), 'Tickets sold via RA']);
-      if (isNum(m.reach))              ov.push([fmt(m.reach), 'People reached']);
-      if (isNum(m.landing_page_views)) ov.push([fmt(m.landing_page_views), 'Landing page views']);
+      if (isNum(m.roas_multiple))      ov.push([m.roas_multiple.toFixed(1) + '×', 'Return on ad spend']);
+      if (combinedExposure)            ov.push([fmtM(combinedExposure), 'Total exposure, organic + paid']);
+      if (isNum(m.reach))              ov.push([fmt(m.reach), 'People reached, Meta']);
       if (ov.length) PANELS['mahalla-overview'].results = ov;
     }
 
@@ -919,11 +926,11 @@
       });
     });
 
-    // ── Child node click → case study (MaHalla) or panel ──
+    // ── Child node click → detail popup (thumbnail click navigates instead) ──
     document.querySelectorAll('.child-node').forEach(node => {
       node.addEventListener('click', e => {
         e.stopPropagation();
-        if (node.dataset.client === 'mahalla') { return; }
+        if (e.target.closest('a.node-thumb')) { return; }   // let the anchor navigate
         const key = node.dataset.panel;
         renderPanel(key);
         panel.classList.add('open');
