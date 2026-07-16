@@ -269,6 +269,8 @@
     .panel-img-wide { width: 226px; }
     .panel-img-tall { width: 108px; }
     .panel-img-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(234,228,213,0.1); }
+    .panel-img-media { overflow: hidden; }
+    .panel-img-media img, .panel-img-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .panel-social { padding: 0 24px 14px; flex-shrink: 0; }
     .social-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
@@ -572,7 +574,13 @@
     const PANELS = {
       meta: {
         code: 'ECH-001 / CH-01', title: 'Meta Ads Campaign',
-        images: ['Campaign visual','Ad 01','Ad 02','Creative','Story'],
+        images: [
+          { src: 'images/sos/sos-hero-lanterns.jpg', type: 'image', label: 'Campaign creative' },
+          { src: 'images/sos/sos-2.mp4', type: 'video', label: 'Ad reel 01' },
+          { src: 'images/sos/sos-3.mp4', type: 'video', label: 'Ad reel 02' },
+          { src: 'images/sos/sos-hero-performance.jpg', type: 'image', label: 'Campaign visual' },
+          { src: 'images/sos/sos-4.mp4', type: 'video', label: 'Ad reel 03' }
+        ],
         specs: [['Platform','Meta'],['Format','Events'],['Placement','Instagram'],['Objective','Event reach'],['Status','Live']],
         specPos: 'Status',
         desc: `Built and launched Meta paid social targeting Berlin's underground music and culture scene. Optimised for event reach and capture funnel entry — every click feeds directly into the owned audience list rather than a ticket page.`,
@@ -581,7 +589,13 @@
       },
       funnel: {
         code: 'ECH-001 / ST-01', title: 'Capture Funnel',
-        images: ['Funnel flow','Landing page','Form','Confirmation','Email'],
+        images: [
+          { src: 'images/sos/sos-feature-fiberlights.jpg', type: 'image', label: 'Installation detail' },
+          { src: 'images/sos/sos-1.mp4', type: 'video', label: 'Production reel 01' },
+          { src: 'images/sos/sos-5.mp4', type: 'video', label: 'Production reel 02' },
+          { src: 'images/sos/sos-poster.jpeg', type: 'image', label: 'Event creative' },
+          { src: 'images/sos/sos-2.mp4', type: 'video', label: 'Production reel 03' }
+        ],
         specs: [['Type','Strategy'],['Model','Capture first'],['Approach','List build'],['Trigger','Meta Ads'],['Status','Deployed']],
         specPos: 'Status',
         desc: 'Designed a capture-first funnel that builds an owned audience list before any ticket promotion spend. Users click Meta ads, land on a lightweight capture page, and are added to the MaHalla list. No ticket page until the list is warm.',
@@ -590,7 +604,13 @@
       },
       audience: {
         code: 'ECH-001 / OUT', title: 'Audience Asset',
-        images: ['List overview','Segment A','Segment B','Growth chart','Export'],
+        images: [
+          { src: 'images/sos/sos-hero-performance.jpg', type: 'image', label: 'Performance' },
+          { src: 'images/sos/sos-3.mp4', type: 'video', label: 'Reel 01' },
+          { src: 'images/sos/sos-4.mp4', type: 'video', label: 'Reel 02' },
+          { src: 'images/sos/sos-hero-lanterns.jpg', type: 'image', label: 'Campaign creative' },
+          { src: 'images/sos/sos-5.mp4', type: 'video', label: 'Reel 03' }
+        ],
         specs: [['Type','Capture funnel'],['Model','List build'],['Channel','Meta Ads'],['Market','Berlin'],['Status','Delivered']],
         specPos: 'Status',
         desc: 'Meta paid social drove qualified traffic into MaHalla’s capture funnel — cheap, targeted reach from Berlin’s music and culture audience. Each entry feeds an owned list built to promote events and ticket drops directly, lowering the cost to reach the same people again.',
@@ -757,13 +777,21 @@
         socialEl.hidden = true;
       }
 
-      // Images
+      // Images — entries are either a plain label string (placeholder box)
+      // or { src, type, label } for a real photo/video thumbnail.
       const imgs = d.images;
       const imgEl = document.getElementById('p-images');
-      imgEl.innerHTML = imgs.map((lbl, i) =>
-        `<div class="panel-img ${i === 0 || i === 3 ? 'panel-img-wide' : 'panel-img-tall'}">
-          <span class="panel-img-label">${lbl}</span></div>`
-      ).join('');
+      imgEl.innerHTML = imgs.map((entry, i) => {
+        const wide = i === 0 || i === 3;
+        const cls = `panel-img ${wide ? 'panel-img-wide' : 'panel-img-tall'}`;
+        if (typeof entry === 'object' && entry.src) {
+          const media = entry.type === 'video'
+            ? `<video src="${entry.src}" muted loop autoplay playsinline preload="metadata"></video>`
+            : `<img src="${entry.src}" alt="${entry.label || ''}" loading="lazy">`;
+          return `<div class="${cls} panel-img-media">${media}</div>`;
+        }
+        return `<div class="${cls}"><span class="panel-img-label">${entry}</span></div>`;
+      }).join('');
 
       // Specs
       document.getElementById('p-specs').innerHTML =
