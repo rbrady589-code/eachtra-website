@@ -5,3 +5,7 @@ dev/
 .gstack/
 images/sos/_backup/
  
+
+graphify-out/
+supabase/.temp/
+.DS_Store
