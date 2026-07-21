@@ -1,72 +1,23 @@
 # Eachtra Agency Website — STATUS
 
+## Last updated: 2026-07-21 (regenerated from code/git — previous file described pre-launch state)
+
 ## Current state
 
-Dark mode transformation is in progress on `index.html`. The base palette and typography are done; a few sections (`#services`, `.os-section`, form submit button) still need background fixes before the dark state is fully clean.
+- **Live** on Cloudflare Pages at eachtraagency.com. Dark site shipped.
+- **`work.html` nodal canvas is SHIPPED** (promoted from `dev/nodes.html`): pan/zoom canvas, expand-in-place nodes, bezier connectors, bottom detail panel, responsive (mobile card-stack fix 2026-07-16). This canvas is also the approved **Jarvis frontend reference**.
+- Onboarding: `dev/website-onboard.html` full engagement intake (Supabase RPC `submit_onboarding`, storage bucket `onboarding-assets`) — verified e2e but **`dev/` is gitignored → not deployed**.
+- `generator/` client-site generator: unchanged since June; still scaffold-grade.
 
-The nodal work showcase (`dev/nodes.html`) is built and approved as the primary feature direction.
+## ⚠️ Deploy ritual (bus-factor — memorise)
+**git push does NOT deploy.** Deploy = `wrangler pages deploy` of a git-archive snapshot (see `reference_agency_site_deploy` memory). Repo pushed ≠ site updated.
 
----
-
-## What's done
-
-### Dark transformation (index.html)
-- `:root` variables updated: `--ink` is now cream (`#EAE4D5`), body background is `--bg` (`#0c0b09`)
-- Video filter restored: `contrast(1.1) saturate(1.2)` — no grain overlay
-- Synthetic grain div (`#terrain-grain`) removed
-- Display heading sizes reduced (manifesto, about, intro, contact h2)
-- Font: Apple system font stack throughout (`-apple-system, BlinkMacSystemFont, SF Pro Display`)
-- Irish text references removed throughout
-- Em dashes removed throughout
-- Nav padding tightened: `right: 24px, top: 20px`
-- Manifesto, about, metrics section paddings reduced to `80px 24px` / `64px 24px`
-
-### Nodal work showcase (dev/nodes.html)
-- Draggable infinite canvas (pan + scroll to zoom)
-- 4 active MaHalla nodes: client anchor, Meta Ads channel, Capture Funnel strategy, 2000 Contacts outcome
-- S-curve Bezier connections between connected nodes
-- Per-node idle float animation (5 variants, independent phases and speeds)
-- Hover: float pauses, card lifts with shadow
-- Click: detail panel slides up from bottom (rounded 18px)
-- Detail panel: image strip + 4 rounded sub-cards (specs / campaign description / results / credits)
-- 5 dim locked nodes scattered far across canvas suggesting future work
-- Eachtra dark palette, Apple system font
-
----
-
-## What's next
-
-### index.html — dark transformation remaining
-- [ ] Fix `#services { background: var(--bg-elevated) }` (currently renders cream)
-- [ ] Fix `.os-section { background: var(--bg-elevated) }` (same)
-- [ ] Fix `.form-submit { background: var(--cream); color: var(--bg) }` (button invisible)
-- [ ] Reduce remaining section paddings to match tight margins
-- [ ] Expand max-widths to 1200px
-
-### Nodal system — next steps
-- [ ] Add real MaHalla thumbnail image to the main node (drop into `images/`, wire up)
-- [ ] Decide: nodal canvas replaces `#work` section in index.html OR becomes standalone `/work` page
-- [ ] Add real campaign images to the panel image strip when available
-- [ ] Wire up for second client when onboarded
-
----
-
-## Files
-
-| File | Purpose |
-|---|---|
-| `index.html` | Main site — dark transformation in progress |
-| `index.backup-20260604-1347.html` | Last known-good backup (pre-dark mode) |
-| `dev/nodes.html` | Nodal work showcase — approved concept |
-| `dev/sketch.html` | Earlier dev sketch |
-| `images/painting-arete-animated.mp4` | Hero video (828x1108, 9116kbps H.264) |
-
----
+## Next
+- [ ] MaHalla public case study — plan at `docs/superpowers/plans/2026-07-14-mahalla-public-case-study.md`
+- [ ] Promote onboarding out of gitignored `dev/` when prices are Rory-approved (client-facing)
+- [ ] Wire second client node into work.html canvas when onboarded
 
 ## Decisions locked
-
-- Font: Apple system font throughout (no decorative fonts)
-- Video: no grain overlay, `contrast(1.1) saturate(1.2)` filter only
+- Font: Apple system stack; full dark `#0c0b09`; no grain overlay
 - Work showcase: nodal/canvas system (sub.global inspired, not a clone)
-- Dark mode: full dark (`#0c0b09` background)
-- Node click: bottom sheet panel with image strip + 4 info columns
+- Node click: bottom sheet panel with image strip + info columns
